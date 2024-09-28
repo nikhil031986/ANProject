@@ -1,0 +1,28 @@
+<app-header></app-header>
+  <div>
+    <!-- [config]="{animationType: ngxLoadingAnimationTypes.circleSwish, primaryColour: primaryColour, backdropBorderRadius: '3px'} [template]="loadingTemplate"" -->
+    <div class="body-content outer-top-xs" id="top-banner-and-menu">
+        <!-- [ngClass]="{'container-fluid': url=='/home','container': url!='/home'}" -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <main class="main">
+                  
+                <div class="col-12 col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-2 sidebar">
+                    <!-- col-xs-12 col-sm-12 col-md-3 sidebar -->
+                    <app-side-menu></app-side-menu>
+                </div>
+                    <div class="bgwhite col-md-12 col-12">
+                        
+                        <router-outlet></router-outlet>
+                    </div>
+                    
+ </main>
+ 
+</div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
