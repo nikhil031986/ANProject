@@ -50,20 +50,18 @@
               </ng-form>
             </div>
           </div>
-          <div class="header-shop">
-            <div class="d-inline-block box-dropdown-cart">
-              <span class="font-lg icon-list icon-account"><i class="fa fa-user-circle-o"
-                   aria-hidden="true"></i></span>
-              <div class="dropdown-account">
-                <ul>
-                   <li><a href="login">My Account</a></li>
-                   <li><a href="login">Order Tracking</a></li>
-                   <li><a href="login">My Orders</a></li>
-                   <li><a href="login">My Wishlist</a></li>
-                   <li><a href="login">Setting</a></li>
-                   <li><a href="login">Sign out</a></li>
-                </ul>
-              </div>
+          <div class="d-inline-block box-dropdown-cart">
+
+            <div class="d-inline-block box-dropdown-cart dropdown">
+              <!-- User Icon -->
+              <span class="font-lg icon-list icon-account dropdown-toggle" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+              </span>
+            
+              <!-- Dropdown Menu -->
+              <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                <li><a class="dropdown-item" href="/home">Logout</a></li>
+              </ul>
             </div>
             <a class="font-lg icon-list icon-wishlist" href="wishlist.html"><i class="fa fa-heart-o"
                 aria-hidden="true"></i><span class="number-item font-xs">5</span></a>
@@ -131,6 +129,23 @@
           <nav class="nav-main-menu d-none d-xl-block">
             <ul class="main-menu">
               <li><a href="home">Home</a></li>
+              <li class="has-children">
+                <a href="#">Category</a>
+                <ul class="sub-menu two-col">
+                  <ng-container *ngFor="let mm of menuItems">
+                    <li class="has-children">
+                      <a href="#">{{mm.category}}</a>
+                      <ul class="sub-menu two-col">
+                      <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
+                        <li>
+                          <a href="#">{{ch.category}}</a>
+                        </li>
+                      </ng-container>
+                    </ul>
+                    </li>
+                  </ng-container>
+                </ul>
+              </li>
               <li class="has-children">
                 <a href="shop-grid.html">About Us</a>
                 <ul class="sub-menu two-col">

@@ -1,3 +1,9 @@
+
+.address-modal-content{
+  height: 500px;
+  overflow-y: scroll;
+}
+
 label {
   display: block;
   margin-top: 10px;

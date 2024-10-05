@@ -15,6 +15,9 @@ export class HeaderComponent implements OnInit {
   iskyraden:any;
   contactDetails:any;
   trybyUrl:any;
+  menuItems:any=[];
+  childMenuItem:any=[];
+
   constructor(private userService: UserService) {
     this.isdirectsec=environment.isdirectsec;
     this.iskyraden = environment.iskyraden;
@@ -31,6 +34,28 @@ export class HeaderComponent implements OnInit {
         this.content = JSON.parse(err.error).message;
       }
     });
+    this.getMenuItem();
+  }
+  GetChildMenu(parentMenuId:any){
+    console.log(this.childMenuItem);
+    return this.childMenuItem.filter((item:any)=> item.parentCategory == parentMenuId); 
   }
 
+  getMenuItem():void{
+    this.userService.GetMenuItem().subscribe((res: any) => {
+      console.log(res);
+      this.menuItems=[];
+      this.childMenuItem=[];
+      var items : any=[];
+      items = res;
+      items.forEach((element:any) => {
+        if(element.parentCategory!==0){
+          this.childMenuItem.push(element);
+        }
+        else{
+          this.menuItems.push(element);
+        }
+      });
+    });
+  }
 }
