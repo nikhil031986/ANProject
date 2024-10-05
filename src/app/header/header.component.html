@@ -52,7 +52,7 @@
           </div>
           <div class="d-inline-block box-dropdown-cart">
 
-            <div class="d-inline-block box-dropdown-cart dropdown">
+            <div class="d-inline-block box-dropdown-cart">
               <!-- User Icon -->
               <span class="font-lg icon-list icon-account dropdown-toggle" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -130,11 +130,14 @@
             <ul class="main-menu">
               <li><a href="home">Home</a></li>
               <li class="has-children">
-                <a href="#">Category</a>
+                <a href="#">Shop by Categories
+                  <span _ngcontent-serverapp-c39="" class="fa fa-caret-down right"></span>
+                </a>
+                
                 <ul class="sub-menu two-col">
                   <ng-container *ngFor="let mm of menuItems">
                     <li class="has-children">
-                      <a href="#">{{mm.category}}</a>
+                      <a href="#" [ngClass]="{'submenuicon': GetChildMenu(mm.categoryTranId)?.length !=0}">{{mm.category}}</a>
                       <ul class="sub-menu two-col" *ngIf="(GetChildMenu(mm.categoryTranId)?.length > 0)">
                       <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
                         <li>
