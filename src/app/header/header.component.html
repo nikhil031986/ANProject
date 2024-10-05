@@ -135,7 +135,7 @@
                   <ng-container *ngFor="let mm of menuItems">
                     <li class="has-children">
                       <a href="#">{{mm.category}}</a>
-                      <ul class="sub-menu two-col">
+                      <ul class="sub-menu two-col" *ngIf="(GetChildMenu(mm.categoryTranId)?.length > 0)">
                       <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
                         <li>
                           <a href="#">{{ch.category}}</a>

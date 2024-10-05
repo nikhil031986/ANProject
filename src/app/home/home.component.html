@@ -143,7 +143,38 @@
              </div>
           </div>
           <div class="mt-10">
-             <ul class="list-9-col">
+
+            <div class="mt-10">
+               <ul class="list-9-col">
+                 <ng-container *ngFor="let mm of menuItems">
+                   <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s">
+                     <div class="box-category hover-up" data-match-height="groupName">
+                       <div class="image">
+                         <a [href]="mm.link" target="_blank">
+                           <img [src]="mm.imgUrl" [alt]="mm.category">
+                         </a>
+                       </div>
+                       <div class="text-info">
+                         <a class="font-sm color-gray-900 font-bold" [href]="mm.link" target="_blank">{{ mm.category }}</a>
+                         <p class="font-xs color-gray-500">{{ mm.category }}</p>
+                       </div>
+
+
+                       <ul class="sub-menu two-col" *ngIf="activeCategoryId === mm.categoryTranId">
+                        <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
+                          <li>
+                            <a href="javascript:void(0)">{{ ch.category }}</a>
+                          </li>
+                        </ng-container>
+                      </ul>
+
+                     </div>
+                   </li>
+                 </ng-container>
+               </ul>
+             </div>
+             
+             <!-- <ul class="list-9-col">
                 <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s">
                    <div class="box-category hover-up" data-match-height="groupName">
                       <div class="image"><a href="https://www.alarmlock.com/"><img
@@ -321,7 +352,7 @@
                       </div>
                    </div>
                 </li>
-             </ul>
+             </ul> -->
           </div>
        </div>
     </section>
