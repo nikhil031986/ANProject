@@ -150,13 +150,13 @@
                    <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s">
                      <div class="box-category hover-up" data-match-height="groupName">
                        <div class="image">
-                         <a  target="_blank" [routerLink]="['/subCatgory']"> 
+                         <a  target="_blank" [routerLink]="['/subCatgory', mm.categoryTranId]"> 
                            <i class="bi bi-backpack4-fill"></i>
                            <img src="/assets/images/Category/comman.png" [alt]="mm.category">
                          </a>
                        </div>
                        <div class="text-info">
-                         <a class="font-sm color-gray-900 font-bold"[routerLink]="['/subCatgory']" target="_blank">{{ mm.category }}</a>
+                         <a class="font-sm color-gray-900 font-bold"[routerLink]="['/subCatgory', mm.categoryTranId]" target="_blank">{{ mm.category }}</a>
                          <p class="font-xs color-gray-500">{{ mm.category }}</p>
                        </div>
 

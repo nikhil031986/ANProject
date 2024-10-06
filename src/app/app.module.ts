@@ -19,6 +19,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
+import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
     HeaderComponent,
     FooterComponent,
     SideMenuComponent,
-    SubCatgoryComponent
+    SubCatgoryComponent,
+    ItemcatwiseComponent
   ],
   imports: [
     BrowserModule,

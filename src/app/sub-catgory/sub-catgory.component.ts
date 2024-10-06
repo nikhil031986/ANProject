@@ -21,23 +21,17 @@ export class SubCatgoryComponent implements OnInit {
     this.getMenuItem(); // Fetch all menu items when the component initializes
 
     this.route.paramMap.subscribe((params) => {
-      const newCategoryId = params.get('parentCategoryId'); // Retrieve the parent category ID
-      if (newCategoryId) {
-        this.getChildMenu(newCategoryId); // Fetch child items for the selected parent category
+      const categoryTranId = params.get('categoryTranId'); 
+      if (categoryTranId) {
+        this.getChildMenu(categoryTranId); 
       }
     });
-    // this.route.paramMap.subscribe((params) => {
-    //   this.parentCategoryId = params.get('parentMenuId');
-    //   console.log('Parent Category ID:', this.parentCategoryId); // Log the ID
-    //   this.getChildMenu(this.parentCategoryId); // Get child menu items for the selected parent category
-    // });
   }
 
-  // Method to filter child menu items based on the parent category ID
-  getChildMenu(parentMenuId: any) {
-    this.childMenuItems = this.childMenuItem.filter((item: any) => item.parentCategory === parentMenuId);
+ getChildMenu(parentMenuId: any) {
+    this.childMenuItems = this.childMenuItem.filter((item: any) => item.parentCategory === Number(parentMenuId));
     console.log('Filtered Child Menu Items:', this.childMenuItems); // Log filtered child menu items
-  }
+}
 
   // Method to fetch menu items from the service
   getMenuItem(): void {
@@ -53,9 +47,10 @@ export class SubCatgoryComponent implements OnInit {
           this.menuItems.push(element); // Push to parent menu items array
         }
       });
-      
-      // After fetching menu items, we can filter child menu items based on the current parentCategoryId
-      this.getChildMenu(this.parentCategoryId);
+      const currentCategoryId = this.route.snapshot.paramMap.get('categoryTranId');
+      if (currentCategoryId) {
+        this.getChildMenu(currentCategoryId);
+      }
     }, (error) => {
       console.error('Error fetching menu items:', error); // Handle error
     });

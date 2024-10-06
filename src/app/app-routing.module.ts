@@ -10,6 +10,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
+import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
-  { path: 'subCatgory', component: SubCatgoryComponent },
+  { path: 'subCatgory/:categoryTranId', component: SubCatgoryComponent },
+  { path: 'itemcatwise', component: ItemcatwiseComponent },
   {path:'ChangePassword', component:ChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
