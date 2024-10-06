@@ -1,0 +1,20 @@
+
+   <ul class="child-menu">
+    <ng-container *ngFor="let item of childMenuItem">
+      <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s">
+        <div class="box-category hover-up" data-match-height="groupName">
+          <div class="image">
+            <a href="javascript:void(0)" target="_blank"> 
+              <i class="bi bi-backpack4-fill"></i>
+              <img src="/assets/images/Category/comman.png" [alt]="item.category">
+            </a>
+          </div>
+          <div class="text-info">
+            <a class="font-sm color-gray-900 font-bold" href="javascript:void(0)" target="_blank">{{ item.category }}</a>
+            <p class="font-xs color-gray-500">{{ item.category }}</p>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+  

@@ -18,6 +18,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
+import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     BoardUserComponent,
     HeaderComponent,
     FooterComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    SubCatgoryComponent
   ],
   imports: [
     BrowserModule,
