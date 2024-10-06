@@ -13,7 +13,26 @@
             <a class="font-sm color-gray-900 font-bold" href="javascript:void(0)" target="_blank">{{ item.category }}</a>
             <p class="font-xs color-gray-500">{{ item.category }}</p>
           </div>
+          
+
+          <div class="product-details">
+            <h4 class="font-sm color-gray-900">Product Details</h4>
+            <p class="font-xs color-gray-500">Detail 1: {{ item.detail1 }}</p>
+            <p class="font-xs color-gray-500">Detail 2: {{ item.detail2 }}</p>
+            <!-- More details can be added as necessary -->
+            <div class="detail-item">
+              <img src="/assets/images/details/detail1.png" alt="Detail 1" class="detail-image">
+              <span class="font-xs color-gray-500">{{ item.detail1 }}</span>
+            </div>
+            <div class="detail-item">
+              <img src="/assets/images/details/detail2.png" alt="Detail 2" class="detail-image">
+              <span class="font-xs color-gray-500">{{ item.detail2 }}</span>
+            </div>
+          </div>
         </div>
+
+          
+        <!-- </div> -->
       </li>
     </ng-container>
   </ul>
