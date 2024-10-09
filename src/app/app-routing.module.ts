@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'subCatgory/:categoryTranId', component: SubCatgoryComponent },
+  { path: 'subCatgory/:categeryName', component: SubCatgoryComponent },
   { path: 'itemcatwise', component: ItemcatwiseComponent },
   {path:'ChangePassword', component:ChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }

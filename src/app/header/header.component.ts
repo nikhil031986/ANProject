@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit {
     this.getMenuItem();
   }
   GetChildMenu(parentMenuId:any){
-    console.log(this.childMenuItem);
     return this.childMenuItem.filter((item:any)=> item.parentCategory == parentMenuId); 
   }
 

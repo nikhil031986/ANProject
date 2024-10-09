@@ -39,6 +39,14 @@ export class UserService {
     return this.http.get(environment.APIUrl+"Item/GetItemCategory",httpOptions);
   }
   
+  GetCategoryWithNoItem(){
+    return this.http.get(environment.APIUrl+"Item/GetItetmWiseCategory",httpOptions);
+  }
+
+  GetItemByCategory(categoryId:any){
+    return this.http.get(environment.APIUrl+"Item/ItemGetByCategory?categoryId="+categoryId,httpOptions);
+  }
+
   GetloginCustomerInfo(CustID: any) {
     return this.http.get(environment.APIUrl + 'Customer/GetCustomerById?customerId='+CustID, httpOptions);}
 }

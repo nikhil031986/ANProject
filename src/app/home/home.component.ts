@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   }
 
   getMenuItem():void{
-    this.userService.GetMenuItem().subscribe((res: any) => {
+    this.userService.GetCategoryWithNoItem().subscribe((res: any) => {
       console.log(res);
       this.menuItems=[];
       this.childMenuItem=[];
