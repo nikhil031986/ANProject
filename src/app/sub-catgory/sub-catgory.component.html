@@ -32,8 +32,8 @@
   <div class="box-filters mt-0 pb-5 border-bottom" *ngIf="childMenuItems!=undefined && childMenuItems!=null && childMenuItems.length>0">
     <div class="row">
       <div class="align-flex">
-        <div class="col-xl-2 col-lg-3 mb-10 text-lg-start text-center">
-          <div class="dropdown d-inline-block" *ngIf="childMenuItems!=undefined && childMenuItems!=null && childMenuItems.length>0 && showsafilter=='1' && showsafilter1=='1'">
+        <div class="col-xl-2 col-lg-3 mb-10 text-lg-start text-center" *ngIf="Items != undefined || Items != null">
+          <div class="dropdown d-inline-block" *ngIf="childMenuItems!=undefined || childMenuItems!=null &&( showsafilter=='1' && showsafilter1=='1')">
             <button class="toggle btn btn-filter font-sm color-brand-3 font-medium" (click)="getsetopenview(setopenview)">{{SaFilterLable}}</button>
           </div>
         </div>
@@ -49,7 +49,11 @@
       <div class="col-xl-12 mb-10 text-lg-start">
         <div class="filter-data">
           <ul class="align-flex justify-content-start">
-            <li><a class="font-xs filter-btn" href="index.html">Custom Fields<i class="fa fa-times" aria-hidden="true"></i></a></li>
+            <!-- <li>
+              <a class="font-xs filter-btn" href="index.html">Custom Fields
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </a>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -92,7 +96,7 @@
               <!-- <a class="btn btn-filter font-sm color-brand-3 font-medium" href="#ModalFiltersForm" data-bs-toggle="modal">All Fillters</a> -->
   
               <div class="dropdown d-inline-block" *ngIf="Items!=undefined && Items!=null && Items.length>0 && showsafilter=='1' && showsafilter1=='1'">
-                  <button class="toggle btn btn-filter font-sm color-brand-3 font-medium" (click)="getsetopenview(setopenview)">{{SaFilterLable}}</button>
+                  <button class="toggle btn btn-filter font-sm color-brand-3 font-medium" (click)="getsetopenview(setopenview)">Products</button>
               </div>
           </div>
           <div class="col-xl-10 col-lg-9 mb-10 text-lg-end text-center">
@@ -182,7 +186,7 @@
                 <h4>{{item.item_Name}}</h4>
                 <div class="image-box itembox">
                   <a href="#" >
-                    <img src="/assets/imgs/prodcut-1.jpeg" class="pimage itemimg" alt="{{item.item_Name+''+item.item_Description +''+item.weight}}">
+                    <img src={{imagePath}}{{item.imageUrl}} class="pimage itemimg" alt="{{item.item_Name+''+item.item_Description +''+item.weight}}">
                     <!-- <img src="{{product.image}}" class="pimage itemimg" alt="{{item.item_Name+''+item.item_Description +''+item.weight}}" *ngIf="item.item_Images != undefined && item.item_Images!=null"> -->
                 </a>
                 </div>

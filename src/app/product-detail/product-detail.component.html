@@ -1,0 +1,69 @@
+<main class="main">
+    <section class="section-box shop-template mt-100">
+        <div class="row padding-lr-80">
+            <div class="col-md-10 col-lg-10" id="pdrow1">
+                <div class="row">
+                    <div class="col-lg-4 detail-gallery px-3 py-2">
+                        <!-- <app-image-slider [slides]="galleryImages" [thumbnailSlides]="galleryImages">
+
+                        </app-image-slider> -->
+                        <h6 class="font-bold text-center">Actual product and finish may vary</h6>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="product-info padding-lr-50">
+                            <h4 class="font-md" id="vendorname">{{product.vendor[0].customerCode}}</h4>
+                            <div class="product-description mt-10">
+                                <ul style="gap: 15px; margin-top: 20px; margin-bottom: 5px; text-transform: uppercase;">
+                                    <li class="font-md mb-12">
+                                        <h4>{{product.item_Name}}</h4>
+                                    </li>
+                                    <li class="font-md mb-10" *ngIf="product.item_Description!=''">
+                                        {{product.item_Description}}
+                                    </li>
+                                </ul>   
+                                <div class="d-flex mt-15 mb-15 gap-5">
+                                    <ul>
+                                        <li class="font-md mb-10"><span class="mr-5">List:</span>${{product.item_Price}}
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li class="font-md mb-10"><strong> <span class="mr-5">Cost:</span>
+                                                Login For Cost
+                                            </strong></li>
+                                    </ul>
+                                </div>
+                                <ul>
+                                    <li class="font-md mb-10">
+                                    </li>
+                                    <li class="font-md mb-10"><strong>
+                                            <span class="text-green">Availability:</span> Login to check stock
+                                        </strong></li>
+                                </ul>
+                                <h6 class="font-bold mt-10 mb-10 text-orange">
+                                    Avaibility: Please call, this <br /> item may be able to be made<br /> from parts on hand
+                                </h6>
+                                <h6 class="font-bold mb-10 text-green">Avaibility :
+                                    10 in stock</h6>
+                                 <div class="buy-product mt-5"
+                                    *ngIf="(product==undefined && (product.item_Images==undefined || product.item_Images.length==0)) || (product!=undefined && product!=undefined)">
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <div class="box-quantity mt-15" id="left-align-10">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="row padding-lr-80 align-items-center">
+            
+        </div>
+        <div class="border-bottom pt-30 margin-lr-80"></div>
+       
+    </section>
+</main>

@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AbstractType, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { ThrowStmt } from '@angular/compiler';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -41,35 +43,24 @@ export class SubCatgoryComponent implements OnInit {
   objcategory:any=0;
   mancategory:any;
   txtCategory:any="";
+  imagePath:any="";
   constructor(private route: ActivatedRoute, private userService: UserService) {}
 
   async ngOnInit() {
     this.itlable="Product Name :"
     this.mancategory=null;
-    await this.getMenuItem(); // Fetch all menu items when the component initializes
-    this.SaFilterLable="Product Details"
-    this.route.paramMap.subscribe((params) => {
+    this.imagePath =environment.APIHost;
+    this.SaFilterLable="Child Category"
+   await this.route.paramMap.subscribe((params) => {
       const categoryTranId = params.get('categoryTranId');
       if(isNaN(Number(categoryTranId))){
-        this.objcategory = this.getCategoryIdFromCategory(categoryTranId);
+        this.getIdFromCategoryName(categoryTranId);
+      }else{
+        this.getMenuItem(categoryTranId); // Fetch all menu items when the component initializes
       }
-      else{
-        this.objcategory=categoryTranId; 
-      }
-      if (this.objcategory) {
-        this.getChildMenu(this.objcategory); 
-        this.getItemFromAPI(this.objcategory);
-      }
-      this.getCurrentCategory();
     });
   }
-  getCategoryIdFromCategory(categoryName:any){
-    var Id = this.menuItems.filter((x:any)=> x.category===categoryName)[0].categoryTranId;
-    if(Id === undefined || Id === null){
-      Id =  this.childMenuItem.filter((item: any) => item.category===categoryName)[0].categoryTranId;
-    }
-    return Id;
-  }
+
  getChildMenu(parentMenuId: any) {
   if(Number(parentMenuId)===0){
     this.childMenuItems =this.menuItems;
@@ -124,8 +115,18 @@ getCurrentCategory(){
   }
   console.log(this.mancategory);
 }
+
+  getIdFromCategoryName(categeryName:any){
+  this.userService.GetIdFromCategoryName(categeryName).subscribe((res:any)=>{
+    var Id =res.message;
+    if(Number(Id)){
+      this.objcategory =Id;
+      this.getMenuItem(Id);
+    }
+  });
+}
   // Method to fetch menu items from the service
-  async getMenuItem() {
+  async getMenuItem(categoryId:any) {
     this.userService.GetMenuItem().subscribe((res: any) => {
       console.log('API Response:', res); // Log the API response
       this.menuItems = [];
@@ -139,11 +140,12 @@ getCurrentCategory(){
         }
       });
       
+      this.objcategory=categoryId; 
       if (this.objcategory) {
-        this.getChildMenu(this.objcategory);
+        this.getChildMenu(this.objcategory); 
+        this.getItemFromAPI(this.objcategory);
       }
       this.getCurrentCategory();
-      
     }, (error) => {
       console.error('Error fetching menu items:', error); // Handle error
     });

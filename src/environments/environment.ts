@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   APIUrl:  "https://localhost:7269/api/",
+  APIHost:"https://localhost:7269/",
   isdirectsec:false,
   iskyraden:true,
 };

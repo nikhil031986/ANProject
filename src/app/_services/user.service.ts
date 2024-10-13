@@ -42,7 +42,9 @@ export class UserService {
   GetCategoryWithNoItem(){
     return this.http.get(environment.APIUrl+"Item/GetItetmWiseCategory",httpOptions);
   }
-
+  GetIdFromCategoryName(categeryName:any){
+    return this.http.get(environment.APIUrl+"Item/GetIdFromCategoryName?categoryName="+categeryName,httpOptions);
+  }
   GetItemByCategory(categoryId:any){
     return this.http.get(environment.APIUrl+"Item/ItemGetByCategory?categoryId="+categoryId,httpOptions);
   }

@@ -137,7 +137,8 @@
                <ul class="sub-menu two-col">
                  <ng-container *ngFor="let mm of menuItems">
                    <li class="has-children">
-                     <a [routerLink]="['/subCatgory',mm.categoryTranId]" [ngClass]="{'submenuicon': GetChildMenu(mm.categoryTranId)?.length !=0}">{{mm.category}}</a>
+                     <!-- <a [routerLink]="['/subCatgory',mm.categoryTranId]" [ngClass]="{'submenuicon': GetChildMenu(mm.categoryTranId)?.length !=0}">{{mm.category}}</a> -->
+                     <a [routerLink]="['/subCatgory',mm.category]" [ngClass]="{'submenuicon': GetChildMenu(mm.categoryTranId)?.length !=0}">{{mm.category}}</a>
                      <ul class="sub-menu two-col" *ngIf="(GetChildMenu(mm.categoryTranId)?.length > 0)">
                      <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
                        <li>

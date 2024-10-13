@@ -20,6 +20,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
     FooterComponent,
     SideMenuComponent,
     SubCatgoryComponent,
-    ItemcatwiseComponent
+    ItemcatwiseComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,
