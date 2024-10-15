@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  
+  quantity: number = 2;
   product:any;
   imagePath:any="";
   galleryImages:any = [];
@@ -34,5 +34,24 @@ export class ProductDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  increment() {
+    if (this.quantity < 9999) {
+      this.quantity++;
+    }
+  }
+
+  // Decrement the quantity
+  decrement() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  // Add to cart function
+  addToCart() {
+    this.productService.updateCartQuantity(this.quantity); 
+    console.log('Product added to cart:', this.quantity); // Update the cart quantity in the service
   }
 }

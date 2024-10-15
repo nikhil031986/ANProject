@@ -48,7 +48,49 @@
                                  <div class="buy-product mt-5"
                                     *ngIf="(product!=undefined && (product.item_Images!=undefined || product.item_Images.length>0)) || (product!=undefined && product!=null)">
                                     <div class="">
+
                                         <div class="col-md-12">
+                                            <div class="box-quantity mt-15" id="left-align-10">
+                                              <div class="did-floating-label-content mb-0">
+                                                <div class="increment-wrapper d-flex justify-content-start">
+                                                  <!-- Decrement button -->
+                                                  <button type="button" class="button dec" (click)="decrement()">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                  </button>
+                                                  <!-- Quantity input field -->
+                                                  <input class="did-floating-input" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty"
+                                                    [value]="quantity" readonly />
+                                                  <label class="did-floating-label ml-25">Qty</label>
+                                                  <!-- Increment button -->
+                                                  <button type="button" class="button inc" (click)="increment()">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                  </button>
+                                                </div>
+                                              </div>
+
+                                              <div class="did-floating-label-content" id="unitMeasurediv">
+                                                <section class="did-floating-select mt-0 ml-15" id="unitMeasure"
+                                                     name="unitMeasure">
+                                                     <option value="Unit">
+                                                        aa
+                                                    </option>
+                                                    <option value="Unit1">
+                                                        ea
+                                                    </option>
+                                                </section>
+                                                <label class="did-floating-label ml-20">Unit</label>
+                                            </div>
+                                            </div>
+
+                                            
+                                          
+                                            <!-- Add to cart button -->
+                                            <div id="addcrt">
+                                                <button (click)="addToCart()">Add to cart</button>
+                                            </div>
+                                          </div>
+                                          
+                                        <!-- <div class="col-md-12">
                                             <div class="box-quantity mt-15" id="left-align-10">
                                                 <div class="did-floating-label-content mb-0">
                                                     <div class="increment-wrapper d-flex justify-content-start">
@@ -86,7 +128,7 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
