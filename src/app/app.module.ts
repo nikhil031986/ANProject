@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,32 +21,27 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ImageSliderComponent } from './common/image-slider/image-slider.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    ChangePasswordComponent,
-    HomeComponent,
-    ProfileComponent,
-    BoardAdminComponent,
-    BoardModeratorComponent,
-    BoardUserComponent,
-    HeaderComponent,
-    FooterComponent,
-    SideMenuComponent,
-    SubCatgoryComponent,
-    ItemcatwiseComponent,
-    ProductDetailComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  providers: [authInterceptorProviders],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        ChangePasswordComponent,
+        HomeComponent,
+        ProfileComponent,
+        BoardAdminComponent,
+        BoardModeratorComponent,
+        BoardUserComponent,
+        HeaderComponent,
+        FooterComponent,
+        SideMenuComponent,
+        SubCatgoryComponent,
+        ItemcatwiseComponent,
+        ProductDetailComponent,
+            ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        ImageSliderComponent,
+        FormsModule], providers: [authInterceptorProviders, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

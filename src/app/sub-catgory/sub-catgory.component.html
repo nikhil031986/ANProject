@@ -185,7 +185,7 @@
               <div class="card-grid-inner text-center">
                 <h4>{{item.item_Name}}</h4>
                 <div class="image-box itembox">
-                  <a href="#" >
+                  <a [routerLink]="['/productDetail', item.item_Name]" >
                     <img src={{imagePath}}{{item.imageUrl}} class="pimage itemimg" alt="{{item.item_Name+''+item.item_Description +''+item.weight}}">
                     <!-- <img src="{{product.image}}" class="pimage itemimg" alt="{{item.item_Name+''+item.item_Description +''+item.weight}}" *ngIf="item.item_Images != undefined && item.item_Images!=null"> -->
                 </a>

@@ -11,6 +11,7 @@ import { BoardModeratorComponent } from './board-moderator/board-moderator.compo
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: 'subCatgory/:categoryTranId', component: SubCatgoryComponent },
   { path: 'subCatgory/:categeryName', component: SubCatgoryComponent },
+  {path:'productDetail/:productCode',component:ProductDetailComponent},
   { path: 'itemcatwise', component: ItemcatwiseComponent },
   {path:'ChangePassword', component:ChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
