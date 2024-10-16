@@ -166,7 +166,7 @@
                        <ul class="sub-menu two-col" *ngIf="activeCategoryId === mm.categoryTranId">
                         <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
                           <li>
-                            <a href="javascript:void(0)">{{ ch.category }}</a>
+                            <a [routerLink]="['/subCatgory', ch.category]">{{ ch.category }}</a>
                           </li>
                         </ng-container>
                       </ul>

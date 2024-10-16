@@ -45,6 +45,18 @@ export class ProductService {
     var GUIID = this.getGUID();
     return this.http.get(this.APIURL+"Item/GetCartItem?refKey="+GUIID,httpOptions);
   }
+
+  removeFromCart(itemCode:any){
+    var GUIID = this.getGUID();
+    return this.http.delete(this.APIURL+"Item/DeleteFromCart?ItemCode="+itemCode+"&refKey="+GUIID,httpOptions);
+  }
+
+  removeQtyFromCart(qty:any){
+    let current = this.cartQuantity.value;  // Get current quantity
+    const updatedQuantity = current - qty;  // Increase by the quantity
+    console.log('Product added to cart:', updatedQuantity);
+    this.cartQuantity.next(updatedQuantity);
+  }
   updateCartQuantity(quantity: number,ItemCode:any,unit:any) {
     if(this.guid == undefined && this.guid == null){
       this.createGUid();

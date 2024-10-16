@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: 'subCatgory/:categoryTranId', component: SubCatgoryComponent },
   { path: 'subCatgory/:categeryName', component: SubCatgoryComponent },
-  {path:'productDetail/:productCode',component:ProductDetailComponent},
+  { path:'productDetail/:productCode/:desc',component:ProductDetailComponent},
   { path: 'itemcatwise', component: ItemcatwiseComponent },
   { path: 'viewCart', component: ViewCartComponent },
   {path:'ChangePassword', component:ChangePasswordComponent},

@@ -17,6 +17,7 @@ export class ProductDetailComponent implements OnInit {
   galleryImages:any = [];
   tabord:any=1;
   objunit:any=[];
+  IsLogin:boolean=false;
   constructor(private route: ActivatedRoute, private productService: ProductService) {}
 
   ngOnInit(): void {

@@ -23,13 +23,14 @@ export class HeaderComponent implements OnInit {
   shcart: any;
   cartProduct:any=[];
   imagePath:any="";
-
+  totalAmount:any;
   constructor(private userService: UserService,private productService: ProductService,private cdr: ChangeDetectorRef) {
     this.isdirectsec=environment.isdirectsec;
     this.iskyraden = environment.iskyraden;
     this.contactDetails="info@metroboltmi.com";
     this.trybyUrl="https://www.metroboltmi.com/industries-served";
     this.imagePath = environment.APIHost;
+    this.totalAmount=0.0
    }
 
   ngOnInit(): void {
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
       this.cartProduct=[];
       this.productService.getCart().subscribe((res:any)=>{
         this.cartProduct=res;
+        this.totalAmount =parseFloat( this.cartProduct.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
         this.shcart = 1;
       });
     }

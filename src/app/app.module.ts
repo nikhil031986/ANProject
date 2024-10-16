@@ -23,6 +23,7 @@ import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ImageSliderComponent } from './common/image-slider/image-slider.component';
 import { ProductDetailModule } from './product-detail/product-detail.module';
+import { ViewCartComponent } from './view-cart/view-cart.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -39,6 +40,7 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
         SideMenuComponent,
         SubCatgoryComponent,
         ItemcatwiseComponent,
+        ViewCartComponent,
             ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

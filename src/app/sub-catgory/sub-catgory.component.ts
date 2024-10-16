@@ -106,8 +106,8 @@ AtoZ(){
 getCurrentCategory(){
   console.log("Current Category Id == "+ this.objcategory);
   this.mancategory = this.menuItems.filter((x:any)=> x.categoryTranId==this.objcategory)[0];
-  if(this.mancategory === null && this.mancategory === undefined ){
-    this.mancategory = this.childMenuItems.filter((x:any)=> x.categoryTranId==this.objcategory)[0];
+  if(this.mancategory == null || this.mancategory == undefined ){
+    this.mancategory = this.childMenuItem.filter((x:any)=> x.categoryTranId==this.objcategory)[0];
     this.txtCategory = this.mancategory.category;
   } else{
     this.txtCategory = this.mancategory.category;

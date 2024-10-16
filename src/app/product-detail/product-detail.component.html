@@ -29,24 +29,26 @@
                                         <li class="font-md mb-10"><span class="mr-5">List:</span>${{product.item_Price}}
                                         </li>
                                     </ul>
-                                    <ul>
+                                    <ul *ngIf="IsLogin">
                                         <li class="font-md mb-10"><strong> <span class="mr-5">Cost:</span>
                                                 Login For Cost
                                             </strong></li>
                                     </ul>
                                 </div>
-                                <ul>
+                                <ul *ngIf="IsLogin">
                                     <li class="font-md mb-10">
                                     </li>
                                     <li class="font-md mb-10"><strong>
                                             <span class="text-green">Availability:</span> Login to check stock
                                         </strong></li>
                                 </ul>
-                                <h6 class="font-bold mt-10 mb-10 text-orange">
-                                    Avaibility: Please call, this <br /> item may be able to be made<br /> from parts on hand
-                                </h6>
-                                <h6 class="font-bold mb-10 text-green">Avaibility :
-                                    10 in stock</h6>
+                                <div *ngIf="IsLogin">
+                                    <h6 class="font-bold mt-10 mb-10 text-orange">
+                                        Avaibility: Please call, this <br /> item may be able to be made<br /> from parts on hand
+                                    </h6>
+                                    <h6 class="font-bold mb-10 text-green">Avaibility :
+                                        10 in stock</h6>
+                                </div>
                                  <div class="buy-product mt-5"
                                     *ngIf="(product!=undefined && (product.item_Images!=undefined || product.item_Images.length>0)) || (product!=undefined && product!=null)">
                                     <div class="">
@@ -71,13 +73,10 @@
                                               </div>
 
                                               <div class="did-floating-label-content" id="unitMeasurediv">
-                                                <section class="did-floating-select mt-0 ml-15 ng-pristine ng-valid ng-touched" id="unitMeasure"
-                                                     name="unitMeasure"
-                                                    (change)="onUnitChange('test')">
-                                                     <option [ngValue]="k.unitSymbol" *ngFor="let k of objunit">
-                                                        {{k.unitName}}
-                                                    </option>
-                                                </section>
+                                                <select class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
+                                                    <option *ngFor="let unit of objunit" [value]="unit.unitName">{{ unit.unitName }}</option>
+                                                  </select>
+                                                  <label class="did-floating-label">unit</label>
                                                 <label class="did-floating-label ml-20">Unit</label>
                                             </div>
                                             </div>
@@ -86,7 +85,8 @@
                                           
                                             <!-- Add to cart button -->
                                             <div id="addcrt">
-                                                <button (click)="addToCart()">Add to cart</button>
+                                                <a class="font-md-bold btn btn-buy w-auto mb-10 mr-10"
+                                                   (click)="addToCart()">Add to cart</a>
                                             </div>
                                           </div>
                                           
