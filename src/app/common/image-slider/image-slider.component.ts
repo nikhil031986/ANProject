@@ -19,11 +19,30 @@ export class ImageSliderComponent {
   @Input() thumbnailSlides: any[] = [];
   private _albums: any = [];
 
-  constructor(private lgbox: Lightbox,private sanitizer: DomSanitizer) { }
+  constructor(private lgbox: Lightbox,private sanitizer: DomSanitizer) {
+    console.log("==> Start.");
+   }
 
   getSafeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
+
+  slickInit(e:any) {
+    
+  }
+
+  breakpoint(e:any) {
+    
+  }
+
+  afterChange(e:any) {
+    
+  }
+
+  beforeChange(e:any) {
+    
+  }
+
   open(index: number): void {
     for (let i = 0; i < this.thumbnailSlides.length; i++) {
       const album = {
@@ -44,24 +63,9 @@ export class ImageSliderComponent {
     this.lgbox.open(album, 0);
   }
 
-  // slides = [
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  // ];
-
-  // thumbnailSlides = [
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  //   { img: 'https://krayden.com/DefaultImageUnavailable/Dow_Unavailable.jpg' },
-  // ];
-
   slideConfig = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    // asNavFor: '.thumbnail-carousel',
     draggable: true,
     prevArrow: false,
     nextArrow: false
@@ -70,7 +74,6 @@ export class ImageSliderComponent {
   thumbnailConfig = {
     slidesToShow: 5,
     slidesToScroll: 1,
-    //asNavFor: '.main-carousel',
     asNavFor: '.thumbnail-carousel',
     centerMode: false,
     focusOnSelect: true,

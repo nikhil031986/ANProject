@@ -4,16 +4,18 @@
             <div class="col-md-10 col-lg-10" id="pdrow1">
                 <div class="row">
                     <div class="col-lg-4 detail-gallery px-3 py-2" *ngIf="galleryImages != undefined && galleryImages != null && galleryImages.length > 0">
-                        <!-- <app-image-slider [slides]="galleryImages" [thumbnailSlides]="galleryImages">
+                        <app-image-slider [slides]="galleryImages" [thumbnailSlides]="galleryImages">
 
-                        </app-image-slider> -->
-                        <img src={{imagePath}}{{product.imageUrl}}>
+                        </app-image-slider>
+                        <!-- <img src={{imagePath}}{{product.imageUrl}}> -->
                         <h6 class="font-bold text-center">Actual product and finish may vary</h6>
                     </div>
                     <div class="col-lg-8">
                         <div class="product-info padding-lr-50">
-                            <h4 class="font-md" id="vendorname">{{product.vendor[0].customerCode}}</h4>
-                            <div class="product-description mt-10">
+                            <div *ngIf="product != undefined && product != null">
+                                <h4 class="font-md" id="vendorname" >{{product.vendor[0].customerCode}}</h4>
+                            </div>
+                            <div class="product-description mt-10" *ngIf="product != undefined && product != null">
                                 <ul style="gap: 15px; margin-top: 20px; margin-bottom: 5px; text-transform: uppercase;">
                                     <li class="font-md mb-12">
                                         <h4>{{product.item_Name}}</h4>
@@ -69,13 +71,11 @@
                                               </div>
 
                                               <div class="did-floating-label-content" id="unitMeasurediv">
-                                                <section class="did-floating-select mt-0 ml-15" id="unitMeasure"
-                                                     name="unitMeasure">
-                                                     <option value="Unit">
-                                                        aa
-                                                    </option>
-                                                    <option value="Unit1">
-                                                        ea
+                                                <section class="did-floating-select mt-0 ml-15 ng-pristine ng-valid ng-touched" id="unitMeasure"
+                                                     name="unitMeasure"
+                                                    (change)="onUnitChange('test')">
+                                                     <option [ngValue]="k.unitSymbol" *ngFor="let k of objunit">
+                                                        {{k.unitName}}
                                                     </option>
                                                 </section>
                                                 <label class="did-floating-label ml-20">Unit</label>
@@ -134,70 +134,62 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8">
-                        <div class="product-info padding-lr-50">
-                            <div id="DownloadPDF" 
-                                class="font-md-bold btn btn-buy w-auto mb-5"
-                                style="float: right;cursor: pointer">Download</div>
-    
-                            <h4 class="mb-15" id="iname">{{product.item_Name}} </h4>
-                            <div class="border-bottom pt-10 mb-20"></div>
-                            <h4 class="mb-15" id="iname">
-                                Product: {{product.countryoforgin}} </h4>
-                            <ng-container
-                                *ngIf="product!=null && product.item_Description!=undefined">
-                                <h4 class="mb-15" id="iname">
-                                    <ng-container class="description-container"
-                                        *ngFor="let pdesc of product.item_Images;let l=index;">
-                                        <ng-container *ngIf="pdesc.sku!=''">
-                                            {{pdesc.sku}}<br />
-                                        </ng-container>
+                    
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs nav-tabs-product" role="tablist">
+                                <li>
+                                    <a [ngClass]="{'active': tabord==1}" href="#tab-featureTitle" (click)="activetabord(1)"
+                                        data-bs-toggle="tab" role="tab" aria-controls="tab-featureTitle" id="satab"
+                                        aria-selected="true">Product Details</a>
+                                </li>
+                                <li>
+            
+                                    <a [ngClass]="{'active': tabord==3}" href="#tab-overviewTitle" data-bs-toggle="tab" role="tab"
+                                        (click)="activetabord(3)" aria-controls="tab-overviewTitle" id="overtab"
+                                        aria-selected="true">Decription </a>
+                                </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade" [ngClass]="{'active show': tabord==1}" *ngIf="product!=undefined"
+                            id="tab-featureTitle" role="tabpanel" aria-labelledby="tab-featureTitle">
+                            <!-- <h5 class="mb-25">{{featureTitle}}</h5> -->
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                    <ng-container
+                                        *ngIf="product!=null && product!=undefined">
+                                        <tr>
+                                            <td>Weight</td>
+                                            <td>{{product.weight}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ship width</td>
+                                            <td>{{product.ship_width}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ship Height</td>
+                                            <td>{{product.ship_Height}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ship Length</td>
+                                            <td>{{product.ship_Length}}</td>
+                                        </tr>
                                     </ng-container>
-                                </h4>
-                            </ng-container>
-                            <ng-container>
-                                <h4 class="mb-15" id="iname"> {{product.countryoforgin}} </h4>
-                            </ng-container>
-    
-                            <div class="tag sale">
-                                <span id="sale">sale</span>
+                                </tbody>
+                                </table>
                             </div>
-                          
-                            <div class="product-description mt-10">
-                                <ul style="gap:15px;margin-top:20px;margin-bottom: 5px;text-transform: uppercase;">
-                                    <li class="font-md mb-12"><strong></strong>
-                                        {{product.item_Name}}</li>
-                                    <li class="font-md mb-12"
-                                        *ngIf=" product.vendor!=undefined && product.vendor!=null && product.vendor.customerCode!=null">
-                                        <strong>Vendor:</strong> {{product.vendor.customerCode}}
-                                    </li>
-                                </ul>
-                                <div id="hwl">
-                                    <label class="color-brand-3 font-xs-bold pl10px" id="ship_height1">H: <span
-                                        id="ship_height2">{{product.ship_Height}}</span></label>
-                                <label class="color-brand-3 font-xs-bold pl10px" id="ship_length1">L: <span
-                                        id="ship_length2">{{product.ship_Length}}</span></label>
-                                <label class="color-brand-3 font-xs-bold pl10px" id="ship_width1">W: <span
-                                        id="ship_width2">{{product.ship_width}}</span></label>
-                                <label class="color-brand-3 font-xs-bold pl10px" id="weight1">Weight: <span
-                                        id="weight2">{{product.weight}}</span></label>
-                                <label class="color-brand-3 font-xs-bold pl10px" id="weight_per1">Weight Per: <span
-                                        id="weight_per2">{{product.item_Price}}</span></label>
+                            </div>
+                            <div class="tab-pane fade" [ngClass]="{'active show': tabord==3}" id="tab-overviewTitle" role="tabpanel"
+                                aria-labelledby="tab-overviewTitle">
+                                <!-- <h5 class="mb-25">{{overviewTitle}}</h5> -->
+                                <div class="display-text-short">
+                                    <div style="margin-top:10px;" *ngIf="product!=null && product!=undefined  && product!='undefined'"
+                                        [innerHTML]="product.webdescription" class="list-d"></div>
                                 </div>
-                            </div>  
-
-                            <div class="box-product-color mt-10">
-                                <ul class="list-colors">
-                                    <li class="selectdiv">
-                                        <img title="{{product.item_Name}}"
-                                        src={{imagePath}}{{product.imageUrl}} alt="{{product.item_Name}}"
-                                        style="width: 20px;height: 20px;border-radius: 10px;"
-                                        *ngIf="product.imageUrl != undefined && product.imageUrl!=null && product.imageUrl!=''">
-                                    </li>
-                                </ul>
                             </div>
+                        </div>
                     </div>
-                    </div>
+                    
                 </div>
             </div> 
         </div>

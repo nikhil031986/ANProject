@@ -22,6 +22,7 @@ import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ImageSliderComponent } from './common/image-slider/image-slider.component';
+import { ProductDetailModule } from './product-detail/product-detail.module';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -38,10 +39,10 @@ import { ImageSliderComponent } from './common/image-slider/image-slider.compone
         SideMenuComponent,
         SubCatgoryComponent,
         ItemcatwiseComponent,
-        ProductDetailComponent,
             ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         ImageSliderComponent,
+        ProductDetailModule,
         FormsModule], providers: [authInterceptorProviders, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

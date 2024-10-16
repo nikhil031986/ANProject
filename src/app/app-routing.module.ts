@@ -12,6 +12,7 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductDetailModule } from './product-detail/product-detail.module';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },

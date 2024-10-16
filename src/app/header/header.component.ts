@@ -29,15 +29,6 @@ export class HeaderComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.userService.getPublicContent().subscribe({
-      next: data => {
-        this.content = data;
-      },
-      error: err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    });
-    
     this.getMenuItem();
     this.productService.currentQuantity.subscribe((quantity) => {
       this.cartQuantity = quantity;
