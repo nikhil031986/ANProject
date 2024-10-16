@@ -261,7 +261,49 @@
                   </div>
                     <div class="align-flex justify-content-center">
                       <div class="col-md-12 p-1">
-                        <div class="box-btn-cart"><a class="btn btn-cart w-auto">Add to
+
+
+
+                        <div class="col-md-12">
+                          <div class="box-quantity mt-15" id="left-align-10">
+                            <div class="did-floating-label-content mb-0">
+                              <div class="increment-wrapper d-flex justify-content-start">
+                                <!-- Decrement button -->
+                                <button type="button" class="button dec" (click)="decrement()">
+                                  <i class="fa fa-minus" aria-hidden="true"></i>
+                                </button>
+                                <!-- Quantity input field -->
+                                <input class="did-floating-input" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty"
+                                  [value]="quantity" readonly />
+                                <label class="did-floating-label ml-25">Qty</label>
+                                <!-- Increment button -->
+                                <button type="button" class="button inc" (click)="increment()">
+                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div class="did-floating-label-content" id="unitMeasurediv">
+                              <select class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
+                                  <option *ngFor="let unit of objunit" [value]="unit.unitName">{{ unit.unitName }}</option>
+                                </select>
+                                <label class="did-floating-label">unit</label>
+                              <label class="did-floating-label ml-5">Unit</label>
+                          </div>
+                          </div>
+
+                          
+                        
+                          <!-- Add to cart button -->
+                          <!-- <div id="addcrt">
+                              <a class="font-md-bold btn btn-buy w-auto mb-10 mr-10"
+                                 (click)="addToCart()">Add to cart</a>
+                          </div>
+                        </div> -->
+                        </div>
+
+
+                        <div class="box-btn-cart"><a class="btn btn-cart w-auto"(click)="addToCart()">Add to
                           Cart</a>
                         </div>
                         <!-- <div class="box-btn-cart"><a class="btn btn-cart w-auto"  title="Add to cart">Add to

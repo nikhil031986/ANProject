@@ -15,6 +15,8 @@ export class ViewCartComponent {
   totalAmount:any=0.0;
   isLoggedIn:boolean=true;
   isEmpty:boolean=true;
+  quantity: number= 0;
+  product:any;
   constructor( private productService: ProductService,private userService:UserService,private router: Router) {}
   ngOnInit(): void {
     this.imgeUrl = environment.APIHost;
@@ -34,10 +36,48 @@ export class ViewCartComponent {
    
   
   
-    increaseQuantity(index: number) {
-      this.cartItems[index].quantity++;
-    }
+    // increaseQuantity(index: number) {
+    //   this.cartItems[index].quantity++;
+    // }
   
+    increaseQuantity(index: number) {
+      if (this.cartItems[index] && this.cartItems[index].quntity !== undefined) {
+        console.log("Before increment:", this.cartItems[index].quntity);
+        this.cartItems[index].quntity++;
+        const itemCode = this.cartItems[index].itemCode;  // Extract ItemCode
+        const unit = this.cartItems[index].unit;          // Extract unit
+      //  this.addToCart(itemCode, unit);   
+       // this.addToCart();
+        this.productService.updateCartQuantity(this.cartItems[index].quntity, itemCode, unit);
+      //  this.productService.updateCartQuantity(this.cartItems[index].quntity);
+        console.log("After increment:", this.cartItems[index].quntity);
+      }
+    }
+    decreaseQuantity(index: number) {
+      if (this.cartItems[index] && this.cartItems[index].quntity > 1) {
+          console.log("Before decrement:", this.cartItems[index].quntity);
+          this.cartItems[index].quntity--;
+          const itemCode = this.cartItems[index].itemCode;  // Extract ItemCode
+          const unit = this.cartItems[index].unit;
+          this.productService.updateCartQuantity(this.cartItems[index].quntity, itemCode, unit);
+  
+          console.log("After decrement:", this.cartItems[index].quntity);
+      }
+  }
+  
+    
+    // decreaseQuantity(index: number) {
+    //   if (this.cartItems[index] && this.cartItems[index].quntity > 1) {
+    //     console.log("Before decrement:", this.cartItems[index].quntity);
+    //     this.cartItems[index].quntity--;
+    //     const itemCode = this.cartItems[index].itemCode;  // Extract ItemCode
+    //     const unit = this.cartItems[index].unit; 
+    //    // this.addToCart();        
+    //     this.productService.updateCartQuantity(this.cartItems[index].quntity, itemCode, unit);
+
+    //     console.log("After decrement:", this.cartItems[index].quntity);
+    //   }
+    // }
     checkout(){
       if(this.userService.userLogin()){
 
@@ -45,16 +85,16 @@ export class ViewCartComponent {
         this.router.navigate(['/login']);
       }
     }
-    decreaseQuantity(index: number) {
-      if (this.cartItems[index].quantity > 1) {
-        this.cartItems[index].quantity--;
-      }
-    }
+    // decreaseQuantity(index: number) {
+    //   if (this.cartItems[index].quantity > 1) {
+    //     this.cartItems[index].quantity--;
+    //   }
+    // }
   
     removeItem(index: number) {
       var item = this.cartItems[index];
       this.productService.removeFromCart(item.itemCode).subscribe((res:any)=>{
-        this.productService.removeFromCart(item.quntity);
+        this.productService.removeQtyFromCart(item.quntity);
         this.cartItems.splice(index, 1);
       });
     }
@@ -75,4 +115,8 @@ export class ViewCartComponent {
         }
       );
     }
+
+    // addToCart() {
+    //   this.productService.updateCartQuantity(this.quantity,this.product.item_Name,this.product.itemUnit); 
+    // }
   }

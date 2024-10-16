@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { ProductService } from '../_services/product.service';
 
 
 @Component({
@@ -43,7 +44,12 @@ export class SubCatgoryComponent implements OnInit {
   mancategory:any;
   txtCategory:any="";
   imagePath:any="";
-  constructor(private route: ActivatedRoute, private userService: UserService) {}
+  quantity: number = 2;
+  product:any;
+  objunit:any=[];
+
+
+  constructor(private route: ActivatedRoute, private userService: UserService,private productservice:ProductService) {}
 
   async ngOnInit() {
     this.itlable="Product Name :"
@@ -58,6 +64,7 @@ export class SubCatgoryComponent implements OnInit {
         this.getMenuItem(categoryTranId); // Fetch all menu items when the component initializes
       }
     });
+    this.getAllUnit();
   }
 
  getChildMenu(parentMenuId: any) {
@@ -147,6 +154,34 @@ getCurrentCategory(){
       this.getCurrentCategory();
     }, (error) => {
       console.error('Error fetching menu items:', error); // Handle error
+    });
+  }
+
+  increment() {
+    if (this.quantity < 9999) {
+      this.quantity++;
+    }
+  }
+
+  // Decrement the quantity
+  decrement() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  // Add to cart function
+  addToCart() {
+    this.productservice.updateCartQuantity(this.quantity,this.product.item_Name,this.product.itemUnit); 
+    console.log('Product added to cart:', this.quantity); // Update the cart quantity in the service
+  }
+  
+
+  getAllUnit(){
+    this.objunit=[];
+    this.productservice.getUnit().subscribe((res:any)=>{
+      this.objunit = res;
+      console.log(this.objunit);
     });
   }
 }

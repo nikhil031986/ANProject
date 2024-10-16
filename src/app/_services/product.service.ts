@@ -57,6 +57,8 @@ export class ProductService {
     console.log('Product added to cart:', updatedQuantity);
     this.cartQuantity.next(updatedQuantity);
   }
+
+
   updateCartQuantity(quantity: number,ItemCode:any,unit:any) {
     if(this.guid == undefined && this.guid == null){
       this.createGUid();
