@@ -13,6 +13,7 @@ import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductDetailModule } from './product-detail/product-detail.module';
+import { ViewCartComponent } from './view-cart/view-cart.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'subCatgory/:categeryName', component: SubCatgoryComponent },
   {path:'productDetail/:productCode',component:ProductDetailComponent},
   { path: 'itemcatwise', component: ItemcatwiseComponent },
+  { path: 'viewCart', component: ViewCartComponent },
   {path:'ChangePassword', component:ChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

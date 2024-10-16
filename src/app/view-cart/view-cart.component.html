@@ -1,0 +1,44 @@
+<div class="cart-container">
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Price Per</th>
+          <th>Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems; let i = index">
+          <td>
+            <img [src]="item.image" alt="{{item.description}}" />
+          </td>
+          <td>{{ item.description }}</td>
+          <td>
+            <button (click)="decreaseQuantity(i)">-</button>
+            <input type="text"  readonly />
+            <button (click)="increaseQuantity(i)">+</button>
+          </td>
+          <td>
+            <select >
+              <option *ngFor="let unit of availableUnits" [value]="unit">{{ unit }}</option>
+            </select>
+          </td>
+          <td>{{ item.price  }}</td>
+          <td>{{ (item.price * item.quantity)  }}</td>
+          <td>
+            <button (click)="removeItem(i)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="cart-total">
+      <span>Total: </span>
+      <!-- <strong>{{ getTotal() | currency }}</strong> -->
+    </div>
+  </div>
+  

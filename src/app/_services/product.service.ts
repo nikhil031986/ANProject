@@ -63,4 +63,6 @@ export class ProductService {
     console.log('Product added to cart:', updatedQuantity);
     this.cartQuantity.next(updatedQuantity);  // Emit the updated quantity
   }
+
+ 
 }
