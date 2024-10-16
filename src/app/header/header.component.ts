@@ -20,12 +20,16 @@ export class HeaderComponent implements OnInit {
   menuItems:any=[];
   childMenuItem:any=[];
   cartQuantity: number = 0;
+  shcart: any;
+  cartProduct:any=[];
+  imagePath:any="";
 
   constructor(private userService: UserService,private productService: ProductService,private cdr: ChangeDetectorRef) {
     this.isdirectsec=environment.isdirectsec;
     this.iskyraden = environment.iskyraden;
     this.contactDetails="info@metroboltmi.com";
     this.trybyUrl="https://www.metroboltmi.com/industries-served";
+    this.imagePath = environment.APIHost;
    }
 
   ngOnInit(): void {
@@ -39,7 +43,18 @@ export class HeaderComponent implements OnInit {
   GetChildMenu(parentMenuId:any){
     return this.childMenuItem.filter((item:any)=> item.parentCategory == parentMenuId); 
   }
-
+  showhidecart() {
+    if (this.shcart == undefined || this.shcart == 0) {
+      this.cartProduct=[];
+      this.productService.getCart().subscribe((res:any)=>{
+        this.cartProduct=res;
+        this.shcart = 1;
+      });
+    }
+    else {
+      this.shcart = 0;
+    }
+  }
   getMenuItem():void{
     this.userService.GetMenuItem().subscribe((res: any) => {
       console.log(res);

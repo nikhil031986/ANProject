@@ -41,6 +41,10 @@ export class ProductService {
   //  updateCartQuantity(quantity: number) {
   //   this.cartQuantity.next(quantity); // Update the cart quantity
   // }
+  getCart(){
+    var GUIID = this.getGUID();
+    return this.http.get(this.APIURL+"Item/GetCartItem?refKey="+GUIID,httpOptions);
+  }
   updateCartQuantity(quantity: number,ItemCode:any,unit:any) {
     if(this.guid == undefined && this.guid == null){
       this.createGUid();

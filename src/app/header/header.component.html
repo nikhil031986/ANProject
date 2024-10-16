@@ -65,45 +65,46 @@
            </div>
            <a class="font-lg icon-list icon-wishlist" href="wishlist.html"><i class="fa fa-heart-o"
                aria-hidden="true"></i><span class="number-item font-xs">5</span></a>
-           <div class="d-inline-block box-dropdown-cart">
-            <div class="d-inline-block box-dropdown-cart">
+            <div class="d-inline-block box-dropdown-cart" (click)="showhidecart()">
               <span class="font-lg icon-list icon-cart">
                 <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                 <span class="number-item font-xs">{{cartQuantity }}</span>
               </span>
+              <div class="dropdown-cart"  [ngClass]="{'dropdown-open': shcart==1}">
+                <div class="item-cart mb-20" *ngFor="let item of cartProduct">
+                  <a
+                                    [routerLink]="['/productdetail',item.itemCode.toLowerCase()]">
+                                    <div class="cart-image">
+
+                                        <img src={{imagePath}}{{item.imagePath}}
+                                            alt="{{item.itemCode}}">
+                                    </div>
+                  </a>
+                  <div class="cart-info">
+                      <a class="font-sm-bold color-brand-3"
+                          [routerLink]="['/productdetail',item.itemCode.toLowerCase()]">{{item.itemCode}}</a>
+                      <p><span class="color-brand-2 font-sm-bold">{{item.quntity}} x
+                              15.0 {{item.unit}}</span></p>
+                  </div>
+                </div>
+                <div class="border-bottom pt-0 mb-15"></div>
+                <div class="cart-total">
+                   <div class="row">
+                     <div class="col-6 text-start"><span class="font-md-bold color-brand-3">Total</span></div>
+                     <div class="col-6"><span class="font-md-bold color-brand-1">$2586.3</span></div>
+                   </div>
+                   <div class="row mt-15">
+                     <div class="col-6 text-start"><a class="btn btn-cart w-auto" href="cart.html">View
+                         cart</a>
+                     </div>
+                     <div class="col-6"><a class="btn btn-buy w-auto" href="checkout.html">Checkout</a></div>
+                   </div>
+                </div>
+              </div>
             </div>
              <!-- <span class="font-lg icon-list icon-cart"><i class="fa fa-cart-arrow-down"
                   aria-hidden="true"></i><span class="number-item font-xs">2</span></span> -->
-             <div class="dropdown-cart">
-               <div class="item-cart mb-20">
-                  <div class="cart-image"><img src="assets/imgs/prodcut-1.jpeg" alt="Image"></div>
-                  <div class="cart-info">
-                    <a class="font-sm-bold color-brand-3" href="shop-single-product.html">Product Name</a>
-                    <p><span class="color-brand-2 font-sm-bold">1 x $100.1</span></p>
-                  </div>
-               </div>
-               <div class="item-cart mb-20">
-                  <div class="cart-image"><img src="assets/imgs/prodcut-1.jpeg" alt="Image"></div>
-                  <div class="cart-info">
-                    <a class="font-sm-bold color-brand-3" href="shop-single-product.html">Product Name</a>
-                    <p><span class="color-brand-2 font-sm-bold">1 x $100.1</span></p>
-                  </div>
-               </div>
-               <div class="border-bottom pt-0 mb-15"></div>
-               <div class="cart-total">
-                  <div class="row">
-                    <div class="col-6 text-start"><span class="font-md-bold color-brand-3">Total</span></div>
-                    <div class="col-6"><span class="font-md-bold color-brand-1">$2586.3</span></div>
-                  </div>
-                  <div class="row mt-15">
-                    <div class="col-6 text-start"><a class="btn btn-cart w-auto" href="cart.html">View
-                        cart</a>
-                    </div>
-                    <div class="col-6"><a class="btn btn-buy w-auto" href="checkout.html">Checkout</a></div>
-                  </div>
-               </div>
-             </div>
-           </div>
+           
            <a class="font-lg icon-list icon-compare" href="shop-compare.html"><span>Compare</span></a>
          </div>
       </div>
