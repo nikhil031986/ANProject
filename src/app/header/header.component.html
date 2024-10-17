@@ -36,16 +36,29 @@
            <div class="box-header-search">
              <ng-form class="form-search" method="post" action="#">
                <div class="box-keysearch">
+
+                <div class="did-floating-label-content mb-0">
+                  <input class="did-floating-input" type="text" placeholder=" " required="true"
+                         [(ngModel)]="productCode" (keyup.enter)="getProductByProductCode(productCode)">
+                  <label class="did-floating-label">Enter item number</label>
+                  
+                  <div class="search-icon">
+                    <a (click)="getProductByProductCode(productCode)"> <!-- Call function on search icon click -->
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+                
                   <!-- Search Here -->
-                  <div class="did-floating-label-content mb-0">
+                  <!-- <div class="did-floating-label-content mb-0">
                     <input class="did-floating-input" type="text" placeholder=" " required="true">
                     <label class="did-floating-label">Enter item number</label>
                     <div class="search-icon">
                        <a href="home">
                         <i class="fa fa-search" aria-hidden="true"></i>
                       </a>
-                    </div>
-                  </div>
+                    </div> -->
+                  <!-- </div> -->
                </div>
              </ng-form>
            </div>

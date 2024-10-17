@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { ProductService } from '../_services/product.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+  productCode: string = '';
   content?: string;
   isdirectsec:any;
   iskyraden:any;
@@ -23,8 +24,10 @@ export class HeaderComponent implements OnInit {
   shcart: any;
   cartProduct:any=[];
   imagePath:any="";
+  product:any;
+  galleryImages:any = [];
   totalAmount:any;
-  constructor(private userService: UserService,private productService: ProductService,private cdr: ChangeDetectorRef) {
+  constructor(private userService: UserService,private productService: ProductService,private cdr: ChangeDetectorRef,private route: ActivatedRoute,) {
     this.isdirectsec=environment.isdirectsec;
     this.iskyraden = environment.iskyraden;
     this.contactDetails="info@metroboltmi.com";
@@ -39,6 +42,10 @@ export class HeaderComponent implements OnInit {
       this.cartQuantity = quantity;
       console.log('Cart quantity updated in UI:', this.cartQuantity);
       this.cdr.detectChanges();
+    });
+    this.route.paramMap.subscribe((params) => {
+      const productCode = params.get('productCode');
+      this.getProductByProductCode(productCode);
     });
   }
   GetChildMenu(parentMenuId:any){
@@ -72,6 +79,24 @@ export class HeaderComponent implements OnInit {
           this.menuItems.push(element);
         }
       });
+    });
+  }
+
+  getProductByProductCode(productCode:any){
+    if (!productCode || productCode.trim() === '') {  // Check if productCode is empty
+      console.error('Product code is required');
+      return;  // Don't make the API call if product code is empty
+    }
+    this.product = null;
+    this.galleryImages=[];
+    this.productService.getItemByItemCode(productCode).subscribe((res:any)=>{
+      this.product = res;
+      if(this.product != null && this.product != undefined){
+        var path = String(this.imagePath)+String(this.product.imageUrl);
+        this.galleryImages.push({
+          img: String(this.imagePath)+String(this.product.imageUrl)
+        });
+      }
     });
   }
 }
