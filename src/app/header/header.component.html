@@ -38,8 +38,8 @@
                <div class="box-keysearch">
 
                 <div class="did-floating-label-content mb-0">
-                  <input class="did-floating-input" type="text" placeholder=" " required="true"
-                         [(ngModel)]="productCode" (keyup.enter)="getProductByProductCode(productCode)">
+                  <input #inputValue class="did-floating-input" type="text" placeholder=" " required="true"
+                         [ngModel]="productCode" (keyup.enter)="getProductByProductCode(inputValue.value)">
                   <label class="did-floating-label">Enter item number</label>
                   
                   <div class="search-icon">

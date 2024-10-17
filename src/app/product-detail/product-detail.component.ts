@@ -3,6 +3,7 @@ import { ProductService } from '../_services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ImageSliderComponent } from '../common/image-slider/image-slider.component';
+import { CartServiceService } from '../_services/cart-service.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,7 +19,9 @@ export class ProductDetailComponent implements OnInit {
   tabord:any=1;
   objunit:any=[];
   IsLogin:boolean=false;
-  constructor(private route: ActivatedRoute, private productService: ProductService) {}
+  constructor(private route: ActivatedRoute, private productService: ProductService,
+    private cart:CartServiceService
+  ) {}
 
   ngOnInit(): void {
     this.imagePath=environment.APIHost;
@@ -67,10 +70,9 @@ export class ProductDetailComponent implements OnInit {
       this.quantity--;
     }
   }
-
+  
   // Add to cart function
   addToCart() {
-    this.productService.updateCartQuantity(this.quantity,this.product.item_Name,this.product.itemUnit); 
-    console.log('Product added to cart:', this.quantity); // Update the cart quantity in the service
+    this.cart.addToCart(this.product.item_Name,this.quantity,this.product.item_Description,this.product.imageUrl,this.product.item_Price,this.product.itemUnit); 
   }
 }

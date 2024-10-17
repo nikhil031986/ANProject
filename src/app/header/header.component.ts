@@ -4,7 +4,8 @@ import { environment } from 'src/environments/environment';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { ProductService } from '../_services/product.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CartServiceService } from '../_services/cart-service.service';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +28,8 @@ export class HeaderComponent implements OnInit {
   product:any;
   galleryImages:any = [];
   totalAmount:any;
-  constructor(private userService: UserService,private productService: ProductService,private cdr: ChangeDetectorRef,private route: ActivatedRoute,) {
+  constructor(private userService: UserService,private productService: ProductService,
+    private cdr: ChangeDetectorRef,private route: ActivatedRoute,private cart:CartServiceService,private router: Router,) {
     this.isdirectsec=environment.isdirectsec;
     this.iskyraden = environment.iskyraden;
     this.contactDetails="info@metroboltmi.com";
@@ -38,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMenuItem();
-    this.productService.currentQuantity.subscribe((quantity) => {
+    this.cart.currentQuantity.subscribe((quantity) => {
       this.cartQuantity = quantity;
       console.log('Cart quantity updated in UI:', this.cartQuantity);
       this.cdr.detectChanges();
@@ -54,7 +56,7 @@ export class HeaderComponent implements OnInit {
   showhidecart() {
     if (this.shcart == undefined || this.shcart == 0) {
       this.cartProduct=[];
-      this.productService.getCart().subscribe((res:any)=>{
+      this.cart.getCart().subscribe((res:any)=>{
         this.cartProduct=res;
         this.totalAmount =parseFloat( this.cartProduct.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
         this.shcart = 1;
@@ -84,7 +86,7 @@ export class HeaderComponent implements OnInit {
 
   getProductByProductCode(productCode:any){
     if (!productCode || productCode.trim() === '') {  // Check if productCode is empty
-      console.error('Product code is required');
+      console.log('Product code is required');
       return;  // Don't make the API call if product code is empty
     }
     this.product = null;
@@ -92,10 +94,11 @@ export class HeaderComponent implements OnInit {
     this.productService.getItemByItemCode(productCode).subscribe((res:any)=>{
       this.product = res;
       if(this.product != null && this.product != undefined){
-        var path = String(this.imagePath)+String(this.product.imageUrl);
-        this.galleryImages.push({
-          img: String(this.imagePath)+String(this.product.imageUrl)
-        });
+        this.router.navigate(['/productDetail',this.product.item_Name,this.product.item_Description]);
+        // var path = String(this.imagePath)+String(this.product.imageUrl);
+        // this.galleryImages.push({
+        //   img: String(this.imagePath)+String(this.product.imageUrl)
+        // });
       }
     });
   }

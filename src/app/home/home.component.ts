@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { ProductService } from '../_services/product.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
   menuItems:any=[];
   childMenuItem:any=[];
   activeCategoryId: number | null = null;
-  constructor(private userService: UserService) { 
+  constructor(private userService: UserService,private productService: ProductService) { 
    
   }
 

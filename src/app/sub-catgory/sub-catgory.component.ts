@@ -4,6 +4,7 @@ import { UserService } from '../_services/user.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ProductService } from '../_services/product.service';
+import { CartServiceService } from '../_services/cart-service.service';
 
 
 @Component({
@@ -47,15 +48,17 @@ export class SubCatgoryComponent implements OnInit {
   quantity: number = 2;
   product:any;
   objunit:any=[];
-
-
-  constructor(private route: ActivatedRoute, private userService: UserService,private productservice:ProductService) {}
+  IsLogin:boolean=false;
+  selectedUnit:any="";
+  constructor(private route: ActivatedRoute, private userService: UserService,
+    private productservice:ProductService,private cart:CartServiceService) {}
 
   async ngOnInit() {
     this.itlable="Product Name :"
     this.mancategory=null;
     this.imagePath =environment.APIHost;
     this.SaFilterLable="Child Category"
+    this.IsLogin = this.userService.userLogin();
    await this.route.paramMap.subscribe((params) => {
       const categoryTranId = params.get('categoryTranId');
       if(isNaN(Number(categoryTranId))){
@@ -170,10 +173,11 @@ getCurrentCategory(){
     }
   }
 
+
   // Add to cart function
-  addToCart() {
-    this.productservice.updateCartQuantity(this.quantity,this.product.item_Name,this.product.itemUnit); 
-    console.log('Product added to cart:', this.quantity); // Update the cart quantity in the service
+  addToCart(item_Name:any) {
+    var item = this.Items.filter((item:any)=> item.item_Name==item_Name)[0];
+    this.cart.addToCart(item_Name,this.quantity,item.item_Description,item.imageUrl,item.item_Price,this.selectedUnit); 
   }
   
 

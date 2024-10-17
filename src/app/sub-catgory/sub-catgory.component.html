@@ -245,7 +245,7 @@
                     <h4 id="min" class="color-brand-3 font-xs-bold" *ngIf="1>0">
                       <label>min
                       </label> 1
-                  </h4> &nbsp;&nbsp;
+                  </h4> 
                   <h4 id="max" class="color-brand-3 font-xs-bold" *ngIf="1>0">
                     <label>max
                     </label> 20
@@ -253,12 +253,12 @@
   
                   </div>
                   <br />
-                  <div class="box-quantity justify-content-center mb-10">
-                    <div class="did-floating-label-content mb-0 mt-8">
+                  <div class="box-quantity justify-content-center mb-10" >
+                    <div class="did-floating-label-content mb-0 mt-8" *ngIf="1!=1">
                       <div class="increment-wrapper d-flex justify-content-start align-items-center">
                         
                       </div>
-                  </div>
+                    </div>
                     <div class="align-flex justify-content-center">
                       <div class="col-md-12 p-1">
 
@@ -282,16 +282,16 @@
                                 </button>
                               </div>
                             </div>
-
-                            <div class="did-floating-label-content" id="unitMeasurediv">
-                              <select class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
-                                  <option *ngFor="let unit of objunit" [value]="unit.unitName">{{ unit.unitName }}</option>
-                                </select>
-                                <label class="did-floating-label">unit</label>
-                              <label class="did-floating-label ml-5">Unit</label>
+                            <br/>
+                           
                           </div>
-                          </div>
-
+                          <br/>
+                          <div class="did-floating-label-content" id="unitMeasurediv">
+                            <select [(ngModel)]="selectedUnit" class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
+                                <option *ngFor="let unit of objunit" [value]="unit.unitName">{{ unit.unitName }}</option>
+                              </select>
+                            <label class="did-floating-label ml-5">Unit</label>
+                        </div>
                           
                         
                           <!-- Add to cart button -->
@@ -303,16 +303,18 @@
                         </div>
 
 
-                        <div class="box-btn-cart"><a class="btn btn-cart w-auto"(click)="addToCart()">Add to
+                        <div class="box-btn-cart"><a class="btn btn-cart w-auto"(click)="addToCart(item.item_Name)">Add to
                           Cart</a>
                         </div>
                         <!-- <div class="box-btn-cart"><a class="btn btn-cart w-auto"  title="Add to cart">Add to
                           cart</a>
                       </div> -->
-                       <div class="box-btn-cart"><a class="btn btn-cart w-auto" title="Add to Quote">Add to
-                        Quote</a>
+                       <div class="box-btn-cart" *ngIf="IsLogin">
+                        <a class="btn btn-cart w-auto" title="Add to Quote">Add to
+                          Quote</a>
                         </div>
-                        <div class="box-btn-cart"><a class="btn btn-cart w-auto" title="Login to Quote">Login to Quote</a>
+                        <div class="box-btn-cart">
+                          <a class="btn btn-cart w-auto" title="Login to Quote">Login to Quote</a>
                         </div>
                       </div>
                     </div>
