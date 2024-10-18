@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+.custom-toast {
+    background-color: #343a40 !important; /* Dark background */
+    color: white !important; /* White text for contrast */
+    border-radius: 8px !important; /* Rounded corners for a modern look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important; /* Add shadow for depth */
+  }
+  
+  .toast-top-left {
+    top: 2000px; /* Distance from the top */
+    right: 2000px; /* Distance from the right */
+  }
+  
+  .toast-success {
+    background-color: #28a745 !important; /* Use a modern green for success */
+    color: white !important;
+  }
+  

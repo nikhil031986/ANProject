@@ -80,7 +80,7 @@ export class ProductDetailComponent implements OnInit {
   // Add to cart function
   addToCart() {
     this.cart.addToCart(this.product.item_Name,this.quantity,this.product.item_Description,this.product.imageUrl,this.product.item_Price,this.product.itemUnit);
-   this.toastera.success("Cart Added success"); 
+   this.toastera.success("Item Added in the Cart."); 
   //alert("Cart Added success");
 
   }
