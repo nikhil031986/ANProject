@@ -1,9 +1,10 @@
-import { Component, Inject, NgModule, OnInit } from '@angular/core';
+import { Component, Inject, NgModule, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ProductService } from '../_services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ImageSliderComponent } from '../common/image-slider/image-slider.component';
 import { CartServiceService } from '../_services/cart-service.service';
+import { ToasterService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,7 +20,10 @@ export class ProductDetailComponent implements OnInit {
   tabord:any=1;
   objunit:any=[];
   IsLogin:boolean=false;
-  constructor(private route: ActivatedRoute, private productService: ProductService,
+  @ViewChild('toasterContainer', { read: ViewContainerRef })
+  toasterContainer!: ViewContainerRef;
+
+  constructor(private route: ActivatedRoute, private productService: ProductService,private toastera:ToasterService,
     private cart:CartServiceService
   ) {}
 
@@ -71,8 +75,14 @@ export class ProductDetailComponent implements OnInit {
     }
   }
   
+  
   // Add to cart function
   addToCart() {
-    this.cart.addToCart(this.product.item_Name,this.quantity,this.product.item_Description,this.product.imageUrl,this.product.item_Price,this.product.itemUnit); 
+    this.cart.addToCart(this.product.item_Name,this.quantity,this.product.item_Description,this.product.imageUrl,this.product.item_Price,this.product.itemUnit);
+   this.toastera.success("Cart Added success"); 
+  alert("Cart Added success");
+
   }
+
+  
 }

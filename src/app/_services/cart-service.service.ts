@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' })
@@ -20,7 +21,7 @@ export class CartServiceService {
   private cartQuantity = new BehaviorSubject<number>(0);
   currentQuantity = this.cartQuantity.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private toastr: ToastrService,) {
     this.APIURL = environment.APIUrl;
    }
 
@@ -55,41 +56,52 @@ export class CartServiceService {
 
   }
 
-  addToCart(item_Code:any,Qty:Number,itemdesc:any,img:any,price:any,unit:any){
-    
-    if(this.guid == undefined && this.guid == null){
+  addToCart(item_Code: any, Qty: number, itemdesc: any, img: any, price: any, unit: any) {
+    // Check if the GUID is undefined or null
+    if (this.guid === undefined || this.guid === null) {
       this.createGUid();
     }
+  
     var currentGuid = this.getGUID();
-    this.http.put(this.APIURL+"Item/AddItemInCart?Item_Code="+item_Code+"&quntity="+Qty+"&refkey="+currentGuid+"&unit="+unit,httpOptions).subscribe((res:any)=>{
-      if(res.message.content("Record add")){
-        console.log("record added.");
-      }
-      else{
-        console.log("Record not added.");
-      }
-    });
-
-    var item = this.cartDetails.filter((x:any)=> x.itemCode==item_Code)[0];
-    if(item != undefined || item != null){
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  
+    // Make the HTTP request
+    this.http.put(this.APIURL + "Item/AddItemInCart?Item_Code=" + item_Code + "&quntity=" + Qty + "&refkey=" + currentGuid + "&unit=" + unit, httpOptions)
+      .subscribe((res: any) => {
+        if (res.message.includes("Record add")) {
+          console.log("Record added.");
+          // Show success toaster
+          this.toastr.success('Item added to cart!', 'Success');
+        } else {
+          console.log("Record not added.");
+          // Optionally show an error toaster if something goes wrong
+          this.toastr.error('Failed to add item to cart.', 'Error');
+        }
+      });
+  
+    // Find the item in the cart
+    var item = this.cartDetails.find((x: any) => x.itemCode == item_Code);
+    if (item) {
       item.imgpath = img;
       item.itemdes = itemdesc;
       item.qty = Qty;
       item.itemprice = price;
-    }
-    else{
+    } else {
       this.cartDetails.push({
         itemCode: item_Code,
         itemdes: itemdesc,
-        qty:Qty,
-        imgpath:img,
-        itemprice:price
+        qty: Qty,
+        imgpath: img,
+        itemprice: price
       });
     }
-    let totalQty=parseFloat( this.cartDetails.reduce((sum:any, item:any) => sum + (item.qty), 0)).toFixed(2);
-    this.cartQuantity.next(Number( totalQty));
+  
+    // Calculate total quantity and update cart quantity
+    let totalQty = parseFloat(this.cartDetails.reduce((sum: any, item: any) => sum + item.qty, 0)).toFixed(2);
+    this.cartQuantity.next(Number(totalQty));
   }
-
+  
+  
   getCart(){
     var GUIID = this.getGUID();
     return this.http.get(this.APIURL+"Item/GetCartItem?refKey="+GUIID,httpOptions);

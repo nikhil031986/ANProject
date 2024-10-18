@@ -39,7 +39,7 @@
 
                 <div class="did-floating-label-content mb-0">
                   <input #inputValue class="did-floating-input" type="text" placeholder=" " required="true"
-                         [ngModel]="productCode" (keyup.enter)="getProductByProductCode(inputValue.value)">
+                         [ngModel]="productCode" (keyup.enter)="getProductByProductCode(inputValue.value)" [ngModelOptions]="{standalone: true}">
                   <label class="did-floating-label">Enter item number</label>
                   
                   <div class="search-icon">

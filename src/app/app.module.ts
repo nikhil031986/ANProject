@@ -20,10 +20,14 @@ import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ImageSliderComponent } from './common/image-slider/image-slider.component';
 import { ProductDetailModule } from './product-detail/product-detail.module';
 import { ViewCartComponent } from './view-cart/view-cart.component';
+import { ToastrModule } from 'ngx-toastr';
+import { ToasterService } from './services/toaster.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 @NgModule({ declarations: [
         AppComponent,
@@ -41,10 +45,15 @@ import { ViewCartComponent } from './view-cart/view-cart.component';
         SubCatgoryComponent,
         ItemcatwiseComponent,
         ViewCartComponent,
+        
             ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         ImageSliderComponent,
         ProductDetailModule,
-        FormsModule], providers: [authInterceptorProviders, provideHttpClient(withInterceptorsFromDi())] })
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+       
+              
+        FormsModule], providers: [authInterceptorProviders,ToasterService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
