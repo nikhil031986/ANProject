@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ImageSliderComponent } from '../common/image-slider/image-slider.component';
 import { CartServiceService } from '../_services/cart-service.service';
 import { ToasterService } from '../services/toaster.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-detail',
@@ -24,7 +25,7 @@ export class ProductDetailComponent implements OnInit {
   toasterContainer!: ViewContainerRef;
 
   constructor(private route: ActivatedRoute, private productService: ProductService,private toastera:ToasterService,
-    private cart:CartServiceService
+    private cart:CartServiceService,private tsmodal:ToastrModule,
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +81,7 @@ export class ProductDetailComponent implements OnInit {
   addToCart() {
     this.cart.addToCart(this.product.item_Name,this.quantity,this.product.item_Description,this.product.imageUrl,this.product.item_Price,this.product.itemUnit);
    this.toastera.success("Cart Added success"); 
-  alert("Cart Added success");
+  //alert("Cart Added success");
 
   }
 

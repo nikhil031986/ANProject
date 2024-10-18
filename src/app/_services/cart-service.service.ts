@@ -69,9 +69,9 @@ export class CartServiceService {
     this.http.put(this.APIURL + "Item/AddItemInCart?Item_Code=" + item_Code + "&quntity=" + Qty + "&refkey=" + currentGuid + "&unit=" + unit, httpOptions)
       .subscribe((res: any) => {
         if (res.message.includes("Record add")) {
-          console.log("Record added.");
+          //console.log("Record added.");
           // Show success toaster
-          this.toastr.success('Item added to cart!', 'Success');
+          //this.toastr.success('Item added to cart!', 'Success');
         } else {
           console.log("Record not added.");
           // Optionally show an error toaster if something goes wrong
