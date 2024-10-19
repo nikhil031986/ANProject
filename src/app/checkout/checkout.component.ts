@@ -14,12 +14,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class CheckoutComponent {
   shippingForm!: FormGroup;
   billingForm!: FormGroup;
+  orderDetailsForm!:FormGroup
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initShippingForm();
     this.initBillingForm();
+    this.initOrderDetailsForm();
   }
 
 
@@ -27,20 +29,52 @@ export class CheckoutComponent {
   // Initialize Shipping Form
   initShippingForm() {
     this.shippingForm = this.fb.group({
-      shippingName: ['', [Validators.required, Validators.minLength(3)]],
-      shippingAddress: ['', [Validators.required, Validators.minLength(5)]],
-      shippingCity: ['', [Validators.required, Validators.minLength(2)]],
-      shippingZip: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]] // Example for US ZIP Code pattern
+      sameAsBilling: [false], // Checkbox, no validators required
+      residential: [false],   // Checkbox, no validators required
+      shippingToName: ['', [Validators.required, Validators.minLength(3)]],
+      blindShopping: [false], // Checkbox, no validators required
+      attn: ['', [Validators.required, Validators.minLength(2)]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // 10 digit phone number validation
+      address: ['', [Validators.required, Validators.minLength(5)]],
+      billingAddress1: ['', [Validators.required, Validators.minLength(5)]],
+      billingAddress2: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required, Validators.minLength(2)]],
+      postalCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]] // 5 digit postal code
     });
   }
+
 
   // Initialize Billing Form
   initBillingForm() {
     this.billingForm = this.fb.group({
       billingName: ['', [Validators.required, Validators.minLength(3)]],
-      billingAddress: ['', [Validators.required, Validators.minLength(5)]],
-      billingCity: ['', [Validators.required, Validators.minLength(2)]],
-      billingZip: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]] // Example for US ZIP Code pattern
+      phone: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.minLength(3)]],
+      fax:['', [Validators.required, Validators.minLength(3)]],
+      address:['', [Validators.required, Validators.minLength(3)]],
+      billingAddress1:['', [Validators.required, Validators.minLength(3)]],
+      billingAddress2:['', [Validators.required, Validators.minLength(3)]],
+      state:['', [Validators.required, Validators.minLength(3)]],
+       City: ['', [Validators.required, Validators.minLength(2)]],
+    postalCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]] // Example for US ZIP Code pattern
+    });
+  }
+
+  initOrderDetailsForm() {
+    this.orderDetailsForm = this.fb.group({
+      cancelDate: ['', Validators.required],
+      jobRelease: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      poNumber: ['', Validators.required],
+      contact: ['', Validators.required],
+      enteredBy: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      paymentType: ['', Validators.required],
+      shipVia: ['', Validators.required],
+      shippingAccount: ['', Validators.required],
+      additionalInfo: ['']
     });
   }
 
@@ -83,5 +117,8 @@ export class CheckoutComponent {
 
   get billingControls() {
     return this.billingForm.controls;
+  }
+  onSubmitOrderDetails(){
+    
   }
 }
