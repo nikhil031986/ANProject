@@ -1,5 +1,6 @@
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
 
@@ -7,14 +8,34 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
   selector: 'app-checkout',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule], // Make sure CommonModule is imported
+  providers: [CurrencyPipe],
+ // imports: [ReactiveFormsModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent {
   shippingForm!: FormGroup;
   billingForm!: FormGroup;
-  orderDetailsForm!:FormGroup
+  orderDetailsForm!:FormGroup;
+  paymentForm!: FormGroup;
+
+  cartItems = [
+    {
+      imageUrl: 'https://via.placeholder.com/50',
+      name: 'Product 1',
+      quantity: 1,
+      unitPrice: 10.0,
+      totalPrice: 10.0
+    },
+    {
+      imageUrl: 'https://via.placeholder.com/50',
+      name: 'Product 2',
+      quantity: 2,
+      unitPrice: 20.0,
+      totalPrice: 40.0
+    }
+  ];
 
   constructor(private fb: FormBuilder) { }
 
@@ -22,6 +43,7 @@ export class CheckoutComponent {
     this.initShippingForm();
     this.initBillingForm();
     this.initOrderDetailsForm();
+    this.initPaymentForm();
   }
 
 
@@ -78,6 +100,24 @@ export class CheckoutComponent {
     });
   }
 
+  initPaymentForm() {
+    this.paymentForm = this.fb.group({
+      cardHolderName: ['', [Validators.required, Validators.minLength(3)]],
+      cardType: ['', [Validators.required]],
+      cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]], // 16 digits for a credit card
+      securityCode: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]], // 3-4 digits for CVV
+      expirationMonth: ['', [Validators.required]],
+      expirationYear: ['', [Validators.required]],
+      address1: ['', [Validators.required, Validators.minLength(5)]],
+      address2: [''],
+      country: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required, Validators.minLength(2)]],
+      zip: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
   // Handle submission for shipping form
   onSubmitShipping(): void {
     if (this.shippingForm.valid) {
@@ -119,6 +159,28 @@ export class CheckoutComponent {
     return this.billingForm.controls;
   }
   onSubmitOrderDetails(){
+    
+  }
+
+  onSubmitPayment(){
+
+  }
+
+
+
+
+
+  // Function to remove item from the cart
+  removeItem(index: number): void {
+    this.cartItems.splice(index, 1);
+  }
+
+  // Function to update total price based on quantity
+  updateTotalPrice(index: number): void {
+    const item = this.cartItems[index];
+    item.totalPrice = item.quantity * item.unitPrice;
+  }
+  onClickContinue(){
     
   }
 }
