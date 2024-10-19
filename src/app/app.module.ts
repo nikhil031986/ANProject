@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,7 @@ import { ViewCartComponent } from './view-cart/view-cart.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ToasterService } from './services/toaster.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 
@@ -46,12 +47,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ItemcatwiseComponent,
         ViewCartComponent,
         
+        
+        
             ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
+        CheckoutComponent,
         ImageSliderComponent,
         ProductDetailModule,
         BrowserAnimationsModule,
+        ReactiveFormsModule,
         ToastrModule.forRoot(),
        
               
