@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-
+import { CartServiceService } from '../_services/cart-service.service';
+import { UserService } from '../_services/user.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService,private router: Router,private cart:CartServiceService,private user:UserService) { }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
@@ -37,11 +39,16 @@ export class LoginComponent implements OnInit {
         else{
           this.tokenStorage.saveToken(data.accessToken);
           this.tokenStorage.saveUser(data.user);
-  
+          this.user.setUserLogin();
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.roles = this.tokenStorage.getUser().roles;
-          this.reloadPage();
+          if(this.cart.CheckcartItem()){
+            this.router.navigate(['/checkOut']);
+          }
+          else{
+            this.reloadPage();
+          }
         }
       },
       error: err => {

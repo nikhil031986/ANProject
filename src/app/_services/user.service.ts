@@ -20,6 +20,10 @@ export class UserService {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
   }
 
+  setUserLogin(){
+    this.isLogin.next(true);
+  }
+
   userLogin(){
     return this.isLogin.closed;
   }
@@ -54,6 +58,11 @@ export class UserService {
     return this.http.get(environment.APIUrl+"Item/ItemGetByCategory?categoryId="+categoryId,httpOptions);
   }
 
+  GetCustomerDetails(CustId:any){
+    return this.http.get(environment.APIUrl+"Customer/GetCustomerDetails?customerId="+CustId,httpOptions);
+  }
+
   GetloginCustomerInfo(CustID: any) {
-    return this.http.get(environment.APIUrl + 'Customer/GetCustomerById?customerId='+CustID, httpOptions);}
+    return this.http.get(environment.APIUrl + 'Customer/GetCustomerById?customerId='+CustID, httpOptions);
+  }
 }

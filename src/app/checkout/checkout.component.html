@@ -6,52 +6,52 @@
         <form [formGroup]="billingForm" (ngSubmit)="onSubmitBilling()">
           <div class="mb-3">
             <label for="billingName" class="form-label">Name</label>
-            <input type="text" id="billingName" formControlName="billingName" class="form-control" placeholder="Enter your name" required>
+            <input type="text" id="billingName" value="{{customerMaster?.firstName}}" formControlName="billingName" class="form-control" placeholder="Enter your name" required>
           </div>
           
           <div class="mb-3">
             <label for="Phone" class="form-label">Phone</label>
-            <input type="text" id="billingName" formControlName="phone" class="form-control" placeholder="Enter your Phone" required>
+            <input type="text" id="billingName" formControlName="phone" value="{{customerMaster?.phone}}" class="form-control" placeholder="Enter your Phone" required>
           </div>
 
           <div class="mb-3">
             <label for="Email" class="form-label">Email</label>
-            <input type="text" id="email" formControlName="email" class="form-control" placeholder="Enter your Email" required>
+            <input type="text" id="email" formControlName="email" value="{{customerMaster?.email}}" class="form-control" placeholder="Enter your Email" required>
           </div>
           <div class="mb-3">
             <label for="Fax" class="form-label">FAX</label>
-            <input type="text" id="fax" formControlName="fax" class="form-control" placeholder="Enter your Fax" required>
+            <input type="text" id="fax" formControlName="fax" class="form-control" value="{{customerMaster?.phoneExtension}}" placeholder="Enter your Fax" required>
           </div>
           <div class="mb-3">
             <label for="Fax" class="form-label">Please Copy Address here </label>
-            <input type="text" id="address" formControlName="address" class="form-control" placeholder="Enter your Address" required>
+            <input type="text" id="address"  value="{{customerAddress?.address1}}" formControlName="address" class="form-control" placeholder="Enter your Address" required>
           </div>
 
           <div class="mb-3">
             <label for="billingAddress1" class="form-label">Address1</label>
-            <input type="text" id="billingAddress1" formControlName="billingAddress1" class="form-control" placeholder="Enter your address1" required>
+            <input type="text" id="billingAddress1" value="{{customerAddress?.address2}}" formControlName="billingAddress1" class="form-control" placeholder="Enter your address1" required>
           </div>
           <div class="mb-3">
             <label for="billingAddress2" class="form-label">Address2</label>
-            <input type="text" id="billingAddress2" formControlName="billingAddress2" class="form-control" placeholder="Enter your address2" required>
+            <input type="text" id="billingAddress2" value="{{customerAddress?.address3}}" formControlName="billingAddress2" class="form-control" placeholder="Enter your address2" required>
           </div>
           <div class="mb-3">
             <label for="billingCountry" class="form-label">Country</label>
-            <input type="text" id="billingCountry" formControlName="country" class="form-control" placeholder="Enter your Country" required>
+            <input type="text" id="billingCountry" value="{{customerAddress?.country}}" formControlName="country" class="form-control" placeholder="Enter your Country" required>
           </div>
 
           <div class="mb-3">
             <label for="billingState" class="form-label">State</label>
-            <input type="text" id="billingState" formControlName="state" class="form-control" placeholder="Enter your State" required>
+            <input type="text" id="billingState" value="{{customerAddress?.state}}" formControlName="state" class="form-control" placeholder="Enter your State" required>
           </div>
 
           <div class="mb-3">
             <label for="billingCity" class="form-label">City</label>
-            <input type="text" id="billingCity" formControlName="city" class="form-control" placeholder="Enter your City" required>
+            <input type="text" id="billingCity" value="{{customerAddress?.city}}" formControlName="city" class="form-control" placeholder="Enter your City" required>
           </div>
           <div class="mb-3">
             <label for="billingZip" class="form-label">Postal Code</label>
-            <input type="text" id="billingZip" formControlName="postalCode" class="form-control" placeholder="Enter Postal code" required>
+            <input type="text" id="billingZip" value="{{customerAddress?.postal}}" formControlName="postalCode" class="form-control" placeholder="Enter Postal code" required>
           </div>
         </form>
       </div>
@@ -165,16 +165,17 @@
               <label for="paymentType" class="form-label">Payment Type</label>
               <select id="paymentType" formControlName="paymentType" class="form-control" required>
                 <option value="" disabled selected>Select payment type</option>
-                <option value="credit">Credit Card</option>
-                <option value="debit">Debit Card</option>
-                <option value="paypal">PayPal</option>
-                <option value="bankTransfer">Bank Transfer</option>
+                <option *ngFor="let paym of paymentMethod" [value]="paym.paymentMethod1">{{ paym.paymentMethod1 }}</option>
               </select>
             </div>
       
             <div class="col-md-4 mb-3">
               <label for="shipVia" class="form-label">Ship Via</label>
-              <input type="text" id="shipVia" formControlName="shipVia" class="form-control" placeholder="Enter shipping method" required>
+              <select id="shipVia" formControlName="paymentType" class="form-control" required>
+                <option value="" disabled selected>Select shipVia</option>
+                <option *ngFor="let spvia of SystemShipVia" [value]="spvia.shipViaCode">{{ spvia.shipViaCode }}</option>
+              </select>
+              <!-- <input type="text" id="shipVia" formControlName="shipVia" class="form-control" placeholder="Enter shipping method" required> -->
             </div>
       
             <div class="col-md-4 mb-3">
@@ -292,14 +293,14 @@
                 </button>
               </td>
               <td>
-                <img [src]="item.imageUrl" alt="{{ item.name }}" width="50" height="50">
+                <img src="{{imgeUrl}}{{item.imagePath}}" alt="{{ item.itemCode }}" width="50" height="50">
               </td>
-              <td>{{ item.name }}</td>
+              <td>{{ item.itemCode }}{{item.item_Description}}</td>
               <td>
-                <input type="number" [(ngModel)]="item.quantity" class="form-control" min="1" (change)="updateTotalPrice(i)">
+                <input type="number" [(ngModel)]="item.quntity" class="form-control" min="1" (change)="updateTotalPrice(i)">
               </td>
-              <td>{{ item.unitPrice | currency }}</td>
-              <td>{{ item.totalPrice | currency }}</td>
+              <td>{{ item.itemPrice | currency }}</td>
+              <td>{{ item.itemPrice * item.quntity | currency }}</td>
             </tr>
           </tbody>
         </table>

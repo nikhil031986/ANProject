@@ -1,7 +1,10 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { CartServiceService } from '../_services/cart-service.service';
+import { environment } from 'src/environments/environment';
+import { UserService } from '../_services/user.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 @Component({
 
  
@@ -18,35 +21,51 @@ export class CheckoutComponent {
   shippingForm!: FormGroup;
   billingForm!: FormGroup;
   orderDetailsForm!:FormGroup;
-  paymentForm!: FormGroup;
-
-  cartItems = [
-    {
-      imageUrl: 'https://via.placeholder.com/50',
-      name: 'Product 1',
-      quantity: 1,
-      unitPrice: 10.0,
-      totalPrice: 10.0
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/50',
-      name: 'Product 2',
-      quantity: 2,
-      unitPrice: 20.0,
-      totalPrice: 40.0
-    }
-  ];
-
-  constructor(private fb: FormBuilder) { }
+  paymentForm!: FormGroup;   
+  imgeUrl:any="";
+  customerDetails:any[]=[];
+  cartItems:any[]=[];
+  customerMaster:any;
+  contactDetails:any;
+  paymentTerm:any[]=[];
+  paymentMethod:any[]=[];
+  SystemShipVia:any[]=[];
+  customerAddress:any;
+  constructor(private fb: FormBuilder,private cart:CartServiceService,private userservice:UserService,
+    private token:TokenStorageService
+  ) { }
 
   ngOnInit(): void {
+    this.imgeUrl = environment.APIHost;
+    this.getCustomerDetails();
+    this.getCartData();
     this.initShippingForm();
     this.initBillingForm();
     this.initOrderDetailsForm();
     this.initPaymentForm();
   }
 
+  getCustomerDetails(){
+    const currentCustomerId = this.token.getUserInfo("Customer_Id");
+    this.userservice.GetCustomerDetails(currentCustomerId).subscribe((res:any)=>{
+      this.customerDetails= res;
+      if(this.customerDetails != null && this.customerDetails != undefined){
+        this.customerMaster = this.customerDetails[0].customerMaster;
+        this.customerAddress = this.customerDetails[0].customerLocationInformation;
+        this.paymentTerm = this.customerDetails[0].paymentTerm;
+        this.paymentMethod = this.customerDetails[0].paymentMethod;
+        this.contactDetails = this.customerDetails[0].contactDetails;
+        this.SystemShipVia = this.customerDetails[0].systemShipVia;
+      }
+    });
+  }
 
+  getCartData(){
+    this.cart.getCart().subscribe((res:any)=>{
+      this.cartItems=res;
+      console.log(this.cartItems);
+    });
+  }
 
   // Initialize Shipping Form
   initShippingForm() {
@@ -165,11 +184,6 @@ export class CheckoutComponent {
   onSubmitPayment(){
 
   }
-
-
-
-
-
   // Function to remove item from the cart
   removeItem(index: number): void {
     this.cartItems.splice(index, 1);
@@ -180,6 +194,7 @@ export class CheckoutComponent {
     const item = this.cartItems[index];
     item.totalPrice = item.quantity * item.unitPrice;
   }
+
   onClickContinue(){
     
   }

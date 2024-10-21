@@ -6,6 +6,7 @@ import { ProductService } from '../_services/product.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CartServiceService } from '../_services/cart-service.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -29,7 +30,9 @@ export class HeaderComponent implements OnInit {
   galleryImages:any = [];
   totalAmount:any;
   constructor(private userService: UserService,private productService: ProductService,
-    private cdr: ChangeDetectorRef,private route: ActivatedRoute,private cart:CartServiceService,private router: Router,) {
+    private cdr: ChangeDetectorRef,private route: ActivatedRoute,
+    private cart:CartServiceService,private router: Router,
+  private tokenStorageService:TokenStorageService) {
     this.isdirectsec=environment.isdirectsec;
     this.iskyraden = environment.iskyraden;
     this.contactDetails="info@metroboltmi.com";
@@ -50,6 +53,12 @@ export class HeaderComponent implements OnInit {
       this.getProductByProductCode(productCode);
     });
   }
+
+  logout(){
+    this.tokenStorageService.signOut();
+    window.location.href="\home";
+  }
+
   GetChildMenu(parentMenuId:any){
     return this.childMenuItem.filter((item:any)=> item.parentCategory == parentMenuId); 
   }

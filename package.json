@@ -18,6 +18,7 @@
     "@angular/platform-browser": "~18.2.8",
     "@angular/platform-browser-dynamic": "~18.2.8",
     "@angular/router": "~18.2.8",
+    "jwt-decode": "^4.0.0",
     "ngx-lightbox": "^3.0.0",
     "ngx-slick-carousel": "^17.0.0",
     "ngx-toastr": "^19.0.0",

@@ -112,4 +112,7 @@ export class CartServiceService {
     return this.http.delete(this.APIURL+"Item/DeleteFromCart?ItemCode="+itemCode+"&refKey="+GUIID,httpOptions);
   }
 
+  CheckcartItem(){
+    return this.cartQuantity.value > 0 ?true:false;
+  }
 }

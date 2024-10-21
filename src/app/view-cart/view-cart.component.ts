@@ -58,7 +58,7 @@ export class ViewCartComponent {
 
   checkout(){
     if(this.userService.userLogin()){
-
+      this.router.navigate(['/checkOut']);
     }else{
       this.router.navigate(['/login']);
     }
