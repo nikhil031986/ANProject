@@ -5,6 +5,7 @@ import { CartServiceService } from '../_services/cart-service.service';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../_services/user.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Router } from '@angular/router';
 @Component({
 
  
@@ -32,7 +33,7 @@ export class CheckoutComponent {
   SystemShipVia:any[]=[];
   customerAddress:any;
   constructor(private fb: FormBuilder,private cart:CartServiceService,private userservice:UserService,
-    private token:TokenStorageService
+    private token:TokenStorageService,private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -196,6 +197,6 @@ export class CheckoutComponent {
   }
 
   onClickContinue(){
-    
+    this.router.navigate(['/revieworder']);
   }
 }

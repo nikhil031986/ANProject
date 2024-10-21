@@ -15,6 +15,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductDetailModule } from './product-detail/product-detail.module';
 import { ViewCartComponent } from './view-cart/view-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { RevieworderComponent } from 'src/revieworder/revieworder.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -28,7 +29,9 @@ const routes: Routes = [
   { path: 'subCatgory/:categeryName', component: SubCatgoryComponent },
   { path:'productDetail/:productCode/:desc',component:ProductDetailComponent},
   { path: 'itemcatwise', component: ItemcatwiseComponent },
-  { path: 'viewCart', component: ViewCartComponent },
+  { path: 'viewCart', component: ViewCartComponent },  
+  { path: 'revieworder', component: RevieworderComponent },
+
   { path: 'checkOut', component: CheckoutComponent },
 
   {path:'ChangePassword', component:ChangePasswordComponent},

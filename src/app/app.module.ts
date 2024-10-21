@@ -27,6 +27,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ToasterService } from './services/toaster.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { RevieworderComponent } from 'src/revieworder/revieworder.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -45,7 +47,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
         SideMenuComponent,
         SubCatgoryComponent,
         ItemcatwiseComponent,
+        RevieworderComponent,
         ViewCartComponent,
+        
         
         
         
@@ -57,6 +61,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
         ProductDetailModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        RouterModule,
         ToastrModule.forRoot(),
        
               
