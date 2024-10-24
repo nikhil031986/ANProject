@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -20,50 +22,56 @@ import { FooterComponent } from './footer/footer.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { SubCatgoryComponent } from './sub-catgory/sub-catgory.component';
 import { ItemcatwiseComponent } from './itemcatwise/itemcatwise.component';
-import { ImageSliderComponent } from './common/image-slider/image-slider.component';
-import { ProductDetailModule } from './product-detail/product-detail.module';
+import { RevieworderComponent } from 'src/revieworder/revieworder.component';
 import { ViewCartComponent } from './view-cart/view-cart.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ToasterService } from './services/toaster.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { RevieworderComponent } from 'src/revieworder/revieworder.component';
 import { RouterModule } from '@angular/router';
 
+// Import standalone components
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ImageSliderComponent } from './common/image-slider/image-slider.component';
+import { AddressDialogComponent } from './address-dialog/address-dialog.component';
+import { ProductDetailModule } from './product-detail/product-detail.module';
 
-
-@NgModule({ declarations: [
-        AppComponent,
-        LoginComponent,
-        RegisterComponent,
-        ChangePasswordComponent,
-        HomeComponent,
-        ProfileComponent,
-        BoardAdminComponent,
-        BoardModeratorComponent,
-        BoardUserComponent,
-        HeaderComponent,
-        FooterComponent,
-        SideMenuComponent,
-        SubCatgoryComponent,
-        ItemcatwiseComponent,
-        RevieworderComponent,
-        ViewCartComponent,
-        
-        
-        
-        
-            ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        CheckoutComponent,
-        ImageSliderComponent,
-        ProductDetailModule,
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        ToastrModule.forRoot(),
-       
-              
-        FormsModule], providers: [authInterceptorProviders,ToasterService, provideHttpClient(withInterceptorsFromDi())] })
-export class AppModule { }
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    ChangePasswordComponent,
+    HomeComponent,
+    ProfileComponent,
+    BoardAdminComponent,
+    BoardModeratorComponent,
+    BoardUserComponent,
+    HeaderComponent,
+    FooterComponent,
+    SideMenuComponent,
+    SubCatgoryComponent,
+    ItemcatwiseComponent,
+    RevieworderComponent,
+    ViewCartComponent
+  ],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ProductDetailModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ToastrModule.forRoot(),
+    FormsModule,
+    // Import standalone components
+    CheckoutComponent,
+    ImageSliderComponent,
+    AddressDialogComponent
+  ],
+  providers: [authInterceptorProviders, ToasterService, provideHttpClient(withInterceptorsFromDi())]
+})
+export class AppModule {}

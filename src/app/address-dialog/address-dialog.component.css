@@ -1,0 +1,91 @@
+/* Modern styling for the mat-dialog */
+.mat-dialog-container {
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header styling */
+  h2[mat-dialog-title] {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  /* Form field styling */
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Input field styling */
+  input[matInput] {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+  }
+  
+  /* Focus state for input fields */
+  .mat-form-field input:focus {
+    outline: none;
+    border-color: #3f51b5;
+    box-shadow: 0 0 5px rgba(63, 81, 181, 0.3);
+  }
+  
+  /* Button styling */
+  button[mat-button] {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Save button */
+  button[mat-button]:nth-child(2) {
+    background-color: #3f51b5;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button[mat-button]:nth-child(2):hover {
+    background-color: #2c3e97;
+  }
+  
+  /* Cancel button */
+  button[mat-button]:nth-child(1) {
+    background-color: transparent;
+    color: #3f51b5;
+  }
+  
+  button[mat-button]:nth-child(1):hover {
+    background-color: rgba(63, 81, 181, 0.1);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .mat-dialog-container {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    h2[mat-dialog-title] {
+      font-size: 20px;
+    }
+  
+    input[matInput] {
+      font-size: 14px;
+    }
+  
+    button[mat-button] {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+  

@@ -106,7 +106,9 @@
           <label for="Fax" class="form-label">Please Copy Address here </label>
           <input type="text" id="address" formControlName="address" class="form-control" placeholder="Enter your Address" required>
         </div>
-
+        <button class="btn btn-link fw-bold" style="font-size: 24px;" (click)="openDialog()">
+          Address
+        </button>
         <div class="mb-3">
           <label for="billingAddress1" class="form-label">Address1</label>
           <input type="text" id="billingAddress1" formControlName="billingAddress1" class="form-control" placeholder="Enter your address1" required>

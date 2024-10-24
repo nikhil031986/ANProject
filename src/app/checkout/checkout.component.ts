@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { UserService } from '../_services/user.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddressDialogComponent } from '../address-dialog/address-dialog.component';
 @Component({
 
  
@@ -33,7 +35,7 @@ export class CheckoutComponent {
   SystemShipVia:any[]=[];
   customerAddress:any;
   constructor(private fb: FormBuilder,private cart:CartServiceService,private userservice:UserService,
-    private token:TokenStorageService,private router: Router
+    private token:TokenStorageService,private router: Router,private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -199,4 +201,18 @@ export class CheckoutComponent {
   onClickContinue(){
     this.router.navigate(['/revieworder']);
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddressDialogComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Address data:', result);
+        // You can update the form with the returned address data here
+      }
+    });
+  }
+ 
 }

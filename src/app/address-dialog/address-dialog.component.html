@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Enter Address</h2>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Address Line 1</mat-label>
+    <input matInput [(ngModel)]="addressLine1">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Address Line 2</mat-label>
+    <input matInput [(ngModel)]="addressLine2">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>City</mat-label>
+    <input matInput [(ngModel)]="city">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>State</mat-label>
+    <input matInput [(ngModel)]="state">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Postcode</mat-label>
+    <input matInput [(ngModel)]="postcode">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</div>
