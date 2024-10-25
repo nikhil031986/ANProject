@@ -16538,3 +16538,9 @@ ul.list-grid-col.mt-60.mb-60 {
 .dbox .text {
     width: 100%;
 }
+.custom-dialog-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

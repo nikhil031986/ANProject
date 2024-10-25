@@ -204,15 +204,17 @@ export class CheckoutComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
-      width: '300px',
+      panelClass: 'custom-dialog-container',
+      width: '90vw',  // Optional: adjust this width to control sizing
+      maxWidth: '500px', // Constrain width for larger screens
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Address data:', result);
-        // You can update the form with the returned address data here
       }
     });
   }
+  
+  }
  
-}

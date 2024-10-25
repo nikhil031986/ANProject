@@ -1,10 +1,5 @@
 /* Modern styling for the mat-dialog */
-.mat-dialog-container {
-    border-radius: 8px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
+
   
   /* Header styling */
   h2[mat-dialog-title] {
@@ -87,5 +82,24 @@
       font-size: 14px;
       padding: 8px 16px;
     }
+  }
+  .custom-dialog-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+
+  .mat-dialog-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 20px;
   }
   
