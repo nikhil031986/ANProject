@@ -25,7 +25,7 @@ export class AddressDialogComponent {
     this.dialogRef.close();
   }
 
-  onSave(): void {
+  onSubmit(): void {
     const addressData = {
       addressLine1: this.addressLine1,
       addressLine2: this.addressLine2,

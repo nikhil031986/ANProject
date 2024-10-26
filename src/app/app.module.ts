@@ -52,7 +52,8 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
     SubCatgoryComponent,
     ItemcatwiseComponent,
     RevieworderComponent,
-    ViewCartComponent
+    ViewCartComponent,
+    
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -70,7 +71,8 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
     // Import standalone components
     CheckoutComponent,
     ImageSliderComponent,
-    AddressDialogComponent
+    AddressDialogComponent,
+   
   ],
   providers: [authInterceptorProviders, ToasterService, provideHttpClient(withInterceptorsFromDi())]
 })

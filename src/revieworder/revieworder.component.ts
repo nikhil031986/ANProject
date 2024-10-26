@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-revieworder',
@@ -60,6 +61,8 @@ export class RevieworderComponent {
   ];
 
   agreeTerms = false;
+  constructor(private router :Router){
+  }
 
     orderSummary = {
         subtotal: 250.00,
@@ -70,6 +73,9 @@ export class RevieworderComponent {
     submitOrder() {
       // Code to submit the order
       console.log("Order submitted!");
+
+      this.router.navigate(['/stripepayment'])
+
   }
 
   modifyOrder() {

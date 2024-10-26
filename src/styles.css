@@ -16,3 +16,37 @@
     color: white !important;
   }
   
+
+  /* .cdk-overlay-container, .cdk-overlay-pane {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute !important;
+  } */
+
+  .cdk-overlay-container, .cdk-overlay-pane {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Change to fixed if you want it relative to the viewport */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the popup */
+    z-index: 1000; /* Ensure it's on top */
+  }
+  
+
+
+  .cdk-overlay-pane {
+    position: absolute !important;
+  }
+  
+  
+
+  .custom-dialog-container {
+    transform: translate(-50%, -50%) !important; /* Centering */
+    top: 50% !important;
+    left: 50% !important;
+    position: fixed !important;
+  }
+  

@@ -16,6 +16,7 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
 import { ViewCartComponent } from './view-cart/view-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { RevieworderComponent } from 'src/revieworder/revieworder.component';
+import { StripepaymentComponent } from './stripepayment/stripepayment.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -33,7 +34,9 @@ const routes: Routes = [
   { path: 'revieworder', component: RevieworderComponent },
 
   { path: 'checkOut', component: CheckoutComponent },
+  { path: 'stripepayment', component: StripepaymentComponent },
 
+  
   {path:'ChangePassword', component:ChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

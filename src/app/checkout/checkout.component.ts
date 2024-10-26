@@ -201,20 +201,51 @@ export class CheckoutComponent {
   onClickContinue(){
     this.router.navigate(['/revieworder']);
   }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddressDialogComponent, {
-      panelClass: 'custom-dialog-container',
-      width: '90vw',  // Optional: adjust this width to control sizing
-      maxWidth: '500px', // Constrain width for larger screens
-    });
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Address data:', result);
-      }
-    });
-  }
+
+  // openDialog(): void {
+  //   this.dialog.open(AddressDialogComponent, {
+  //     width: '400px', // Adjust as needed
+  //     height: 'auto',
+  //   });
+  // }
+  // openPopup(event: MouseEvent): void {
+  //   // Get the button's position
+  //   const buttonRect = (event.target as HTMLElement).getBoundingClientRect();
+  //   const position = {
+  //     top: `${buttonRect.top}px`,
+  //     left: `${buttonRect.left}px`
+  //   };
+
+  //   this.dialog.open(AddressDialogComponent, {
+  //     position: position,
+  //     width: '200px', // Set a custom width if needed
+  //     height: 'auto'
+  //   });
+  // }
+  // openPopup(event: MouseEvent): void {
+  //   // Get the button's position on the screen
+  //   const buttonRect = (event.target as HTMLElement).getBoundingClientRect();
+  //   const dialogPosition = {
+  //     top: `${buttonRect.top + window.scrollY}px`, // Account for scrolling
+  //     left: `${buttonRect.left + window.scrollX}px`
+  //   };
+
+  //   this.dialog.open(AddressDialogComponent, {
+  //     position: dialogPosition,
+  //     width: '200px',
+  //     height: 'auto'
+  //   });
+  // }
+  openPopup() {
+    const dialogRef = this.dialog.open(AddressDialogComponent, {
+      panelClass: 'custom-dialog-container', // Add a custom class for additional styling
+      position: {
+        top: '50%', // Adjust as needed
+        left: '50%', // Adjust as needed
+      },
+      // Add width, height or other properties if needed
+    });}
   
   }
  
