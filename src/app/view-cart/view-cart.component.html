@@ -13,7 +13,7 @@
           <th class="font-md-bold text-white">Image</th>
           <th class="font-md-bold text-white">Description</th>
           <th class="font-md-bold text-white">Quantity</th>
-          <th class="font-md-bold text-white">Unit</th>
+          <th class="font-md-bold text-white" *ngIf="viewUnit">Unit</th>
           <th class="font-md-bold text-white text-end">Price Per</th>
           <th class="font-md-bold text-white text-end">Total</th>
           <th class="font-md-bold text-white text-center">Remove</th>
@@ -52,7 +52,7 @@
               </div>
             </div>
           </td>
-          <td class="d-flex-td-respo" data-th="Unit Price">
+          <td class="d-flex-td-respo" *ngIf="viewUnit" data-th="Unit Price">
             <div class="did-floating-label-content mb-0">
               <select class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
                 <option *ngFor="let unit of availableUnits" [value]="unit.unitName">{{ unit.unitName }}</option>

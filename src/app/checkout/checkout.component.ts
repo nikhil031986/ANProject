@@ -1,5 +1,5 @@
-import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartServiceService } from '../_services/cart-service.service';
 import { environment } from 'src/environments/environment';
@@ -8,10 +8,10 @@ import { TokenStorageService } from '../_services/token-storage.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressDialogComponent } from '../address-dialog/address-dialog.component';
+import { ProductService } from '../_services/product.service';
+import { ToasterService } from '../services/toaster.service';
+
 @Component({
-
- 
-
   selector: 'app-checkout',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule, CommonModule], // Make sure CommonModule is imported
@@ -34,8 +34,11 @@ export class CheckoutComponent {
   paymentMethod:any[]=[];
   SystemShipVia:any[]=[];
   customerAddress:any;
+  shipmentAddress:any[]=[];
+  shipingLocation:any;
   constructor(private fb: FormBuilder,private cart:CartServiceService,private userservice:UserService,
-    private token:TokenStorageService,private router: Router,private dialog: MatDialog
+    private token:TokenStorageService,private router: Router,
+    private productservice:ProductService,private toastera:ToasterService,private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +62,8 @@ export class CheckoutComponent {
         this.paymentMethod = this.customerDetails[0].paymentMethod;
         this.contactDetails = this.customerDetails[0].contactDetails;
         this.SystemShipVia = this.customerDetails[0].systemShipVia;
+        this.shipingLocation = this.customerDetails[0].shipingLocation[0];
+        this.shipmentAddress = this.customerDetails[0].shipAddresses;
       }
     });
   }
@@ -199,7 +204,72 @@ export class CheckoutComponent {
   }
 
   onClickContinue(){
-    this.router.navigate(['/revieworder']);
+    const objorder:any[]=[];
+    const shipobj:any[]=[];
+    const OrderPaymentEntry:any[]=[];
+    const OrderDetailEntry:any[]=[];
+    const currentCustomerId = this.token.getUserInfo("Customer_Id");
+    const today = new Date();
+    
+    shipobj.push({
+      Id:0,
+      OrderId:0,
+      Address1:this.shippingForm.controls["billingAddress1"].value,
+      Address2:this.shippingForm.controls["billingAddress2"].value,
+      State:this.shippingForm.controls["state"].value,
+      Contry:this.shippingForm.controls["country"].value,
+      PhoneNumber:this.shippingForm.controls["phone"].value,
+      Email:"",
+    });   
+
+    OrderPaymentEntry.push({
+      Id:0,
+      OrderId:0,
+      PaymentType:1,
+      PaymentTerm:0,
+      Amount:0,
+    });
+
+    this.cartItems.forEach( (element) => {
+      OrderDetailEntry.push({
+        Id:0,
+        OrderId:0,
+        ItemCode:element.itemCode,
+        ItemPrice:element.itemPrice,
+        Unit:"each",
+        Qty:element.quntity,
+        CreateAt:Date.now,
+        });
+      });
+    
+      objorder.push({
+        Id:0,
+        OrderId:"",
+        CustomerId:currentCustomerId,
+        OrderDate:today,
+        PaymentMethodId:1,
+        PaymentTermId:1,
+        TotalAmout:30.20,
+        DiscountAmount:0.20,
+        OrderDetails:OrderDetailEntry,
+        OrderPayments:OrderPaymentEntry,
+        OrderShipments:shipobj,
+      });
+
+      this.productservice.PutOrder(objorder[0]).subscribe((res:any)=>{
+        console.log(res);
+        const message = res.message;
+        if(message != undefined && message != null){
+          if(String(message).includes("Order not added")){
+            this.toastera.error(message); 
+          }
+          else{
+            this.toastera.success("Order please successfully.");
+            this.router.navigate(['/revieworder',message]);
+            //window.location.href="\home";
+          }
+        }
+      });
   }
 
   openDialog(): void {

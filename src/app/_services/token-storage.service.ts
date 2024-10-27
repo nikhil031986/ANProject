@@ -27,6 +27,40 @@ export class TokenStorageService {
     }
   }
   
+  userLogin(){
+    const tokenvlaue = this.getToken();
+    if(tokenvlaue != undefined && tokenvlaue != null){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  getConfig(configName:any){
+    const token = this.getToken();
+    if(token != undefined && token != null){
+      const decodedToken = this.decodeToken(token);
+      if (decodedToken) {
+        const config= JSON.parse(decodedToken["configDetail"]);
+        if(config != undefined && config != null){
+          const objArray = config.filter((data:any)=> data.ConfigName == configName);
+          if(objArray != undefined && objArray != null){
+            return objArray[0].ConfigValue;
+          }
+          return null;
+        }else{
+          return null;
+        }
+      } else{
+        return null;
+      }
+    }else{
+      return null;
+    }
+
+  }
+
   getUserInfo(key:string): any {
     const tokenValue = this.getToken();
     if(tokenValue != undefined && tokenValue != null){

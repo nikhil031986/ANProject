@@ -15,6 +15,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
 })
 export class HeaderComponent implements OnInit {
   productCode: string = '';
+  IsUserLogin:boolean=false;
   content?: string;
   isdirectsec:any;
   iskyraden:any;
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMenuItem();
+    this.IsUserLogin= this.tokenStorageService.userLogin();
     this.cart.currentQuantity.subscribe((quantity) => {
       this.cartQuantity = quantity;
       console.log('Cart quantity updated in UI:', this.cartQuantity);
@@ -55,8 +57,13 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(){
-    this.tokenStorageService.signOut();
-    window.location.href="\home";
+    if(this.IsUserLogin){
+      this.tokenStorageService.signOut();
+      window.location.href="\home";
+    }
+    else{
+      window.location.href="\login"
+    }
   }
 
   GetChildMenu(parentMenuId:any){

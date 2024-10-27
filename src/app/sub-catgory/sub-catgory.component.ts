@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ProductService } from '../_services/product.service';
 import { CartServiceService } from '../_services/cart-service.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 
 @Component({
@@ -49,9 +50,10 @@ export class SubCatgoryComponent implements OnInit {
   product:any;
   objunit:any=[];
   IsLogin:boolean=false;
+  viewUnit:boolean=false;
   selectedUnit:any="";
   constructor(private route: ActivatedRoute, private userService: UserService,
-    private productservice:ProductService,private cart:CartServiceService) {}
+    private productservice:ProductService,private cart:CartServiceService,private token:TokenStorageService) {}
 
   async ngOnInit() {
     this.itlable="Product Name :"
@@ -59,6 +61,16 @@ export class SubCatgoryComponent implements OnInit {
     this.imagePath =environment.APIHost;
     this.SaFilterLable="Child Category"
     this.IsLogin = this.userService.userLogin();
+
+    const IsUnit = this.token.getConfig("UnitCombo");
+    if(IsUnit != undefined && IsUnit != null){
+      if(IsUnit.includes("false")){
+        this.viewUnit = false;
+      }else{
+        this.viewUnit=true;
+      }
+    }
+
    await this.route.paramMap.subscribe((params) => {
       const categoryTranId = params.get('categoryTranId');
       if(isNaN(Number(categoryTranId))){

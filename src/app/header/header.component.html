@@ -73,12 +73,15 @@
            
              <!-- Dropdown Menu -->
              <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-               <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+               <li>
+                <a class="dropdown-item" *ngIf="IsUserLogin" (click)="logout()">Logout</a>
+                <a class="dropdown-item" *ngIf="!IsUserLogin" (click)="logout()">Login</a>
+              </li>
              </ul>
            </div>
-           <a class="font-lg icon-list icon-wishlist" href="wishlist.html"><i class="fa fa-heart-o"
+           <a class="font-lg icon-list icon-wishlist d-none" href="wishlist.html"><i class="fa fa-heart-o"
                aria-hidden="true"></i><span class="number-item font-xs">5</span></a>
-            <div class="d-inline-block box-dropdown-cart" (click)="showhidecart()">
+            <div class="d-inline-block box-dropdown-cart" style="padding-left: 20px;" (click)="showhidecart()">
               <span class="font-lg icon-list icon-cart">
                 <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                 <span class="number-item font-xs">{{cartQuantity }}</span>
@@ -180,7 +183,10 @@
              </li>
              <li><a href="home">MBF Staff</a></li>
              <li><a href="home">Contact Us</a></li>
-             <li><a href="login">Login</a></li>
+             <li>
+              <a href="login" *ngIf="!IsUserLogin">Login</a>
+              <a href="login" *ngIf="IsUserLogin" (click)="logout()">Logout</a>
+            </li>
              <li><a href="register">Register</a></li>
              <li><a class="btn btn-learn btn-header" href="{{trybyUrl}}" >Turn by turn directions</a></li>
            </ul>

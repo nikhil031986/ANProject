@@ -30,7 +30,7 @@ const routes: Routes = [
   { path:'productDetail/:productCode/:desc',component:ProductDetailComponent},
   { path: 'itemcatwise', component: ItemcatwiseComponent },
   { path: 'viewCart', component: ViewCartComponent },  
-  { path: 'revieworder', component: RevieworderComponent },
+  { path: 'revieworder/:order', component: RevieworderComponent },
 
   { path: 'checkOut', component: CheckoutComponent },
 

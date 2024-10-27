@@ -57,30 +57,29 @@
                                             <div class="box-quantity mt-15" id="left-align-10">
                                               <div class="did-floating-label-content mb-0">
                                                 <div class="increment-wrapper d-flex justify-content-start">
-                                                  <!-- Decrement button -->
-                                                  <button type="button" class="button dec" (click)="decrement()">
-                                                    <i class="fa fa-minus" aria-hidden="true"></i>
-                                                  </button>
-                                                  <!-- Quantity input field -->
-                                                  <input class="did-floating-input" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty"
-                                                    [value]="quantity" readonly />
-                                                  <label class="did-floating-label ml-25">Qty</label>
-                                                  <!-- Increment button -->
-                                                  <button type="button" class="button inc" (click)="increment()">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                                  </button>
-                                                </div>
+                                                    <!-- Decrement button -->
+                                                    <button type="button" style="margin-right: 10px;" class="button dec" (click)="decrement()">
+                                                      <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <!-- Quantity input field -->
+                                                    <input class="did-floating-input" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty"
+                                                      [value]="quantity" readonly />
+                                                    <label class="did-floating-label ml-25">Qty</label>
+                                                    <!-- Increment button -->
+                                                    <button type="button" style="margin-left: 10px;" class="button inc" (click)="increment()">
+                                                      <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                  </div>
                                               </div>
 
-                                              <div class="did-floating-label-content" id="unitMeasurediv">
+                                              <div class="did-floating-label-content" *ngIf="viewUnit" id="unitMeasurediv">
                                                 <select class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
                                                     <option *ngFor="let unit of objunit" [value]="unit.unitName">{{ unit.unitName }}</option>
                                                   </select>
-                                                  <label class="did-floating-label">unit</label>
                                                 <label class="did-floating-label ml-20">Unit</label>
                                             </div>
                                             </div>
-
+                                            <br/>
                                             
                                           
                                             <!-- Add to cart button -->

@@ -20,7 +20,7 @@ export class ToasterService {
   this.toasts.push({ textOrTpl, ...options });
 }
 
-  success(message: string, title?: string): void {
+  async success(message: string, title?: string) {
     this.toastr.success(message, title, this.options);
   }
 

@@ -6,6 +6,7 @@ import { ImageSliderComponent } from '../common/image-slider/image-slider.compon
 import { CartServiceService } from '../_services/cart-service.service';
 import { ToasterService } from '../services/toaster.service';
 import { ToastrModule } from 'ngx-toastr';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,6 +17,7 @@ import { ToastrModule } from 'ngx-toastr';
 export class ProductDetailComponent implements OnInit {
   quantity: number = 2;
   product:any;
+  viewUnit:boolean=false;
   imagePath:any="";
   galleryImages:any = [];
   tabord:any=1;
@@ -25,16 +27,27 @@ export class ProductDetailComponent implements OnInit {
   toasterContainer!: ViewContainerRef;
 
   constructor(private route: ActivatedRoute, private productService: ProductService,private toastera:ToasterService,
-    private cart:CartServiceService,private tsmodal:ToastrModule,
+    private cart:CartServiceService,private tsmodal:ToastrModule,private token :TokenStorageService,
   ) {}
 
   ngOnInit(): void {
     this.imagePath=environment.APIHost;
+    const IsUnit = this.token.getConfig("UnitCombo");
+    if(IsUnit != undefined && IsUnit != null){
+      if(IsUnit.includes("false")){
+        this.viewUnit = false;
+      }else{
+        this.viewUnit=true;
+      }
+    }
     this.getAllUnit();
     this.route.paramMap.subscribe((params) => {
       const productCode = params.get('productCode');
       this.getProductByProductCode(productCode);
     });
+  }
+  getPrice(itemcode:any,qty:any){
+    return this.productService.getItemPrice(itemcode,qty);
   }
   getAllUnit(){
     this.objunit=[];
@@ -56,6 +69,7 @@ export class ProductDetailComponent implements OnInit {
       this.product = res;
       if(this.product != null && this.product != undefined){
         var path = String(this.imagePath)+String(this.product.imageUrl);
+        this.product.item_Price = this.getPrice(this.product.item_Name,this.quantity);
         this.galleryImages.push({
           img: String(this.imagePath)+String(this.product.imageUrl)
         });

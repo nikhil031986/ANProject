@@ -22,8 +22,10 @@
     "jwt-decode": "^4.0.0",
     "ngx-lightbox": "^3.0.0",
     "ngx-slick-carousel": "^17.0.0",
+    "ngx-stripe": "^18.1.0",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.4.0",
+    "stripe": "^17.2.1",
     "tslib": "^2.3.0",
     "uuid": "^10.0.0",
     "zone.js": "~0.14.10"
@@ -35,6 +37,7 @@
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "@types/uuid": "^10.0.0",
+    "html2pdf.js": "^0.10.2",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

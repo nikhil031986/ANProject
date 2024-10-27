@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
 import { CartServiceService } from '../_services/cart-service.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-view-cart',
@@ -21,12 +22,20 @@ export class ViewCartComponent {
   cartItems: any = [];  // Ensure the type is specified
   refKey: string = 'your-reference-key';  
   availableUnits:any =[]; // Add any units required
-
+  viewUnit:boolean=false;
   constructor( private productService: ProductService,private userService:UserService,
-    private router: Router,private cart:CartServiceService) {}
+    private router: Router,private cart:CartServiceService,private token:TokenStorageService) {}
 
   ngOnInit(): void {
     this.imgeUrl = environment.APIHost;
+    const IsUnit = this.token.getConfig("UnitCombo");
+    if(IsUnit != undefined && IsUnit != null){
+      if(IsUnit.includes("false")){
+        this.viewUnit = false;
+      }else{
+        this.viewUnit=true;
+      }
+    }
     this.getUnit();
    this.getCartDetailsForCart();
   }
@@ -57,7 +66,7 @@ export class ViewCartComponent {
   }
 
   checkout(){
-    if(this.userService.userLogin()){
+    if(this.token.userLogin()){
       this.router.navigate(['/checkOut']);
     }else{
       this.router.navigate(['/login']);

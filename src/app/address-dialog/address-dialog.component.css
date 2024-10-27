@@ -1,21 +1,91 @@
-/* Modern styling for the mat-dialog */
+* General container styling for the dialog */
+.mat-dialog-container {
+  padding: 20px; /* Internal spacing */
+  border-radius: 12px; /* Soft rounded corners */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  background-color: #ffffff; /* Background color */
+  max-width: 500px; /* Maximum width */
+  margin: auto; /* Center horizontally */
+}
 
-  
-  /* Header styling */
-  h2[mat-dialog-title] {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 16px;
-    text-align: center;
+/* Title styling */
+.mat-dialog-title {
+  font-size: 26px; /* Larger font size for the title */
+  font-weight: 600; /* Bold title */
+  color: #333333; /* Dark gray color */
+  margin-bottom: 20px; /* Space below title */
+  text-align: center; /* Center the title */
+}
+
+/* Form field styling */
+.mat-form-field {
+  width: 100%; /* Full width for fields */
+  margin-bottom: 20px; /* Space between fields */
+}
+
+/* Input styling */
+.mat-input-element {
+  border-radius: 8px; /* Rounded corners for inputs */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  padding: 12px 15px; /* Padding for input */
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+/* Input focus effect */
+.mat-input-element:focus {
+  border-color: #6200ea; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(98, 0, 234, 0.5); /* Glow effect on focus */
+  outline: none; /* Remove outline */
+}
+
+/* Action button styles */
+.mat-dialog-actions {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  margin-top: 20px; /* Space above actions */
+}
+
+/* Common button styling */
+button {
+  border-radius: 8px; /* Rounded corners for buttons */
+  padding: 10px 20px; /* Padding for buttons */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor */
+  font-weight: 500; /* Medium weight */
+  transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+/* Close button styling */
+button[mat-dialog-close] {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+}
+
+/* Close button hover effect */
+button[mat-dialog-close]:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Submit button styling */
+button[type="submit"] {
+  background-color: #6200ea; /* Purple background */
+  color: white; /* White text */
+}
+
+/* Submit button hover effect */
+button[type="submit"]:hover {
+  background-color: #3700b3; /* Darker purple on hover */
+}
+
+/* Responsive input field styling for smaller devices */
+@media (max-width: 600px) {
+  .mat-dialog-container {
+    width: 90%; /* Take up more space on smaller screens */
   }
-  
-  /* Form field styling */
-  .mat-form-field {
-    width: 100%;
-    margin-bottom: 20px;
+
+  .mat-dialog-title {
+    font-size: 24px; /* Slightly smaller title on small screens */
   }
-  
   /* Input field styling */
   input[matInput] {
     font-size: 16px;

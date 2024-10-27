@@ -82,6 +82,31 @@
         </div>
       </li>
     </ul>
+    <div class="row mt-60 display-list" *ngIf="isListView==2 && childMenuItems!=undefined && childMenuItems!=null && childMenuItems.length>0">
+      <div class="col-lg-12 mb-20" *ngFor="let category of childMenuItems">
+        <div class="card-grid-style-3">
+          <div class="card-grid-inner">
+            <div class="image-box">
+            <a [routerLink]="['/subCatgory', category.category]"> 
+              <i class="bi bi-backpack4-fill"></i>
+              <img src="/assets/images/Category/comman.png" [alt]="category.category"/>
+            </a>
+
+            </div>
+            <div class="info-right">
+              <div class="row">
+              </div>
+              <a class="color-brand-3 font-md-bold" [routerLink]="['/subCatgory', category.category]">{{category.Counts}} items
+              </a>
+              <h4 class="color-brand-3 font-md-bold text-center" [routerLink]="['/subCatgory', category.category]">{{category.category}}</h4>
+              <div class="price-info" id="webdescr">
+                <p class="font-base color-brand-3 ellipsis" [innerHTML]="category.category"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <br/>
@@ -286,7 +311,7 @@
                            
                           </div>
                           <br/>
-                          <div class="did-floating-label-content" id="unitMeasurediv">
+                          <div class="did-floating-label-content" *ngIf="viewUnit" id="unitMeasurediv">
                             <select [(ngModel)]="selectedUnit" class="did-floating-select mt-0 width-90px" id="unitMeasure" name="unitMeasure">
                                 <option *ngFor="let unit of objunit" [value]="unit.unitName">{{ unit.unitName }}</option>
                               </select>

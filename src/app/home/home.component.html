@@ -14,7 +14,9 @@
        </div>
        <div class="carousel-inner">
           <div class="carousel-item active">
-             <img src="assets/images/slider/slide-3.png" class="d-block w-100" alt="...">
+            <div class="video video-vimeo">
+               <iframe src="https://player.vimeo.com/video/470252202?h=d3835dce8e&amp;muted=1&amp;loop=1&amp;background=1" width="1366" height="540" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" title="TroopReducedSize.mp4" data-ready="true" id="preview-video"></iframe>
+            </div>
              <div class="carousel-caption d-none d-md-block">
                 <h5 class="slide-title">IM 8000 Series</h5>
                 <p class="slide-descr">Image Dimension Measurement System !</p>
@@ -147,32 +149,26 @@
             <div class="mt-10">
                <ul class="list-9-col">
                  <ng-container *ngFor="let mm of menuItems">
-                   <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s">
-                     <div class="box-category hover-up" data-match-height="groupName">
-                       <div class="image">
-                         <a  [routerLink]="['/subCatgory', mm.category]"> 
-                           <!-- <a  [routerLink]="['/subCatgory', mm.categoryTranId]">  -->
-                           <i class="bi bi-backpack4-fill"></i>
+                   <li class="wow animate__ animate__fadeIn animated" data-wow-delay=".0s" style="visibility: visible; animation-delay: 0s; animation-name: fadeIn;">
+                     <div class="box-category hover-up" data-match-height="groupName" style="min-height: 101.6px;">
+                        <a  [routerLink]="['/subCatgory', mm.category]"> 
+                        <div class="image">
                            <img src="/assets/images/Category/comman.png" [alt]="mm.category">
-                         </a>
-                       </div>
-                       <div class="text-info">
-                         <!-- <a class="font-sm color-gray-900 font-bold"[routerLink]="['/subCatgory', mm.category]" target="_blank">{{ mm.category }}</a> -->
-                         <a class="font-sm color-gray-900 font-bold"[routerLink]="['/subCatgory', mm.category]" target="_blank">{{ mm.category }}</a>
-                         <p class="font-xs color-gray-500">{{ mm.category }}</p>
-                       </div>
-
-
-                       <ul class="sub-menu two-col" *ngIf="activeCategoryId === mm.categoryTranId">
-                        <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
-                          <li>
-                            <a [routerLink]="['/subCatgory', ch.category]">{{ ch.category }}</a>
-                          </li>
-                        </ng-container>
-                      </ul>
-
+                        </div>
+                        </a>
+                        <ul class="sub-menu two-col" *ngIf="activeCategoryId === mm.categoryTranId">
+                           <ng-container *ngFor="let ch of GetChildMenu(mm.categoryTranId)">
+                             <li>
+                               <a [routerLink]="['/subCatgory', ch.category]">{{ ch.category }}
+                                 <div class="image">
+                                    <img src="/assets/images/Category/comman.png" [alt]="mm.category">
+                                 </div>
+                               </a>
+                             </li>
+                           </ng-container>
+                         </ul>
                      </div>
-                   </li>
+                  </li>
                  </ng-container>
                </ul>
              </div>
@@ -360,3 +356,4 @@
        </div>
     </section>
 
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647;"><i class="fi-rr-arrow-small-up"></i></a>
