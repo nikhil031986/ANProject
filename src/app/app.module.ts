@@ -35,6 +35,7 @@ import { ImageSliderComponent } from './common/image-slider/image-slider.compone
 import { AddressDialogComponent } from './address-dialog/address-dialog.component';
 import { ProductDetailModule } from './product-detail/product-detail.module';
 import { CurrentCustomerAllOrderComponent } from './current-customer-all-order/current-customer-all-order.component';
+import { PaymentPOPUPComponent } from './payment-popup/payment-popup.component';
 
 @NgModule({
   declarations: [

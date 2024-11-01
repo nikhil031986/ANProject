@@ -11,6 +11,8 @@ import * as html2pdf from 'html2pdf.js';
 import { ActiveToast } from 'ngx-toastr';
 import { Stripe, StripeCardElement } from '@stripe/stripe-js'
 import { StripService } from 'src/app/_services/strip.service';
+import { PaymentPOPUPComponent } from 'src/app/payment-popup/payment-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-revieworder',
   templateUrl: './revieworder.component.html',
@@ -67,7 +69,7 @@ export class RevieworderComponent {
     
     constructor(private route: ActivatedRoute,private cart:CartServiceService,private userservice:UserService,
       private token:TokenStorageService,private router: Router,
-      private productservice:ProductService,private toastera:ToasterService,private stservice:StripService){}
+      private productservice:ProductService,private toastera:ToasterService,private stservice:StripService,private dialog: MatDialog){}
 
      async ngOnInit() {
         this.imagePath=environment.APIHost;
@@ -251,37 +253,37 @@ export class RevieworderComponent {
     })
   }
 
-  async handlePayment() {
-    if (!this.stobj || !this.card) {
-      console.log('Stripe.js has not loaded or card element not set up');
-      return;
-    }
+  // async handlePayment() {
+  //   if (!this.stobj || !this.card) {
+  //     console.log('Stripe.js has not loaded or card element not set up');
+  //     return;
+  //   }
 
-    // Call your backend to create a Payment Intent and get the client secret
-    const response = await fetch('http://localhost:3000/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: this.orderSummary.subtotal }) // example amount in cents ($50)
-    });
-    const { clientSecret } = await response.json();
+  //   // Call your backend to create a Payment Intent and get the client secret
+  //   const response = await fetch('http://localhost:3000/create-payment-intent', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({ amount: this.orderSummary.subtotal }) // example amount in cents ($50)
+  //   });
+  //   const { clientSecret } = await response.json();
 
-    // Confirm the payment with the client secret
-    const { paymentIntent, error } = await this.stobj.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: this.card,
-        billing_details: {
-          name: 'Sample',
-        },
-      },
-    });
+  //   // Confirm the payment with the client secret
+  //   const { paymentIntent, error } = await this.stobj.confirmCardPayment(clientSecret, {
+  //     payment_method: {
+  //       card: this.card,
+  //       billing_details: {
+  //         name: 'Sample',
+  //       },
+  //     },
+  //   });
 
-    if (error) {
-      console.error('Payment failed:', error);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      console.log('Payment successful!');
-      // Handle post-payment actions here
-    }
-  }
+  //   if (error) {
+  //     console.error('Payment failed:', error);
+  //   } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+  //     console.log('Payment successful!');
+  //     // Handle post-payment actions here
+  //   }
+  // }
 
   // loadStripe() {
 
@@ -293,8 +295,58 @@ export class RevieworderComponent {
   //     this.card.mount('#card-element');
   //   }
   // }
+
+
+  async handlePayment() {
+    const stripe = await this.stservice.getStripeInstance();
+    if (!stripe || !this.card) {
+        console.log('Stripe.js has not loaded or card element not set up');
+        return;
+    }
+
+    // Call your backend to create a Payment Intent and get the client secret
+    const response = await fetch('http://localhost:3000/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: this.orderSummary.subtotal }) // Amount in cents
+    });
+
+    if (!response.ok) {
+        console.error('Failed to create payment intent:', response.statusText);
+        return;
+    }
+
+    const { clientSecret } = await response.json();
+
+    // Confirm the payment with the client secret
+    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+            card: this.card,
+            billing_details: {
+                name: 'Sample', // Change to actual user name or data
+            },
+        },
+    });
+
+    if (error) {
+        console.error('Payment failed:', error.message);
+        this.toastera.error('Payment failed: ' + error.message);
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        console.log('Payment successful!');
+        this.toastera.success('Payment successful!');
+        // Optionally, call your payment token function or any additional logic
+        this.paymentToken(paymentIntent);
+    }
+}
+
   modifyOrder() {
       // Code to modify the order
       console.log("Order modification initiated!");
+  }
+
+  openPaymentModal(){
+    const dialogRef = this.dialog.open(PaymentPOPUPComponent, {
+      width: '400px',
+  });
   }
 }
