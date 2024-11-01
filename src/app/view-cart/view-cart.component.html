@@ -44,7 +44,7 @@
                   <button class="button dec" (click)="decreaseQuantity(i)">
                     <i class="fa fa-minus" aria-hidden="true"></i>
                  </button>
-                 <input class="did-floating-input" [(ngModel)]="item.quntity" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty" type="number" name="Qty" min=1 [attr.min]="1" [attr.max]="99999999">
+                 <input class="did-floating-input" [(ngModel)]="item.quntity" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty" type="number" name="Qty" min=1 [attr.min]="1" [attr.max]="99999999" readonly>
                  <label class="did-floating-label" style="left: 40px;">Qty</label>
                  <button class="button inc" (click)="increaseQuantity(i)">
                   <i class="fa fa-plus" aria-hidden="true"></i></button>

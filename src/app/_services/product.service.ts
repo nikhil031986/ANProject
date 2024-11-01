@@ -45,6 +45,10 @@ export class ProductService {
     return this.http.get(this.APIURL+"Order/GetOrderDetail?orderId="+orderId,httpOptions);
    }
 
+   getCurrentUserOrder(customerId:any){
+    return this.http.get(this.APIURL+"Order/GetAllOrderDetailByCustomerId?CustomerId="+customerId,httpOptions);
+   }
+
    calculationOfTax(objTax:any){
     return this.http.post(this.APIURL+"Order/CalCulationOfTax",objTax,httpOptions);
    }

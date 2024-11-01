@@ -76,6 +76,7 @@
                <li>
                 <a class="dropdown-item" *ngIf="IsUserLogin" (click)="logout()">Logout</a>
                 <a class="dropdown-item" *ngIf="!IsUserLogin" (click)="logout()">Login</a>
+                <a class="dropdown-item" *ngIf="IsUserLogin" [routerLink]="['\allOrder']">My orders</a>
               </li>
              </ul>
            </div>

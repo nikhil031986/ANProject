@@ -69,7 +69,8 @@ export class ProductDetailComponent implements OnInit {
       this.product = res;
       if(this.product != null && this.product != undefined){
         var path = String(this.imagePath)+String(this.product.imageUrl);
-        this.product.item_Price = this.getPrice(this.product.item_Name,this.quantity);
+        console.log(this.product);
+        //this.product.item_Price = this.getPrice(this.product.item_Name,this.quantity);
         this.galleryImages.push({
           img: String(this.imagePath)+String(this.product.imageUrl)
         });

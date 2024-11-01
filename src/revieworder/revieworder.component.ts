@@ -9,7 +9,8 @@ import { ToasterService } from 'src/app/services/toaster.service';
 import { environment } from 'src/environments/environment';
 import * as html2pdf from 'html2pdf.js';
 import { ActiveToast } from 'ngx-toastr';
-
+import { Stripe, StripeCardElement } from '@stripe/stripe-js'
+import { StripService } from 'src/app/_services/strip.service';
 @Component({
   selector: 'app-revieworder',
   templateUrl: './revieworder.component.html',
@@ -21,6 +22,8 @@ export class RevieworderComponent {
   objTaxt:any;
   orderId:any=0;
   myorder:any="";
+  stobj: Stripe | null=null;
+  card: StripeCardElement | null=null;
   billTo = {
     name: 'John Doe',
     address: '123 Main Street, City, Country',
@@ -61,17 +64,29 @@ export class RevieworderComponent {
         total: 245.00 // Total calculation can also be dynamic.
     };
     imagePath:any;
+    
     constructor(private route: ActivatedRoute,private cart:CartServiceService,private userservice:UserService,
       private token:TokenStorageService,private router: Router,
-      private productservice:ProductService,private toastera:ToasterService){}
+      private productservice:ProductService,private toastera:ToasterService,private stservice:StripService){}
 
-      ngOnInit(): void {
+     async ngOnInit() {
         this.imagePath=environment.APIHost;
         this.route.paramMap.subscribe((params) => {
           const orderId = params.get('order');
           this.myorder = orderId;
           this.getOrderDetails(orderId);
         });
+        this.stobj = await this.stservice.getStripeInstance();
+
+        if (!this.stobj) {
+          console.error('Stripe has not been initialized');
+          return;
+        }
+    
+        // Create Elements instance and card element only if stripe is initialized
+        const elements = this.stobj.elements();
+        this.card = elements.create('card');
+        this.card.mount('#card-element');
       }
       getOrderDetails(orderId:any){
         this.productservice.getOrderDetails(orderId).subscribe((res:any)=>{
@@ -123,7 +138,7 @@ export class RevieworderComponent {
             this.orderSummary.tax = Number(res.amount);
             this.orderSummary.total = (Number(this.orderSummary.subtotal) + Number(this.orderSummary.tax)) -  Number(this.orderSummary.rebate);
           }
-        });        
+        });
 
       }
       getCustomerDetails(customerId:any){
@@ -180,21 +195,23 @@ export class RevieworderComponent {
         html2pdf().from(element).set(options).save();
       }
     submitOrder() {
-      // Code to submit the order
-      var handler = (<any>window).StripeCheckout.configure({
-        key: environment.stripKey,
-        locale: 'auto',
-        token: (token: any)=> {
-          // You can access the token ID with `token.id`.
-          // Get the token ID to your server-side code for use.
-          this.paymentToken(token);
-        }
-      });
-      handler.open({
-        name: 'Stripe Payment',
-        description: '2 widgets',
-        amount: this.orderSummary.total * 100
-      });
+
+      
+      // // Code to submit the order
+      // var handler = (<any>window).StripeCheckout.configure({
+      //   key: environment.stripKey,
+      //   locale: 'auto',
+      //   token: (token: any)=> {
+      //     // You can access the token ID with `token.id`.
+      //     // Get the token ID to your server-side code for use.
+      //     this.paymentToken(token);
+      //   }
+      // });
+      // handler.open({
+      //   name: 'Stripe Payment',
+      //   description: '2 widgets',
+      //   amount: this.orderSummary.total * 100
+      // });
       this.toastera.success("Payment Process");
       console.log("Order submitted!");
   }
@@ -224,7 +241,7 @@ export class RevieworderComponent {
         if(res.message == "Payment succ."){
           this.toastera.success("Payment done.");
           this.toastera.success('Payment done.', 'Order status').finally(()=>{
-            window.location.href="/home";
+            window.location.href="/allOrder";
           });
         }else{
           this.toastera.error(res.message);
@@ -234,29 +251,48 @@ export class RevieworderComponent {
     })
   }
 
-  loadStripe() {
-   
-    if(!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement("script");
-      s.id = "stripe-script";
-      s.type = "text/javascript";
-      s.src = "https://checkout.stripe.com/checkout.js";
-      s.onload = () => {
-        this.handler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_51QE6A0P4RbfVfKlDD0Bq0jlSohA86fkTHmKicfJsUizrG04ApyKhv9JTfkJxkK4Is5Y81KxpKCkBFrnsiz8SR3xp00rV2HCz5g',
-          locale: 'auto',
-          token: function (token: any) {
-            // You can access the token ID with `token.id`.
-            // Get the token ID to your server-side code for use.
-            console.log(token)
-            alert('Payment Success!!');
-          }
-        });
-      }
-       
-      window.document.body.appendChild(s);
+  async handlePayment() {
+    if (!this.stobj || !this.card) {
+      console.log('Stripe.js has not loaded or card element not set up');
+      return;
+    }
+
+    // Call your backend to create a Payment Intent and get the client secret
+    const response = await fetch('http://localhost:3000/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: this.orderSummary.subtotal }) // example amount in cents ($50)
+    });
+    const { clientSecret } = await response.json();
+
+    // Confirm the payment with the client secret
+    const { paymentIntent, error } = await this.stobj.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: this.card,
+        billing_details: {
+          name: 'Sample',
+        },
+      },
+    });
+
+    if (error) {
+      console.error('Payment failed:', error);
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      console.log('Payment successful!');
+      // Handle post-payment actions here
     }
   }
+
+  // loadStripe() {
+
+  //   this.stobj = await this.stservice.getStripeInstance();
+  //   if (this.stobj) {
+  //     // Set up Stripe Elements
+  //     const elements = this.stobj.elements();
+  //     this.card = elements.create('card');
+  //     this.card.mount('#card-element');
+  //   }
+  // }
   modifyOrder() {
       // Code to modify the order
       console.log("Order modification initiated!");

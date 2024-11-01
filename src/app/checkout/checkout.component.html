@@ -13,6 +13,7 @@
               </button>
           </h2> -->
           <div id="billingInfo" class="collapse show">
+            <div *ngIf="IsUserLogin==false">
               <form [formGroup]="billingForm" (ngSubmit)="onSubmitBilling()">
                   <div class="mb-3">
                       <label for="billingName" class="form-label">Name</label>
@@ -62,6 +63,12 @@
           <input type="text" id="billingZip" value="{{customerAddress?.postal}}" formControlName="postalCode" class="form-control" placeholder="Enter Postal code" required>
         </div>
               </form>
+            </div>
+            <div *ngIf="IsUserLogin">
+              <div id="Billing_Address" [innerHTML]="billingAddress">
+
+              </div>
+            </div>
           </div>
       </div>
 
@@ -74,76 +81,91 @@
               </button>
           </h2>
           <div id="shippingInfo" class="collapse show">
-            <form  [formGroup]="shippingForm" (ngSubmit)="onSubmitShipping()">
-              <div class="mb-3 from-dropdown">
-                <label for="listExistAddress" class="form-label">Select Address</label>
-                
-                <select id="listExistAddress" formControlName="paymentType" class="form-control" required>
-                  <option value="" disabled selected>Select Existing Addres </option>
-                  <option *ngFor="let paym of shipmentAddress" [value]="paym.location">{{ paym.location }}</option>
-                </select>
-              </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" id="sameAsResidential" formControlName="sameAsBilling" class="form-check-input">
-                <label for="sameAsResidential" class="form-check-label">Same as Billing address</label>
-              </div>
-              <div class="mb-3 form-check">
-                <input type="checkbox" id="residential" formControlName="residential" class="form-check-input">
-                <label for="residential" class="form-check-label"> Residential </label>
-    
+            <div *ngIf="IsUserLogin==false">
+              <form  [formGroup]="shippingForm" (ngSubmit)="onSubmitShipping()">
+                <div class="mb-3 from-dropdown">
+                  <label for="listExistAddress" class="form-label">Select Address</label>
+                  
+                  <select id="listExistAddress" formControlName="paymentType" class="form-control" required>
+                    <option value="" disabled selected>Select Existing Addres </option>
+                    <option *ngFor="let paym of shipmentAddress" [value]="paym.location">{{paym.name}} {{ paym.location }} {{paym.address1 }} {{paym.address2}} {{paym.address3}} {{paym.city}} {{paym.country}}</option>
+                  </select>
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" id="sameAsResidential" formControlName="sameAsBilling" class="form-check-input">
+                  <label for="sameAsResidential" class="form-check-label">Same as Billing address</label>
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" id="residential" formControlName="residential" class="form-check-input">
+                  <label for="residential" class="form-check-label"> Residential </label>
+      
+                  <div class="mb-3">
+                      <label for="shippingName" class="form-label">Ship To Name</label>
+                      <input type="text" id="shippingName" formControlName="shippingToName" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                </div>
+            
+                <div class="mb-3 form-check">
+                  <input type="checkbox" id="blindShopping" formControlName="blindShopping" class="form-check-input">
+                  <label for="blindShopping" class="form-check-label">Blind shopping</label>
+                </div>
                 <div class="mb-3">
-                    <label for="shippingName" class="form-label">Ship To Name</label>
-                    <input type="text" id="shippingName" formControlName="shippingToName" class="form-control" placeholder="Enter your name" required>
-                  </div>
+                  <label for="attn" class="form-label">Attn</label>
+                  <input type="text" id="attn" formControlName="attn" class="form-control" placeholder="Enter your attn" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="Phone" class="form-label">Phone</label>
+                  <input type="text" id="billingName" value="{{customerMaster?.phone}}" formControlName="phone" class="form-control" placeholder="Enter your Phone" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="Fax" class="form-label">Please Copy Address here </label>
+                  <input type="text" id="address" value="{{shipingLocation?.shipingLocation}}" formControlName="address" class="form-control" placeholder="Enter your Address" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="billingAddress1" class="form-label">Address1</label>
+                  <input type="text" id="billingAddress1" value="{{shipingLocation?.address1}}" formControlName="billingAddress1" class="form-control" placeholder="Enter your address1" required>
+                </div>
+                <div class="mb-3">
+                  <label for="billingAddress2" class="form-label">Address2</label>
+                  <input type="text" id="billingAddress2" value="{{shipingLocation?.address2}}" formControlName="billingAddress2" class="form-control" placeholder="Enter your address2" required>
+                </div>
+                <div class="mb-3">
+                  <label for="billingCountry" class="form-label">Country</label>
+                  <input type="text" id="billingCountry"  value="{{shipingLocation?.country}}" formControlName="country" class="form-control" placeholder="Enter your Country" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="billingState" class="form-label">State</label>
+                  <input type="text" id="billingState" value="{{shipingLocation?.state}}" formControlName="state" class="form-control" placeholder="Enter your State" required>
+                </div>
+      
+                <div class="mb-3">
+                  <label for="billingCity" class="form-label">City</label>
+                  <input type="text" id="billingCity" value="{{shipingLocation?.city}}" formControlName="city" class="form-control" placeholder="Enter your City" required>
+                </div>
+                <div class="mb-3">
+                  <label for="billingZip" class="form-label">Postal Code</label>
+                  <input type="text" id="billingZip" value="{{customerAddress?.postal}}" formControlName="postalCode" class="form-control" placeholder="Enter Postal code" required>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="IsUserLogin">
+              <form  [formGroup]="shippingForm" (ngSubmit)="onSubmitShipping()">
+                <div class="mb-3 from-dropdown">
+                  <label for="listExistAddress" class="form-label">Select Address</label>
+                  
+                  <select id="listExistAddress" formControlName="paymentType" (change)="onAddressChange($event)" class="form-control" required>
+                    <option value="" disabled selected>Select Existing Addres </option>
+                    <option *ngFor="let paym of shipmentAddress" [value]="paym.location">{{paym.name}} {{ paym.location }} {{paym.address1 }} {{paym.address2}} {{paym.address3}} {{paym.city}} {{paym.country}}</option>
+                  </select>
+                </div>
+              </form>
+              <div id="Selectedaddress" [innerHTML]="displayShipAdd">
               </div>
-          
-              <div class="mb-3 form-check">
-                <input type="checkbox" id="blindShopping" formControlName="blindShopping" class="form-check-input">
-                <label for="blindShopping" class="form-check-label">Blind shopping</label>
-              </div>
-              <div class="mb-3">
-                <label for="attn" class="form-label">Attn</label>
-                <input type="text" id="attn" formControlName="attn" class="form-control" placeholder="Enter your attn" required>
-              </div>
-    
-              <div class="mb-3">
-                <label for="Phone" class="form-label">Phone</label>
-                <input type="text" id="billingName" value="{{customerMaster?.phone}}" formControlName="phone" class="form-control" placeholder="Enter your Phone" required>
-              </div>
-    
-              <div class="mb-3">
-                <label for="Fax" class="form-label">Please Copy Address here </label>
-                <input type="text" id="address" value="{{shipingLocation?.shipingLocation}}" formControlName="address" class="form-control" placeholder="Enter your Address" required>
-              </div>
-    
-              <div class="mb-3">
-                <label for="billingAddress1" class="form-label">Address1</label>
-                <input type="text" id="billingAddress1" value="{{shipingLocation?.address1}}" formControlName="billingAddress1" class="form-control" placeholder="Enter your address1" required>
-              </div>
-              <div class="mb-3">
-                <label for="billingAddress2" class="form-label">Address2</label>
-                <input type="text" id="billingAddress2" value="{{shipingLocation?.address2}}" formControlName="billingAddress2" class="form-control" placeholder="Enter your address2" required>
-              </div>
-              <div class="mb-3">
-                <label for="billingCountry" class="form-label">Country</label>
-                <input type="text" id="billingCountry"  value="{{shipingLocation?.country}}" formControlName="country" class="form-control" placeholder="Enter your Country" required>
-              </div>
-    
-              <div class="mb-3">
-                <label for="billingState" class="form-label">State</label>
-                <input type="text" id="billingState" value="{{shipingLocation?.state}}" formControlName="state" class="form-control" placeholder="Enter your State" required>
-              </div>
-    
-              <div class="mb-3">
-                <label for="billingCity" class="form-label">City</label>
-                <input type="text" id="billingCity" value="{{shipingLocation?.city}}" formControlName="city" class="form-control" placeholder="Enter your City" required>
-              </div>
-              <div class="mb-3">
-                <label for="billingZip" class="form-label">Postal Code</label>
-                <input type="text" id="billingZip" value="{{customerAddress?.postal}}" formControlName="postalCode" class="form-control" placeholder="Enter Postal code" required>
-              </div>
-            </form>
-        
+            </div>
               <!-- </form> -->
           </div>
       </div>

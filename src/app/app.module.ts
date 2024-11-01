@@ -34,6 +34,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ImageSliderComponent } from './common/image-slider/image-slider.component';
 import { AddressDialogComponent } from './address-dialog/address-dialog.component';
 import { ProductDetailModule } from './product-detail/product-detail.module';
+import { CurrentCustomerAllOrderComponent } from './current-customer-all-order/current-customer-all-order.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
     SubCatgoryComponent,
     ItemcatwiseComponent,
     RevieworderComponent,
-    ViewCartComponent
+    ViewCartComponent,
+    CurrentCustomerAllOrderComponent,
   ],
   bootstrap: [AppComponent],
   imports: [

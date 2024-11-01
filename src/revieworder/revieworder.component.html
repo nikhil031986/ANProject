@@ -1,6 +1,11 @@
 <div style="margin-left: 10px; margin-right: 10px; margin-bottom: 5px;">
     <div id="content-to-print" style="width: 100%; height: 100%;">
         <div class="review-order-form">
+
+<form>
+    <div id="card-element"><!-- Stripe card element will be mounted here --></div>
+    <button type="button" (click)="handlePayment()">Pay Now</button>
+</form>
             <!-- Bill To Section -->
             <div class="section bill-to">
                 <h2>Bill To</h2>

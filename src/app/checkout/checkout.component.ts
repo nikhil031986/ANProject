@@ -24,8 +24,11 @@ export class CheckoutComponent {
   shippingForm!: FormGroup;
   billingForm!: FormGroup;
   orderDetailsForm!:FormGroup;
-  paymentForm!: FormGroup;   
+  paymentForm!: FormGroup;
+  IsUserLogin:boolean=false;   
   imgeUrl:any="";
+  displayShipAdd:any="";
+  billingAddress:any="";
   customerDetails:any[]=[];
   cartItems:any[]=[];
   customerMaster:any;
@@ -43,6 +46,7 @@ export class CheckoutComponent {
 
   ngOnInit(): void {
     this.imgeUrl = environment.APIHost;
+    this.IsUserLogin= this.token.userLogin();
     this.getCustomerDetails();
     this.getCartData();
     this.initShippingForm();
@@ -51,6 +55,18 @@ export class CheckoutComponent {
     this.initPaymentForm();
   }
 
+  onAddressChange(event:any){
+    var docuele = document.getElementById("#Selectedaddress");
+    const selectedValue = event.target.value;
+    const shipadd = this.shipmentAddress.filter((res:any)=> res.location === selectedValue);
+    if(shipadd != undefined && shipadd != null){
+      this.displayShipAdd = "<h4> Name : "+ shipadd[0].name+"</h4>"
+      +"<span>"+shipadd[0].location +"<br/> "+
+      shipadd[0].address1 +" "+ shipadd[0].address2 +" "+ shipadd[0].address3
+      +"<br/>"+ shipadd[0].city+"<br/> "+ shipadd[0].country +"</span>"
+    }
+    //docuele?.innerHTML("<h4> Address </h4><br/><h4>"+selectedValue+"</h4>");
+  }
   getCustomerDetails(){
     const currentCustomerId = this.token.getUserInfo("Customer_Id");
     this.userservice.GetCustomerDetails(currentCustomerId).subscribe((res:any)=>{
@@ -64,6 +80,15 @@ export class CheckoutComponent {
         this.SystemShipVia = this.customerDetails[0].systemShipVia;
         this.shipingLocation = this.customerDetails[0].shipingLocation[0];
         this.shipmentAddress = this.customerDetails[0].shipAddresses;
+
+        this.billingAddress = "<h4> Name :"+this.customerMaster?.firstName+"</h4>"+
+        "<h6> Email :"+this.customerMaster?.email+"</h6>"+
+        "<span>"+ this.customerAddress?.address1+"<br/>"+
+        this.customerAddress?.address2+"<br/>"+
+        this.customerAddress?.address3+"<br/>"+
+        this.customerAddress?.city+"<br/>"+
+        this.customerAddress?.state+"<br/>"+
+        this.customerAddress?.country+"<br/></span>";
       }
     });
   }

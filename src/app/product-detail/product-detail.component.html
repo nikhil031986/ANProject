@@ -12,21 +12,19 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="product-info padding-lr-50">
-                            <div *ngIf="product != undefined && product != null">
+                            <!-- <div *ngIf="product != undefined && product != null">
                                 <h4 class="font-md" id="vendorname" >{{product.vendor[0].customerCode}}</h4>
-                            </div>
+                            </div> -->
                             <div class="product-description mt-10" *ngIf="product != undefined && product != null">
                                 <ul style="gap: 15px; margin-top: 20px; margin-bottom: 5px; text-transform: uppercase;">
                                     <li class="font-md mb-12">
                                         <h4>{{product.item_Name}}</h4>
                                     </li>
-                                    <li class="font-md mb-10" *ngIf="product.item_Description!=''">
-                                        {{product.item_Description}}
-                                    </li>
+                                    {{product.item_Description}}
                                 </ul>   
                                 <div class="d-flex mt-15 mb-15 gap-5">
                                     <ul>
-                                        <li class="font-md mb-10"><span class="mr-5">List:</span>${{product.item_Price}}
+                                        <li class="font-md mb-10"><span class="mr-5">Price:</span>${{product.item_Price}}
                                         </li>
                                     </ul>
                                     <ul *ngIf="IsLogin">
@@ -88,46 +86,6 @@
                                                    (click)="addToCart()">Add to cart</a>
                                             </div>
                                           </div>
-                                          
-                                        <!-- <div class="col-md-12">
-                                            <div class="box-quantity mt-15" id="left-align-10">
-                                                <div class="did-floating-label-content mb-0">
-                                                    <div class="increment-wrapper d-flex justify-content-start">
-                                                        <button type="button" class="button dec" >
-                                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                                        </button>
-                                                        <input class="did-floating-input" aria-label="Quantity input"
-                                                        autocomplete="off" name="quantity-field" title="Qty" value="2"
-                                                        id="txtQuantity" type="number" name="Quantity" 
-                                                         min=1 max="9999" minLength="1"
-                                                        maxLength="4"
-                                                        >
-                                                    <label class="did-floating-label ml-25">Qty</label>
-                                                    <div class="button inc" >
-
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <div class="did-floating-label-content" id="unitMeasurediv">
-                                                    <section class="did-floating-select mt-0 ml-15" id="unitMeasure"
-                                                         name="unitMeasure">
-                                                         <option value="Unit">
-                                                            aa
-                                                        </option>
-                                                        <option value="Unit1">
-                                                            ea
-                                                        </option>
-                                                    </section>
-                                                    <label class="did-floating-label ml-20">Unit</label>
-                                                </div>
-                                                <div id="addcrt">
-                                                    <a class="font-md-bold btn btn-buy w-auto mb-10 mr-10">
-                                                        Add to cart
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

@@ -216,15 +216,13 @@
                 </a>
                 </div>
                 <div class="info-right">
-                  <div class="font-lg-bold color-brand-2 price-main text-end">
-                    <b *ngIf="item.item_Price!='0'">
-                      <span>{{item.item_Description}}&nbsp;</span>
-                  </b>
+                  <div class="font-lg-bold color-brand-2 price-main text-end d-none">
+                    <span>{{item.item_Description}}&nbsp;</span>
                   </div>
-                  <div class="font-lg-bold color-brand-2 price-main text-end" *ngIf="item.item_Price=='0'">
+                  <div class="font-lg-bold color-brand-2 price-main text-end d-none" *ngIf="item.item_Price=='0'">
                       <b [innerHTML]="item.webdescription"></b>
                   </div>
-                  <div class="font-lg-bold color-brand-2 price-main text-end">
+                  <div class="font-lg-bold color-brand-2 price-main text-end d-none">
                     <b *ngIf="item.item_Price!='0'">
                         <span>
                           {{item.item_Price}}&nbsp;</span>
@@ -267,14 +265,6 @@
                     <div id="sa_group_label">
                     
                     </div>
-                    <h4 id="min" class="color-brand-3 font-xs-bold" *ngIf="1>0">
-                      <label>min
-                      </label> 1
-                  </h4> 
-                  <h4 id="max" class="color-brand-3 font-xs-bold" *ngIf="1>0">
-                    <label>max
-                    </label> 20
-                  </h4>    
   
                   </div>
                   <br />

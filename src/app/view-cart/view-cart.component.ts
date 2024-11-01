@@ -54,6 +54,7 @@ export class ViewCartComponent {
       const item = this.cartItems[index];          // Extract unit
       this.cart.addToCart(item.itemCode,item.quntity,item.item_Description,item.imagePath,item.itemPrice,item.unit);
     }
+    this.totalAmount=parseFloat( this.cartItems.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
   }
 
   decreaseQuantity(index: number) {
@@ -62,7 +63,8 @@ export class ViewCartComponent {
         this.cartItems[index].quntity--;
         const item = this.cartItems[index];
         this.cart.addToCart(item.itemCode,item.quntity,item.item_Description,item.imagePath,item.itemPrice,item.unit);
-    }
+      }
+      this.totalAmount=parseFloat( this.cartItems.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
   }
 
   checkout(){
@@ -79,6 +81,7 @@ export class ViewCartComponent {
       this.cart.removeItemFromCart(item.itemCode);
       this.cartItems.splice(index, 1);
     });
+    this.totalAmount=parseFloat( this.cartItems.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
   }
 
   getCartDetailsForCart() {
