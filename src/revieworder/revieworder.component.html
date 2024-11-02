@@ -2,10 +2,10 @@
     <div id="content-to-print" style="width: 100%; height: 100%;">
         <div class="review-order-form">
 
-<form>
-    <div id="card-element"><!-- Stripe card element will be mounted here --></div>
-    <button type="button" (click)="handlePayment()">Pay Now</button>
-</form>
+<!-- <form> -->
+    <!-- <div id="card-element"></div> -->
+    <!-- <button type="button" (click)="openPaymentModal()">Pay Now</button> -->
+<!-- </form> -->
             <!-- Bill To Section -->
             <div class="section bill-to">
                 <h2>Bill To</h2>
@@ -136,7 +136,7 @@
         </div>
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button type="submit" class="btn btn-primary" (click)="submitOrder()" [disabled]="!agreeTerms">Submit</button>
+            <button type="submit" class="btn btn-primary" (click)="openPaymentModal()" [disabled]="!agreeTerms">Submit</button>
             <button type="button" class="btn btn-secondary" (click)="modifyOrder()">Modify</button>
         </div>
     

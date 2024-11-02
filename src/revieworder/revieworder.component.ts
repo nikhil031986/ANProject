@@ -346,7 +346,7 @@ export class RevieworderComponent {
 
   openPaymentModal(){
     const dialogRef = this.dialog.open(PaymentPOPUPComponent, {
-      width: '400px',
+      width: '600px',
   });
   }
 }
