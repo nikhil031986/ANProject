@@ -8,6 +8,7 @@ import * as html2pdf from 'html2pdf.js';
 import { ToastrService } from 'ngx-toastr';
 import { StripService } from '../_services/strip.service';
 import { ProductService } from '../_services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-popup',
@@ -31,13 +32,17 @@ orderId:any=0;
       private dialogRef: MatDialogRef<PaymentPOPUPComponent>,
       private stripeService: StripService,
       private toaster: ToastrService,
-      private  productService: ProductService
+      private  productService: ProductService,
+      private router :Router
 
   ) {}
+  
 
   ngOnInit(): void {
       this.initializeStripe();
   }
+
+  
 
   async initializeStripe() {
       const stripe = await this.stripeService.getStripeInstance();
@@ -96,8 +101,12 @@ orderId:any=0;
         console.error('Payment failed:', error.message);
         this.toaster.error('Payment failed: ' + error.message);
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+
         console.log('Payment successful!');
         this.toaster.success('Payment successful!');
+        this.onCancel();
+        this.router.navigate(['/paymentSuccess']);
+
         // Optionally, call your payment token function or any additional logic
         this.paymentToken(paymentIntent);
     }

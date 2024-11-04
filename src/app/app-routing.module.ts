@@ -17,6 +17,7 @@ import { ViewCartComponent } from './view-cart/view-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { RevieworderComponent } from 'src/revieworder/revieworder.component';
 import { CurrentCustomerAllOrderComponent } from './current-customer-all-order/current-customer-all-order.component';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -33,6 +34,8 @@ const routes: Routes = [
   { path: 'viewCart', component: ViewCartComponent },  
   { path: 'revieworder/:order', component: RevieworderComponent },
   { path:'allOrder',component:CurrentCustomerAllOrderComponent},
+  { path:'paymentSuccess',component:PaymentSuccessComponent},
+  
   { path: 'checkOut', component: CheckoutComponent },
 
   {path:'ChangePassword', component:ChangePasswordComponent},
