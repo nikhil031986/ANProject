@@ -35,6 +35,8 @@ const routes: Routes = [
   { path: 'revieworder/:order', component: RevieworderComponent },
   { path:'allOrder',component:CurrentCustomerAllOrderComponent},
   { path:'paymentSuccess',component:PaymentSuccessComponent},
+  { path:'paymentFailed',component:PaymentSuccessComponent},
+
   
   { path: 'checkOut', component: CheckoutComponent },
 

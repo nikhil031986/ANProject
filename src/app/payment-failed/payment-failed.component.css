@@ -1,0 +1,40 @@
+.success-container {
+    background-color: #d4edda; /* Light green for success */
+    color: #155724;
+  }
+  
+  .failure-container {
+    background-color: #f8d7da; /* Light red for failure */
+    color: #721c24;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .failure-container .logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .failure-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .failure-container p {
+    font-size: 16px;
+  }
+  
+  .failure-container button {
+    padding: 10px 20px;
+    background-color: #721c24; /* Dark red for the button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .failure-container button:hover {
+    background-color: #f5c6cb; /* Light red on hover */
+  }
+  

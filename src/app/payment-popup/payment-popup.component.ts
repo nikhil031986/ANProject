@@ -100,6 +100,8 @@ orderId:any=0;
     if (error) {
         console.error('Payment failed:', error.message);
         this.toaster.error('Payment failed: ' + error.message);
+        this.onCancel();
+        this.router.navigate(['/paymentFailed']);
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
 
         console.log('Payment successful!');
