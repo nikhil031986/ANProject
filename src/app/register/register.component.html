@@ -33,15 +33,15 @@
     class="requires-validation"
     >
     <div class="form-register align-flex justify-content-start align-items-baseline">
-      <div class="col-12 col-md-4 d-flex mb-30">
+      <!-- <div class="col-12 col-md-4 d-flex mb-30 d-none"> -->
         <!-- <div class="form-group"> -->
-        <label class="mb-5">Are you an existing krayden Customer?</label>
-        <div class="did-floating-label-content mb-0 ml-15">
-            <input class="checkagree" type="checkbox" #iscustomer="ngModel" [(ngModel)]="form.iscustomer" name="iscustomer">
+        <!-- <label class="mb-5">Are you an existing krayden Customer?</label> -->
+        <!-- <div class="did-floating-label-content mb-0 ml-15"> -->
+            <!-- <input class="checkagree" type="checkbox" #iscustomer="ngModel" [(ngModel)]="form.iscustomer" name="iscustomer"> -->
             <!-- <label class="did-floating-label ml-15" id="top-res">No</label> -->
-        </div>
-        </div>
-        <div class="col-12 col-md-4 offset-md-4">
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="col-12 col-md-4 offset-md-4 d-none">
           <div class="form-group" *ngIf="form.iscustomer">
               <label for="customerid">Customer ID</label><span class="displaynone">*</span>
               <div class="did-floating-label-content mb-0">
@@ -152,6 +152,7 @@
           <!-- </div> -->
       </div>
     </div>
+    <!--Company Name-->
     <div class="col-12 col-md-4">
       <div class="form-group">
         <label for="comapnyName">Company Name</label>
@@ -167,6 +168,7 @@
         />
       </div>
     </div>
+    <!--Address1-->
     <div class="col-12 col-md-4">
       <div class="form-group">
         <label for="Address1">Address1</label>
@@ -182,6 +184,7 @@
         />
       </div>
     </div>
+    <!--Address2-->
     <div class="col-12 col-md-4">
       <div class="form-group">
         <label for="Address2">Address2</label>
@@ -197,37 +200,8 @@
         />
       </div>
     </div>
-    <div class="col-12 col-md-4">
-      <div class="form-group">
-        <label for="Contry">Contry</label>
-        <input
-          type="text"
-          class="form-control"
-          name="Contry"
-          [(ngModel)]="form.Contry"
-          required
-          minlength="3"
-          maxlength="20"
-          #username="ngModel"
-        />
-      </div>
-    </div>
-    <div class="col-12 col-md-4">
-      <div class="form-group">
-        <label for="State">State</label>
-        <input
-          type="text"
-          class="form-control"
-          name="State"
-          [(ngModel)]="form.State"
-          required
-          minlength="3"
-          maxlength="20"
-          #username="ngModel"
-        />
-      </div>
-    </div>
-    <div class="col-12 col-md-4">
+     <!--City-->
+     <div class="col-12 col-md-4">
       <div class="form-group">
         <label for="City">City</label>
         <input
@@ -242,6 +216,49 @@
         />
       </div>
     </div>
+    <!--State-->
+    <div class="col-12 col-md-4">
+      <div class="form-group">
+        <label for="State">State</label>
+        <!-- <input
+          type="text"
+          class="form-control"
+          name="State"
+          [(ngModel)]="form.State"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        /> -->
+        <select class="did-floating-select" id="state" [(ngModel)]="form.State" (change)="onOptionSelected($event)">
+          <option *ngFor="let option of lststate" [value]="option.state1">
+            ({{option.state1}}) {{ option.descr }} 
+          </option>
+        </select>
+      </div>
+    </div>
+    <!--Country-->
+    <div class="col-12 col-md-4">
+      <div class="form-group">
+        <label for="Contry">Contry</label>
+        <select class="did-floating-select" id="country" [(ngModel)]="form.Contry" (change)="onCountryChange($event)">
+          <option *ngFor="let option of lstContry" [value]="option.countryCode">
+            ({{option.countryCode}}) {{ option.countryDescr }} 
+          </option>
+        </select>
+        <!-- <input
+          type="text"
+          class="form-control"
+          name="Contry"
+          [(ngModel)]="form.Contry"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        /> -->
+      </div>
+    </div>   
+    <!--Zip Code-->
     <div class="col-12 col-md-4">
       <div class="form-group">
         <label for="postalCode">postalCode</label>

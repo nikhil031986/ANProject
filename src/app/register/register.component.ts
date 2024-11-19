@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
 import { state } from '@angular/animations';
+import { ToasterService } from '../services/toaster.service';
+import { FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,8 +17,8 @@ export class RegisterComponent implements OnInit {
     email: null,
     phoneNumber:null,
     password: null,
-    iscustomer: false,
-    customerid:0,
+    iscustomer: [false],
+    customerid:[0],
     State:null,
     City:null,
     Contry:null,
@@ -36,10 +39,51 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
   iscustomeridValidation: boolean = false;
   RegistrationLable:any;
-  constructor(private authService: AuthService,private userservice : UserService) { }
+  lststate:any;
+  lstContry:any;
+
+  constructor(private authService: AuthService,private userservice : UserService,private toastera:ToasterService) { }
 
   ngOnInit(): void {
     this.RegistrationLable="Account Registration";
+    this.getState();
+    this.getCountry();
+  }
+  getState() {
+    this.userservice.getState().subscribe((res:any)=>{
+      this.lststate=res;
+      console.log(res);
+    });
+  }
+  matchPasswords(password: string, confirmPassword: string) {
+    return (formGroup: FormGroup) => {
+      const passControl = formGroup.controls[password];
+      const confirmPassControl = formGroup.controls[confirmPassword];
+
+      if (confirmPassControl.errors && !confirmPassControl.errors['passwordMismatch']) {
+        return; // Return if another validator has already found an error
+      }
+
+      if (passControl.value !== confirmPassControl.value) {
+        confirmPassControl.setErrors({ passwordMismatch: true });
+      } else {
+        confirmPassControl.setErrors(null);
+      }
+    };
+  }
+  getCountry(){
+    this.userservice.getCountry().subscribe((res:any)=>{
+      this.lstContry=res;
+      console.log(res);
+    });
+  }
+  onCountryChange(event:any){
+    console.log('Selected Option:', event.target.value);
+    this.form.Contry = event.target.value;
+  }
+  onOptionSelected(event: any) {
+    console.log('Selected Option:', event.target.value);
+    this.form.State = event.target.value;
   }
   checkcustomer(){
     if (this.form.customerid != undefined && this.form.customerid != null && this.form.customerid != '') {
@@ -65,15 +109,86 @@ export class RegisterComponent implements OnInit {
     this.userservice.CheckEmail(emailId).subscribe((res:any)=>{
       if(res.message=="false")
       {
-        this.isvalidateemail == false;
+        this.isvalidateemail = false;
+        this.toastera.error("Emailid alrday exists.");
       }
       else {
-        this.isvalidateemail == true;
+        this.isvalidateemail = true;
+        this.toastera.success("Emailid valid.");
       }
     });
   }
 
+  formValidation(){
+    var password = this.form.password;
+    var confPassword = this.form.ConfirmPassword;
+
+    if(this.form.FirstName === undefined || this.form.FirstName === null){
+      this.toastera.info("First name not null.");
+      return false;
+    }
+
+    if(this.form.LastName === undefined || this.form.LastName === null){
+      this.toastera.info("Last name not null.");
+      return false;
+    }
+
+    if(this.form.email === undefined || this.form.email === null){
+      this.toastera.info("emailId not null.");
+      return false;
+    }
+
+    if(this.isvalidateemail==false)
+    {
+      this.toastera.error("Emailid alrday exists.");
+      return false;
+    }
+
+    if(this.form.State === undefined || this.form.State === null){
+      this.toastera.info("Please select State from the list.");
+      return false;
+    }
+
+    if(this.form.Contry === undefined || this.form.Contry === null){
+      this.toastera.info("Please select country from the list.");
+      return false;
+    }
+
+    if(this.form.postalCode === undefined || this.form.postalCode === null){
+      this.toastera.info("Postal code not null.");
+      return false;
+    }
+
+    if(String(password).length < 6){
+      this.toastera.info("Password length mustbe grater then six.");
+      return false;
+    }
+
+    if(password != confPassword){
+      this.toastera.info("password and conform password not match.");
+      return false;
+    }
+
+    if(this.form.Address1 === undefined || this.form.Address1 === null || String(this.form.Address1).length < 1){
+      this.toastera.info("Please enter address..")
+      return false;
+    }
+
+    if(this.form.Address2 === undefined || this.form.Address2 === null || String(this.form.Address2).length < 1){
+      this.form.Address2=" ";
+    }
+    return true;
+  }
+
   onSubmit(): void {
+    if(this.isvalidateemail === false){
+      this.toastera.error("Please check emailid.");
+      return;
+    }
+    if(!this.formValidation()){
+      return;
+    }
+
     const { FirstName,
       LastName,
       email,
@@ -112,9 +227,10 @@ export class RegisterComponent implements OnInit {
             this.isSignUpFailed = true;
           }
         else{
-          window.location.href="login";
+          this.toastera.success("User register.");
           this.isSuccessful = true;
           this.isSignUpFailed = false;
+          window.location.href="login";
         }
       },
       error: err => {

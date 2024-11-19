@@ -65,4 +65,18 @@ export class UserService {
   GetloginCustomerInfo(CustID: any) {
     return this.http.get(environment.APIUrl + 'Customer/GetCustomerById?customerId='+CustID, httpOptions);
   }
+
+  PutShipmentAddress(addressDetails:any){
+    return this.http.post(environment.APIUrl + 'Customer/AddLocation',addressDetails,httpOptions)
+  }
+
+  getState(){
+    return this.http.get(environment.APIUrl+"User/GetStates",httpOptions);
+  }
+  getCustomLocation(locationId:any){
+    return this.http.get(environment.APIUrl+"CustomerLocation/GetLocationById?locationId="+locationId,httpOptions);
+  }
+  getCountry(){
+    return this.http.get(environment.APIUrl+"User/GetCountry",httpOptions);
+  }
 }

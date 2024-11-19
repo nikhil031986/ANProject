@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartServiceService } from '../_services/cart-service.service';
@@ -21,6 +21,7 @@ import { ToasterService } from '../services/toaster.service';
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent {
+  btnAddressText:any;
   shippingForm!: FormGroup;
   billingForm!: FormGroup;
   orderDetailsForm!:FormGroup;
@@ -39,12 +40,15 @@ export class CheckoutComponent {
   customerAddress:any;
   shipmentAddress:any[]=[];
   shipingLocation:any;
+  SelectedlocationId:any;
   constructor(private fb: FormBuilder,private cart:CartServiceService,private userservice:UserService,
     private token:TokenStorageService,private router: Router,
     private productservice:ProductService,private toastera:ToasterService,private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.SelectedlocationId=0;
+    this.btnAddressText="Add Address";
     this.imgeUrl = environment.APIHost;
     this.IsUserLogin= this.token.userLogin();
     this.getCustomerDetails();
@@ -57,13 +61,15 @@ export class CheckoutComponent {
 
   onAddressChange(event:any){
     var docuele = document.getElementById("#Selectedaddress");
+    this.btnAddressText="Update Address";
     const selectedValue = event.target.value;
     const shipadd = this.shipmentAddress.filter((res:any)=> res.location === selectedValue);
     if(shipadd != undefined && shipadd != null){
+      this.SelectedlocationId=shipadd[0].customerLocationId;
       this.displayShipAdd = "<h4> Name : "+ shipadd[0].name+"</h4>"
       +"<span>"+shipadd[0].location +"<br/> "+
       shipadd[0].address1 +" "+ shipadd[0].address2 +" "+ shipadd[0].address3
-      +"<br/>"+ shipadd[0].city+"<br/> "+ shipadd[0].country +"</span>"
+      +"<br/>"+ shipadd[0].city+"<br/> "+ shipadd[0].country +"</span>";
     }
     //docuele?.innerHTML("<h4> Address </h4><br/><h4>"+selectedValue+"</h4>");
   }
@@ -298,17 +304,18 @@ export class CheckoutComponent {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddressDialogComponent, {
-      panelClass: 'custom-dialog-container',
-      width: '90vw',  // Optional: adjust this width to control sizing
-      maxWidth: '500px', // Constrain width for larger screens
-    });
+    // const dialogRef = this.dialog.open(AddressDialogComponent, {
+    //   panelClass: 'custom-dialog-container',
+    //   width: '220vw',  // Optional: adjust this width to control sizing
+    //   maxWidth: '500px', // Constrain width for larger screens
+    // });
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Address data:', result);
-      }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     console.log('Address data:', result);
+    //   }
+    // });
+    this.router.navigate(['/CreateUpdateAddress',this.SelectedlocationId]);
   }
   
   }

@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row">
-    <button mat-button (click)="openDialog()">Add Address</button>
+    
     <!-- Billing Information Section -->
       <div class="col-lg-6 col-md-6 col-sm-12">
         <button class="btn btn-link fw-bold" style="font-size: 24px;" data-bs-toggle="collapse" data-bs-target="#billingInfo" aria-expanded="false" aria-controls="billingInfo">
@@ -80,15 +80,17 @@
                   2.Shipping Information
               </button>
           </h2>
+
           <div id="shippingInfo" class="collapse show">
             <div *ngIf="IsUserLogin==false">
+             
               <form  [formGroup]="shippingForm" (ngSubmit)="onSubmitShipping()">
                 <div class="mb-3 from-dropdown">
                   <label for="listExistAddress" class="form-label">Select Address</label>
-                  
-                  <select id="listExistAddress" formControlName="paymentType" class="form-control" required>
-                    <option value="" disabled selected>Select Existing Addres </option>
-                    <option *ngFor="let paym of shipmentAddress" [value]="paym.location">{{paym.name}} {{ paym.location }} {{paym.address1 }} {{paym.address2}} {{paym.address3}} {{paym.city}} {{paym.country}}</option>
+                  <select class="did-floating-select" formControlName="paymentType" id="listExistAddress">
+                    <option *ngFor="let paym of shipmentAddress" [value]="paym.location">
+                      {{paym.name}} {{ paym.location }} {{paym.address1 }} {{paym.address2}} {{paym.address3}} {{paym.city}} {{paym.country}}
+                    </option>
                   </select>
                 </div>
                 <div class="mb-3 form-check">
@@ -156,10 +158,11 @@
               <form  [formGroup]="shippingForm" (ngSubmit)="onSubmitShipping()">
                 <div class="mb-3 from-dropdown">
                   <label for="listExistAddress" class="form-label">Select Address</label>
-                  
-                  <select id="listExistAddress" formControlName="paymentType" (change)="onAddressChange($event)" class="form-control" required>
-                    <option value="" disabled selected>Select Existing Addres </option>
-                    <option *ngFor="let paym of shipmentAddress" [value]="paym.location">{{paym.name}} {{ paym.location }} {{paym.address1 }} {{paym.address2}} {{paym.address3}} {{paym.city}} {{paym.country}}</option>
+                  <button mat-button id="btnAddAddress" style="margin-bottom: 2px;margin-left: 54%;"  class="btn btn-primary" (click)="openDialog()">{{btnAddressText}}</button>
+                  <select class="did-floating-select" formControlName="paymentType" id="listExistAddress" (change)="onAddressChange($event)" required>
+                    <option *ngFor="let paym of shipmentAddress" [value]="paym.location">
+                      {{paym.name}} {{ paym.location }} {{paym.address1 }} {{paym.address2}} {{paym.address3}} {{paym.city}} {{paym.country}}
+                    </option>
                   </select>
                 </div>
               </form>

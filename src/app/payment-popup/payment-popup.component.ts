@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import * as html2pdf from 'html2pdf.js';
 
@@ -20,26 +20,34 @@ import { Router } from '@angular/router';
 export class PaymentPOPUPComponent implements OnInit {
   card: any; // Stripe card element
   isSubmitting = false;
+  orderId:any;
   orderSummary = {
     subtotal: 250.00,
     rebate: 20.00,
     tax: 15.00,
     total: 245.00 // Total calculation can also be dynamic.
 };
-orderId:any=0;
-  myorder:any="";
-  constructor(
+myorder:any="";
+constructor(
+    @Inject(MAT_DIALOG_DATA) public orderDetails: { value: any },
       private dialogRef: MatDialogRef<PaymentPOPUPComponent>,
       private stripeService: StripService,
       private toaster: ToastrService,
       private  productService: ProductService,
       private router :Router
 
-  ) {}
+  ) {
+    this.orderId = orderDetails.value.orderId;
+    this.orderSummary.subtotal = orderDetails.value.subtotal;
+    this.orderSummary.rebate = orderDetails.value.rebate;
+    this.orderSummary.tax = orderDetails.value.tax;
+    this.orderSummary.total = orderDetails.value.total;
+    console.log(orderDetails.value);
+  }
   
-
+  
   ngOnInit(): void {
-      this.initializeStripe();
+    this.initializeStripe();
   }
 
   
@@ -107,10 +115,10 @@ orderId:any=0;
         console.log('Payment successful!');
         this.toaster.success('Payment successful!');
         this.onCancel();
+        this.paymentToken(paymentIntent);
         this.router.navigate(['/paymentSuccess']);
 
         // Optionally, call your payment token function or any additional logic
-        this.paymentToken(paymentIntent);
     }
 }
 
@@ -137,15 +145,15 @@ paymentToken(token:any){
     id: 0,
     orderId: this.orderId,
     amount: this.orderSummary.total,
-    paymentThrow: tvalue.card.brand,
-    cardNumber: tvalue.card.last4,
-    cvcCheck: String(tvalue.card.cvc_check),
-    expMonth: String(tvalue.card.exp_month),
-    expYear:  String(tvalue.card.exp_year),
-    funding: tvalue.card.funding,
-    last4: tvalue.card.last4,
-    emailId: tvalue.email,
-    clientIp: tvalue.client_ip,
+    paymentThrow: tvalue.payment_method_types[0],
+    cardNumber: tvalue.payment_method,
+    cvcCheck: String(tvalue.client_secret),
+    expMonth: String("02"),
+    expYear:  String("2026"),
+    funding: tvalue.confirmation_method,
+    last4: "",
+    emailId: tvalue.id,
+    clientIp: "",
     tokenValue: objstr
   }
   this.CreatePDfFile();
@@ -153,7 +161,9 @@ paymentToken(token:any){
   this.productService.orderPayment(objPaymentDetails).subscribe((res:any)=>{
     if(res != undefined && res != null){
       if(res.message == "Payment succ."){
-        this.toaster.success("Payment done.");
+        this.productService.orderPutErp(objPaymentDetails.tokenValue,this.orderId).subscribe((msg:any)=>{
+          this.toaster.success("Payment done.");
+        });
         //this.toaster.success('Payment done.', 'Order status').finally(()=>{
          // window.location.href="/allOrder";
        // });
@@ -164,10 +174,7 @@ paymentToken(token:any){
     }
   })
 }
-
-
-
-  onCancel() {
+   onCancel() {
       this.dialogRef.close(); // Close the dialog on cancel
   }
 }

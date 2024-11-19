@@ -56,4 +56,8 @@ export class ProductService {
    orderPayment(objpayment:any){
     return this.http.post(this.APIURL+"Order/PaymentDetail",objpayment,httpOptions);
    }
+
+   orderPutErp(paymentTranId:any,orderId:any){
+    return this.http.put(this.APIURL+"Order/OrderPut?paymenttranId="+paymentTranId+"&orderId="+orderId,httpOptions);
+   }
 }

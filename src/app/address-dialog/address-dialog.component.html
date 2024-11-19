@@ -1,26 +1,45 @@
 <h2 mat-dialog-title>Address</h2>
 <mat-dialog-content>
-  <form>
+  <form [formGroup]="NewAddressForm">
     <br/>
     <mat-form-field appearance="fill" floatLabel="always">
       <mat-label>Address Line 1</mat-label>
-      <input matInput placeholder="Enter Address Line 1" [(ngModel)]="addressLine1" name="addressLine1" required>
+      <input matInput placeholder="Enter Address Line 1" formControlName="addressLine1" name="addressLine1" required>
     </mat-form-field>
 
     <mat-form-field appearance="fill"floatLabel="always">
       <mat-label>Address Line 2</mat-label>
-      <input matInput placeholder="Enter Address Line 2" [(ngModel)]="addressLine2" name="addressLine2">
+      <input matInput placeholder="Enter Address Line 2" formControlName="addressLine2" name="addressLine2">
     </mat-form-field>
 
     <mat-form-field appearance="fill"floatLabel="always">
       <mat-label>City</mat-label>
-      <input matInput placeholder="Enter City" [(ngModel)]="city" name="city" required>
+      <input matInput placeholder="Enter City" formControlName="city" name="city" required>
     </mat-form-field>
 
     <mat-form-field appearance="fill"floatLabel="always">
-      <mat-label>Postcode</mat-label>
-      <input matInput placeholder="Enter Postcode" [(ngModel)]="postcode" name="postcode" required>
+      <mat-label>State</mat-label>
+      <input matInput placeholder="Enter State" formControlName="state" name="state" required>
     </mat-form-field>
+    
+    <mat-form-field appearance="fill"  class="full-width">
+      <mat-select formControlName="countryNew" placeholder="Country">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let department of lstContry" value="{{department.countryCode}}">({{department.countryCode}}) {{ department.countryDescr }}</mat-option>
+      </mat-select>  
+     </mat-form-field>
+
+    <mat-form-field appearance="fill"floatLabel="always">
+      <mat-label>Postcode</mat-label>
+      <input matInput placeholder="Enter Postcode" formControlName="postcode" name="postcode" required>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill"floatLabel="always">
+      <mat-label>Phone</mat-label>
+      <input matInput placeholder="Enter Phone" formControlName="phonenumber" name="phonenumber" required>
+    </mat-form-field>
+
   </form>
 </mat-dialog-content>
 <mat-dialog-actions>

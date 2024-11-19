@@ -147,7 +147,13 @@ button[type="submit"]:hover {
     input[matInput] {
       font-size: 14px;
     }
-  
+    
+    select[matselect]{
+      font-size: 14px;
+    }
+    option[matoption]{
+      font-size: 14px;
+    }    
     button[mat-button] {
       font-size: 14px;
       padding: 8px 16px;
@@ -172,4 +178,23 @@ button[type="submit"]:hover {
     box-sizing: border-box;
     padding: 20px;
   }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .cdk-overlay-pane{
+    background: white !important;
+    width: 378px !important;
+    top: 172px !important;
+    left: 17.6px !important;
+  }
+
+  .custom-select-panel {
+    z-index: 1000 !important; /* Ensures the dropdown appears above the dialog */
+  }
   
+  .customClass {
+    margin-top: 25px;
+    margin-left: 25% !important;
+ }

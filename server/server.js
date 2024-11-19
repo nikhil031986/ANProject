@@ -1,5 +1,5 @@
 const express = require('express');
-const stripe = require('stripe')('sk_test_51QE6A0P4RbfVfKlDgZ0cFc1Kr3MCmmWbn6tkXmR33sKJDBYMDDA0Gs6CCvgTRffRjd9smYQg2mywiABUpABsuoo700D5ZRQdAU'); // Replace with your actual Stripe secret key
+const stripe = require('stripe')('sk_test_51QMXyVQZ6Kd2u4hz4FA7TCTZlsurW9iV0gc4vCqIscTFEWxOCmfVPJcckJGyemGLSK0tVd93Kr40inN8Rh5C2TDH00wyYJB5da'); // Replace with your actual Stripe secret key
 const app = express();
 
 app.use(express.json());
@@ -21,6 +21,7 @@ app.post('/create-payment-intent', async (req, res) => {
     });
     res.send({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
+    console.log(error);
     console.error('Error creating payment intent:', error);
     res.status(500).send({ error: 'Failed to create payment intent' });
   }

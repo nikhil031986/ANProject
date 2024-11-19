@@ -18,6 +18,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { RevieworderComponent } from 'src/revieworder/revieworder.component';
 import { CurrentCustomerAllOrderComponent } from './current-customer-all-order/current-customer-all-order.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+import { CreateAndUpdateAddressComponent } from './create-and-update-address/create-and-update-address.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -36,11 +37,9 @@ const routes: Routes = [
   { path:'allOrder',component:CurrentCustomerAllOrderComponent},
   { path:'paymentSuccess',component:PaymentSuccessComponent},
   { path:'paymentFailed',component:PaymentSuccessComponent},
-
-  
   { path: 'checkOut', component: CheckoutComponent },
-
-  {path:'ChangePassword', component:ChangePasswordComponent},
+  { path: 'CreateUpdateAddress/:location', component: CreateAndUpdateAddressComponent },
+  { path:'ChangePassword', component:ChangePasswordComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

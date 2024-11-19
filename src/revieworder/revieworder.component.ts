@@ -103,7 +103,7 @@ export class RevieworderComponent {
             productDetails.forEach((element:any) => {
               this.products.push({
                 image: String(this.imagePath)+String(element.imgPath),
-                name: String(element.ItemCode)+" "+String(element.itemDesc),
+                name: String(element.itemCode)+" "+String(element.itemDesc),
                 quantity: element.qty,
                 unitPrice: element.itemPrice,
                 total: Number(element.qty)*Number(element.itemPrice)
@@ -225,15 +225,15 @@ export class RevieworderComponent {
       id: 0,
       orderId: this.orderId,
       amount: this.orderSummary.total,
-      paymentThrow: tvalue.card.brand,
-      cardNumber: tvalue.card.last4,
-      cvcCheck: String(tvalue.card.cvc_check),
-      expMonth: String(tvalue.card.exp_month),
-      expYear:  String(tvalue.card.exp_year),
-      funding: tvalue.card.funding,
-      last4: tvalue.card.last4,
-      emailId: tvalue.email,
-      clientIp: tvalue.client_ip,
+      paymentThrow: tvalue.payment_method_types[0],
+      cardNumber: tvalue.payment_method,
+      cvcCheck: String(tvalue.client_secret),
+      expMonth: String("02"),
+      expYear:  String("2026"),
+      funding: tvalue.confirmation_method,
+      last4: "",
+      emailId: tvalue.id,
+      clientIp: "",
       tokenValue: objstr
     }
     this.CreatePDfFile();
@@ -243,7 +243,9 @@ export class RevieworderComponent {
         if(res.message == "Payment succ."){
           this.toastera.success("Payment done.");
           this.toastera.success('Payment done.', 'Order status').finally(()=>{
-            window.location.href="/allOrder";
+            this.productservice.orderPutErp(objPaymentDetails.tokenValue,objPaymentDetails.orderId).subscribe((res:any)=>{
+              window.location.href="/allOrder";
+            });
           });
         }else{
           this.toastera.error(res.message);
@@ -345,8 +347,16 @@ export class RevieworderComponent {
   }
 
   openPaymentModal(){
+    var orderDetails = {
+      orderId:this.orderId,
+      subtotal: this.orderSummary.subtotal,
+      rebate: this.orderSummary.rebate,
+      tax: this.orderSummary.tax,
+      total: this.orderSummary.total
+    }
     const dialogRef = this.dialog.open(PaymentPOPUPComponent, {
       width: '600px',
+      data:{value:orderDetails},
   });
   }
 }

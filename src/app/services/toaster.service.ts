@@ -25,11 +25,11 @@ export class ToasterService {
   }
 
   error(message: string, title?: string): void {
-    this.toastr.show(message, title, this.options);
+    this.toastr.error(message, title, this.options);
   }
 
   info(message: string, title?: string): void {
-    this.toastr.show(message, title, this.options);
+    this.toastr.info(message, title, this.options);
   }
 
   warning(message: string, title?: string): void {
