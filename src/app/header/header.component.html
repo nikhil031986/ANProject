@@ -40,7 +40,7 @@
                 <div class="did-floating-label-content mb-0">
                   <input #inputValue class="did-floating-input" type="text" placeholder=" " required="true"
                          [ngModel]="productCode" (keyup.enter)="getProductByProductCode(inputValue.value)" [ngModelOptions]="{standalone: true}">
-                  <label class="did-floating-label">Enter item number</label>
+                  <label class="did-floating-label"style="top:-10px;">Enter item number</label>
                   
                   <div class="search-icon">
                     <a (click)="getProductByProductCode(productCode)"> <!-- Call function on search icon click -->
@@ -63,7 +63,7 @@
              </ng-form>
            </div>
          </div>
-         <div class="d-inline-block box-dropdown-cart">
+         <div class="header-shop">
 
            <div class="d-inline-block box-dropdown-cart">
              <!-- User Icon -->
@@ -80,7 +80,7 @@
               </li>
              </ul>
            </div>
-           <a class="font-lg icon-list icon-wishlist d-none" href="wishlist.html"><i class="fa fa-heart-o"
+           <a class="font-lg icon-list icon-wishlist" href="wishlist.html"><i class="fa fa-heart-o"
                aria-hidden="true"></i><span class="number-item font-xs">5</span></a>
             <div class="d-inline-block box-dropdown-cart" style="padding-left: 20px;" (click)="showhidecart()">
               <span class="font-lg icon-list icon-cart">
@@ -189,7 +189,7 @@
               <a href="login" *ngIf="IsUserLogin" (click)="logout()">Logout</a>
             </li>
              <li><a href="register">Register</a></li>
-             <li><a class="btn btn-learn btn-header" href="{{trybyUrl}}" >Turn by turn directions</a></li>
+             <!-- <li><a class="btn btn-learn btn-header" href="{{trybyUrl}}" >Turn by turn directions</a></li> -->
            </ul>
          </nav>
       </div>

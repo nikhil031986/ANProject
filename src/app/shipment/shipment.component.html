@@ -1,0 +1,62 @@
+<div class="container-fluid">
+    <div class="row padding-lr-80 mt-30">
+      <div class="col-md-8">
+        <h3>
+          Shipment
+          <span *ngIf="isOpen"> Open Order </span>
+          <span *ngIf="!isOpen"> Close Order </span>
+        </h3>
+      </div>
+      <div class="col-md-4 d-flex justify-content-end">
+        <div class="form-group">
+          <button type="submit" (click)="btnOpenClose()" class="font-md-bold btn btn-buy w-auto">
+            {{ btntext }}
+          </button>
+        </div>
+      </div>    
+    </div>
+    <div class="row padding-lr-80">
+      <div class="col-lg-12 col-md-12" style="margin-top: 10px">
+        <table class="rwd-table mb-20">
+          <tbody>
+            <tr>
+              <th>Shipment</th>
+              <th>Status</th>
+              <th>Customer Name</th>
+              <th>Location</th>
+              <th>State</th>
+              <th>Wanted</th>
+              <th>Shipped</th>
+              <th>Lines</th>
+              <th>Total</th>
+              <th>GP%</th>
+              <th>Source</th>
+              <th>Ship Method</th>
+              <th>Billing Option</th>
+            </tr>
+            <tr class="cpointer" *ngFor="let shipment of product">
+              <td>{{ shipment.manifestId }}</td>
+              <td>{{ shipment.status }}</td>
+              <td>
+                {{ shipment.order.customer.name }}
+                <span *ngIf="shipment.order.customer != undefined"> </span>
+              </td>
+              <td>{{ shipment.customerLocation.name }}</td>
+              <td>
+                {{ shipment.state }}
+              </td>
+              <td>{{ shipment.wantedDate | date : "MMM dd yyyy" }}</td>
+              <td>{{ shipment.pickStatus }}</td>
+              <td>{{ shipment.orderShipmentLineCount }}</td>
+              <td>{{ shipment.totalGross }}</td>
+              <td>{{ shipment.grossProfitPercentage }}%</td>
+              <td>{{ shipment.order.orderSource.code }}</td>
+              <td>{{ shipment.systemShipVia.shipViaCode }}</td>
+              <td>{{ shipment.billingOption.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

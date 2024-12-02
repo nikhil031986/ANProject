@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row padding-lr-80 mt-30">
+      <div class="col-md-8">
+        <h3>
+          Quotes
+          <span *ngIf="isOpen"> Open </span>
+          <span *ngIf="!isOpen"> Close </span>
+        </h3>
+      </div>
+      <div class="col-md-4 d-flex justify-content-end">
+        <div class="form-group">
+          <button type="submit" (click)="btnOpenClose()" class="font-md-bold btn btn-buy w-auto">
+            {{ btntext }}
+          </button>
+        </div>
+      </div>    
+    </div>
+    <div class="row padding-lr-80">
+      <div class="col-lg-12 col-md-12" style="margin-top: 10px">
+        <table class="rwd-table mb-20">
+          <tbody>
+            <tr>
+              <th>Quote</th>
+              <th>Status</th>
+              <th>Customer Name</th>
+              <th>Reference</th>
+              <th>Sales Rep</th>
+              <th>Date</th>
+              <th>Lines</th>
+              <th>Total</th>
+              <th>Adj Total</th>
+            </tr>
+            <tr class="cpointer" *ngFor="let shipment of product">
+              <td>{{ shipment.orderQuoteNumber }}</td>
+              <td>
+                <span *ngIf="shipment.open">Open</span>
+                <span *ngIf="!shipment.open">Close</span>
+              </td>
+              <td>
+                {{ shipment.reference }}
+              </td>
+              <td>{{ shipment.customer.name }}</td>
+              <td>
+                <span *ngIf="shipment.salesRepresentative != undefined">
+                     {{ shipment.salesRepresentative.name }}
+                </span>
+              </td>
+              <td>{{ shipment.createdAt | date : "MMM dd yyyy" }}</td>
+              <td>{{ shipment.orderQuoteLineCount }}</td>
+              <td>{{ shipment.orderQuoteLineTotal }}</td>
+              <td>{{ shipment.adjustedTotal }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

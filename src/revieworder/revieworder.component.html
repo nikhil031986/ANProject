@@ -84,7 +84,10 @@
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
-                            <th>Total</th>
+                            <th>Amount</th>
+                            <th>Tax Rate</th>
+                            <th>Tax Amount</th>
+                            <th>Net Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,7 +96,10 @@
                             <td>{{ product.name }}</td>
                             <td>{{ product.quantity }}</td>
                             <td>${{ product.unitPrice.toFixed(2) }}</td>
-                            <td>${{ product.total.toFixed(2) }}</td>
+                            <td>${{ product.amount.toFixed(2) }}</td>
+                            <td>${{ product.taxrate.toFixed(2) }}</td>
+                            <td>${{ product.taxamount.toFixed(2) }}</td>
+                            <td>${{ product.netamount.toFixed(2) }}</td>
                         </tr>
                     </tbody>
                 </table>

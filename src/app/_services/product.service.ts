@@ -60,4 +60,21 @@ export class ProductService {
    orderPutErp(paymentTranId:any,orderId:any){
     return this.http.put(this.APIURL+"Order/OrderPut?paymenttranId="+paymentTranId+"&orderId="+orderId,httpOptions);
    }
+
+   GetOrderHistory(customerId:any,openclose:any){
+    return this.http.get(this.APIURL+"Order/GetOrderHistory?customerId="+customerId+"&openclose="+openclose,httpOptions);
+   }
+
+   GetShipmentOrder(customerId:any,openclose:any){
+    return this.http.get(this.APIURL+"Order/GetShipments?customerId="+customerId+"&openclose="+openclose,httpOptions);
+   }
+
+   GetQuotes(customerId:any,openClose:any){
+    return this.http.get(this.APIURL+"Order/GetQuotes?customerId="+customerId+"&openclose="+openClose,httpOptions);
+   }
+
+   GetOrderInvoice(customerId:any,openclose:any){
+    return this.http.get(this.APIURL+"Order/GetOrderInvoice?customerId="+customerId+"&openclose="+openclose,httpOptions);
+   }
+
 }

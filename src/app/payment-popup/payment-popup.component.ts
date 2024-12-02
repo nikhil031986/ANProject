@@ -116,7 +116,7 @@ constructor(
         this.toaster.success('Payment successful!');
         this.onCancel();
         this.paymentToken(paymentIntent);
-        this.router.navigate(['/paymentSuccess']);
+        
 
         // Optionally, call your payment token function or any additional logic
     }
@@ -163,6 +163,7 @@ paymentToken(token:any){
       if(res.message == "Payment succ."){
         this.productService.orderPutErp(objPaymentDetails.tokenValue,this.orderId).subscribe((msg:any)=>{
           this.toaster.success("Payment done.");
+          this.router.navigate(['/paymentSuccess',this.orderId]);
         });
         //this.toaster.success('Payment done.', 'Order status').finally(()=>{
          // window.location.href="/allOrder";

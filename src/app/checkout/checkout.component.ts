@@ -1,5 +1,5 @@
 import { Component, output } from '@angular/core';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, NumberSymbol } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CartServiceService } from '../_services/cart-service.service';
 import { environment } from 'src/environments/environment';
@@ -23,6 +23,7 @@ import { ToasterService } from '../services/toaster.service';
 export class CheckoutComponent {
   btnAddressText:any;
   shippingForm!: FormGroup;
+  
   billingForm!: FormGroup;
   orderDetailsForm!:FormGroup;
   paymentForm!: FormGroup;
@@ -69,7 +70,17 @@ export class CheckoutComponent {
       this.displayShipAdd = "<h4> Name : "+ shipadd[0].name+"</h4>"
       +"<span>"+shipadd[0].location +"<br/> "+
       shipadd[0].address1 +" "+ shipadd[0].address2 +" "+ shipadd[0].address3
-      +"<br/>"+ shipadd[0].city+"<br/> "+ shipadd[0].country +"</span>";
+      +"<br/>"+ shipadd[0].city+"<br/> "+shipadd[0].state+"<br/> " + shipadd[0].country 
+      +"<br/>"+ shipadd[0].postal+ "</span>";
+      this.shippingForm.controls["billingAddress1"].setValue(shipadd[0].address1);
+      this.shippingForm.controls["billingAddress2"].setValue(shipadd[0].address2);
+      this.shippingForm.controls["state"].setValue(shipadd[0].state);
+      this.shippingForm.controls["country"].setValue(shipadd[0].country);
+      this.shippingForm.controls["phone"].setValue("");
+      this.shippingForm.controls["city"].setValue(shipadd[0].city);
+      this.shippingForm.controls["postalCode"].setValue(shipadd[0].postal);
+      console.log(this.SelectedlocationId);
+      this.calCulateTaxAmountItemWise();
     }
     //docuele?.innerHTML("<h4> Address </h4><br/><h4>"+selectedValue+"</h4>");
   }
@@ -99,9 +110,71 @@ export class CheckoutComponent {
     });
   }
 
+  calCulateTaxAmountItemWise(){
+    let shipobj:any[]=[]; 
+    shipobj.push({
+      Id:0,
+      OrderId:0,
+      Address1:this.shippingForm.controls["billingAddress1"].value,
+      Address2:this.shippingForm.controls["billingAddress2"].value,
+      State:this.shippingForm.controls["state"].value,
+      Contry:this.shippingForm.controls["country"].value,
+      PhoneNumber:this.shippingForm.controls["phone"].value,
+      City:this.shippingForm.controls["city"].value,
+      Email:"",
+    });
+
+    this.cartItems.forEach(item=>{
+      let amount = item.amount;
+      let objproduct:any[]=[];
+      objproduct.push({
+        product_tax_code:item.ItemCode,
+        unit_price:item.itemPrice,
+        quantity:item.qty,
+      });
+      let objTaxt={
+        from_country:"US",
+        from_zip:"73001",
+        from_state:"OK",
+        from_city:"OK",
+        to_country:shipobj[0].Contry,
+        to_zip:this.shippingForm.controls["postalCode"].value,
+        to_state:shipobj[0].State,
+        to_city:shipobj[0].city,
+        amount:amount,
+        shipping:"0.1",
+        line_items:objproduct
+      };
+      this.productservice.calculationOfTax(objTaxt).subscribe((res:any)=>{
+        if(res != undefined && res != null){
+          console.log(res);
+          var sumAmt =0;
+          item.taxRate = Number(res.rate);
+          item.taxAmount=Number(res.amount);
+          item.netAmount = Number(res.amount)+Number(item.amount);
+        }
+      });
+    });
+    
+
+  }
+
   getCartData(){
     this.cart.getCart().subscribe((res:any)=>{
-      this.cartItems=res;
+      let objRes = res;
+      objRes.forEach(item => {
+        this.cartItems.push({
+          itemCode:item.itemCode,
+          imagePath:item.imagePath,
+          item_Description:item.item_Description,
+          quntity:item.quntity,
+          itemPrice:item.itemPrice,
+          amount:Number(item.quntity)*Number(item.itemPrice),
+          taxRate:0.00,
+          taxAmount:0.00,
+          netAmount: Number(item.quntity)*Number(item.itemPrice)
+        });
+      });
       console.log(this.cartItems);
     });
   }
@@ -241,7 +314,7 @@ export class CheckoutComponent {
     const OrderDetailEntry:any[]=[];
     const currentCustomerId = this.token.getUserInfo("Customer_Id");
     const today = new Date();
-    
+
     shipobj.push({
       Id:0,
       OrderId:0,
@@ -250,17 +323,13 @@ export class CheckoutComponent {
       State:this.shippingForm.controls["state"].value,
       Contry:this.shippingForm.controls["country"].value,
       PhoneNumber:this.shippingForm.controls["phone"].value,
+      City:this.shippingForm.controls["city"].value,
       Email:"",
-    });   
-
-    OrderPaymentEntry.push({
-      Id:0,
-      OrderId:0,
-      PaymentType:1,
-      PaymentTerm:0,
-      Amount:0,
+      locationId:this.SelectedlocationId,
     });
 
+    var amount=0;
+    var taxAmount=0.0;
     this.cartItems.forEach( (element) => {
       OrderDetailEntry.push({
         Id:0,
@@ -269,38 +338,55 @@ export class CheckoutComponent {
         ItemPrice:element.itemPrice,
         Unit:"each",
         Qty:element.quntity,
+        taxrate:element.taxRate,
+        taxamount:element.taxAmount,
+        netAmount:element.netAmount,
         CreateAt:Date.now,
         });
-      });
-    
-      objorder.push({
-        Id:0,
-        OrderId:"",
-        CustomerId:currentCustomerId,
-        OrderDate:today,
-        PaymentMethodId:1,
-        PaymentTermId:1,
-        TotalAmout:30.20,
-        DiscountAmount:0.20,
-        OrderDetails:OrderDetailEntry,
-        OrderPayments:OrderPaymentEntry,
-        OrderShipments:shipobj,
+        taxAmount= taxAmount+Number(element.taxamount);
+        amount=amount+(Number(element.itemPrice)*Number(element.quntity));
       });
 
-      this.productservice.PutOrder(objorder[0]).subscribe((res:any)=>{
-        console.log(res);
-        const message = res.message;
-        if(message != undefined && message != null){
-          if(String(message).includes("Order not added")){
-            this.toastera.error(message); 
-          }
-          else{
-            this.toastera.success("Order please successfully.");
-            this.router.navigate(['/revieworder',message]);
-            //window.location.href="\home";
-          }
-        }
+      OrderPaymentEntry.push({
+        Id:0,
+        OrderId:0,
+        PaymentType:1,
+        PaymentTerm:0,
+        Amount:amount,
+        Rebate:0.0,
+        SubTotal:(amount+taxAmount),
+        TaxAmount:taxAmount
       });
+
+      objorder.push({
+          Id:0,
+          OrderId:"",
+          CustomerId:currentCustomerId,
+          OrderDate:today,
+          PaymentMethodId:1,
+          PaymentTermId:1,
+          TotalAmout:amount+taxAmount,
+          DiscountAmount:0.20,
+          OrderDetails:OrderDetailEntry,
+          OrderPayments:OrderPaymentEntry,
+          OrderShipments:shipobj,
+          PurcharOrderNo:"",
+        });
+  
+        this.productservice.PutOrder(objorder[0]).subscribe((res:any)=>{
+          console.log(res);
+          const message = res.message;
+          if(message != undefined && message != null){
+            if(String(message).includes("Order not added")){
+              this.toastera.error(message); 
+            }
+            else{
+              this.toastera.success("Order please successfully.");
+              this.router.navigate(['/revieworder',message]);
+              //window.location.href="\home";
+            }
+          }
+        });    
   }
 
   openDialog(): void {

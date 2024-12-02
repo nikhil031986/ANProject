@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Query } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { RegisterComponent } from './register/register.component';
@@ -19,6 +19,11 @@ import { RevieworderComponent } from 'src/revieworder/revieworder.component';
 import { CurrentCustomerAllOrderComponent } from './current-customer-all-order/current-customer-all-order.component';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 import { CreateAndUpdateAddressComponent } from './create-and-update-address/create-and-update-address.component';
+import { UserHomeComponent } from './user-home/user-home.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
+import { ShipmentComponent } from './shipment/shipment.component';
+import { QuotesComponent } from './quotes/quotes.component';
+import { OrderInvoiceComponent } from './order-invoice/order-invoice.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -35,11 +40,16 @@ const routes: Routes = [
   { path: 'viewCart', component: ViewCartComponent },  
   { path: 'revieworder/:order', component: RevieworderComponent },
   { path:'allOrder',component:CurrentCustomerAllOrderComponent},
-  { path:'paymentSuccess',component:PaymentSuccessComponent},
+  { path:'paymentSuccess/:order',component:PaymentSuccessComponent},
   { path:'paymentFailed',component:PaymentSuccessComponent},
   { path: 'checkOut', component: CheckoutComponent },
   { path: 'CreateUpdateAddress/:location', component: CreateAndUpdateAddressComponent },
   { path:'ChangePassword', component:ChangePasswordComponent},
+  { path:'dashboard', component:UserHomeComponent},
+  { path:'OrderHistory',component:OrderHistoryComponent},
+  { path:'Shipment',component:ShipmentComponent},
+  { path:'Quotes',component:QuotesComponent},
+  { path:'Invoice',component:OrderInvoiceComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -1,0 +1,190 @@
+<!-- <div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                <li><a class="font-xs color-gray-500" href="dashboard">My Account</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/> -->
+
+<div class="container mt-60 mb-60">
+    <div class="row dash-block" >
+        <div (click)="openCategr()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        id="categorydashboard" >
+            <div class="dashbutton">
+                <!-- <i class="fa fa-list-alt fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/categories.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Browse Categories </span>
+            </div>
+        </div>
+    
+        <div  class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        id="advancedSearchdashboard" >
+            <div class="dashbutton">
+                <!-- <i class="fa fa-search fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/advanced-search.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Advanced Search </span>
+            </div>
+        </div>
+    
+        <div id="SeeMyShoppingCartdashboard"
+        class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/shopping-online-cart.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">See My Shopping Cart</span>
+            </div>
+        </div>
+        <div id="ChangePassworddashboard"
+            (click)="openChangePassword()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-key fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/password.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Change Password</span>
+            </div>
+        </div>
+    
+        <div id="PendingOrdersdashboard"
+        (click)="openQuotes()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-clipboard fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/pending-orders.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Pending Orders & Quotes</span>
+            </div>
+        </div>
+        <div id="openshipmentsdb"
+            (click)="openShipmentOrders()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-file-o fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/open-shipment.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Open Shipments</span>
+            </div>
+        </div>
+        <div id="OrderDueIn"
+            class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+            >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Orders Due In</span>
+            </div>
+        </div>
+    
+        <div id="BackOrderItems"
+            class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+            >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Back Order Items</span>
+            </div>
+        </div>
+    
+        <div id="OpenInvoice"
+            (click)="openInvoice()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+            >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Open Invoices</span>
+            </div>
+        </div>
+    
+        <div id="OrderHistory"
+            (click)="openOrderHistory()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+            >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Order History</span>
+            </div>
+        </div>
+    
+        <div id="MyContractProduct"
+            class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+            >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">My Contract Products</span>
+            </div>
+        </div>
+    
+        <div id="PurchaseHistory"
+        class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Purchase History</span>
+            </div>
+        </div>
+    
+        <div id="ReviewUserOrders"
+        class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Review Users Orders</span>
+            </div>
+        </div>
+    
+        <div id="WishList"
+        class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Wish List</span>
+            </div>
+        </div>
+        
+        <div id="Quote"
+        class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Quote</span>
+            </div>
+        </div>
+    
+        <div id="UserAccountSetup"
+        class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15"
+        >
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">User Account Setup</span>
+            </div>
+        </div>
+    </div>
+    </div>

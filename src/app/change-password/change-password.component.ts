@@ -17,6 +17,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+    let cuurntUserEmailId = this.tokenStorage.getUserInfo("User_Email");
+    this.form.username = cuurntUserEmailId;
   }
   onSubmit(): void {
     const { username, password,Conformpassword } = this.form;

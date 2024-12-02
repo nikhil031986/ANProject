@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
           }
           else{
             this.user.setUserLogin();
-            this.router.navigate(['/home']);
+            this.router.navigate(['/dashboard']);
           }
         }
       },

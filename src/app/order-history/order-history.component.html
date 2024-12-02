@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="row mb-50 padding-lr-80 mt-30">
+      <div class="col-md-8">
+          <h3>
+              Order History
+              <span *ngIf="isOpen"> Open Order </span>
+              <span *ngIf="!isOpen"> Close Order </span>
+            </h3>
+      </div>
+      <div class="col-md-4 d-flex justify-content-end">
+          <div class="form-group">
+              <button
+                type="submit"
+                (click)="btnOpenClose()"
+                class="font-md-bold btn btn-buy w-auto"
+              >
+                {{ btntext }}
+              </button>
+            </div>
+      </div>
+      <div class="col-lg-12 col-md-12" style="margin-top: 10px">
+        <table class="rwd-table mb-20">
+          <tbody>
+            <tr>
+              <th>Date</th>
+              <th>Order No.</th>
+              <th>Customer Po.</th>
+              <th>Status</th>
+              <th>Order Source</th>
+              <th>Order Total Cost</th>
+            </tr>
+            <tr class="cpointer" *ngFor="let order of paginatedData">
+              <td>{{ order.orderDate | date : "MMM-dd-yyyy" }}</td>
+              <td>{{ order.orderNumber }}</td>
+              <td>
+                {{ order.customer.name }}
+              </td>
+              <td>{{ order.status }}</td>
+              <td>
+                <span *ngIf="order.orderSource != undefined">
+                  {{ order.orderSource.code }}
+                </span>
+              </td>
+              <td>{{ order.orderTotalCost }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+            Previous
+            </button>
+            <span>   Page {{ currentPage }} of {{ totalPagesCount }}</span>
+            <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPagesCount">
+            Next
+            </button>
+        </div>
+    </div>
+  </div>
+  

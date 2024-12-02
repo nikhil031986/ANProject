@@ -94,27 +94,32 @@ export class RevieworderComponent {
         this.productservice.getOrderDetails(orderId).subscribe((res:any)=>{
           console.log(res);
           if(res != undefined && res != null){
-            this.objproduct=[];
-            this.objTaxt;
             this.orderId = res[0].id;
             const productDetails = res[0].orderDetails;
             var subTotal =0;
             this.products=[];
+            let TaxRate=0;
+            let TaxAmount=0;
             productDetails.forEach((element:any) => {
               this.products.push({
                 image: String(this.imagePath)+String(element.imgPath),
                 name: String(element.itemCode)+" "+String(element.itemDesc),
                 quantity: element.qty,
                 unitPrice: element.itemPrice,
-                total: Number(element.qty)*Number(element.itemPrice)
+                amount: Number(element.amount),
+                taxrate:Number(element.taxrate),
+                taxamount:Number(element.taxamount),
+                netamount:Number(element.netamount)
               });
-              this.objproduct.push({
-                product_tax_code:element.ItemCode,
-                unit_price:element.itemPrice,
-                quantity:element.qty,
-              });
-              subTotal= subTotal+(Number(element.qty)*Number(element.itemPrice));
+              subTotal= subTotal+(Number(element.amount));
+              TaxRate = TaxRate+Number(element.taxrate);
+              TaxAmount = TaxAmount+Number(element.taxamount);
             });
+            this.orderSummary.rebate=0.0;
+            this.orderSummary.subtotal = Number(subTotal);
+            this.orderSummary.tax = Number(TaxAmount);
+            this.orderSummary.total = (Number(subTotal) + Number(TaxAmount)) -  Number(this.orderSummary.rebate);
+
             this.getCustomerDetails(res[0].customerId);
             const dtOrder = res[0].orderDate.substr(0,10);
             this.orderDetails.cancelDate = dtOrder;
@@ -122,27 +127,11 @@ export class RevieworderComponent {
             this.orderDetails.phone=res[0].customer.phone;
             this.orderDetails.emailAddress= res[0].customer.email;
             this.orderDetails.contact = res[0].customer.firstName;
-
-            this.orderSummary.subtotal = subTotal;
             this.orderSummary.rebate =0;
           }
         });
       }
-      calCulateTax(){
-        this.productservice.calculationOfTax(this.objTaxt).subscribe((res:any)=>{
-          if(res != undefined && res != null){
-            console.log(res);
-            var sumAmt =0;
-            this.products.forEach((ele:any)=>{
-              sumAmt = sumAmt + Number(ele.total);
-            });
-            this.orderSummary.subtotal = Number(sumAmt);
-            this.orderSummary.tax = Number(res.amount);
-            this.orderSummary.total = (Number(this.orderSummary.subtotal) + Number(this.orderSummary.tax)) -  Number(this.orderSummary.rebate);
-          }
-        });
-
-      }
+      
       getCustomerDetails(customerId:any){
         this.userservice.GetCustomerDetails(customerId).subscribe((res:any)=>{
           if(res != undefined && res != null){
@@ -176,7 +165,6 @@ export class RevieworderComponent {
               this.shipTo.name = shipviaaddress.name;
               this.shipTo.phone = shipviaaddress.phone;
               this.shipTo.fax="";
-              this.calCulateTax();
           }
         });
       }

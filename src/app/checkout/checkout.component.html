@@ -356,7 +356,10 @@
                           <th scope="col">Product Name</th>
                           <th scope="col">Quantity</th>
                           <th scope="col">Unit Price</th>
-                          <th scope="col">Total Price</th>
+                          <th scope="col">Amount</th>
+                          <th scope="col">Tax Rate</th>
+                          <th scope="col">Tax Amount</th>
+                          <th scope="col">Net Amount</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -374,7 +377,11 @@
                               <input type="number" [(ngModel)]="item.quntity" class="form-control" min="1" (change)="updateTotalPrice(i)">
                           </td>
                           <td>{{ item.itemPrice | currency }}</td>
-                          <td>{{ item.itemPrice * item.quntity | currency }}</td>
+                          <td>{{ item.amount | currency }}</td>
+
+                          <td>{{ item.taxRate | currency }}</td>
+                          <td>{{ item.taxAmount | currency }}</td>
+                          <td>{{ item.netAmount | currency }}</td>
                       </tr>
                   </tbody>
               </table>

@@ -7,7 +7,6 @@ import { ProductService } from '../_services/product.service';
 import { CartServiceService } from '../_services/cart-service.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
-
 @Component({
   selector: 'app-sub-catgory',
   templateUrl: './sub-catgory.component.html',
@@ -82,6 +81,43 @@ export class SubCatgoryComponent implements OnInit {
     this.getAllUnit();
   }
 
+  getItemCount(Id:any):string{
+    try{
+      let currentMenu = this.childMenuItem.filter((item:any)=> item.id==Id);
+      if(currentMenu != undefined || currentMenu != null ){
+        if(Array(currentMenu).length>1){
+          return String(currentMenu[0].itemCount);
+        } 
+        else{
+          let partCat = this.menuItems.filter((items:any)=> items.id==Id);
+          if(partCat != undefined || partCat != null){
+            if(Array(partCat).length>0){
+              return String(partCat[0].itemCount);
+            }
+            else{
+              return "";
+            }
+          }
+          else{
+            return "";
+          }
+        }
+      }
+      else{
+        return this.mancategory.itemCount
+      }
+    } catch(error){
+      return "";
+    }
+  }
+
+  getChildMenuItemCount(parentId:any):string{
+    let currentMenu = this.childMenuItem.filter((item:any)=> item.parentCategory==parentId);
+    if(currentMenu != undefined || currentMenu != null){
+      return String(currentMenu[0].childCatCount);
+    }
+    return "";
+  }
  getChildMenu(parentMenuId: any) {
   if(Number(parentMenuId)===0){
     this.childMenuItems =this.menuItems;
