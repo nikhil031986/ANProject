@@ -60,6 +60,17 @@ changePage(page: number) {
 get totalPagesCount() {
   return Math.ceil(this.product.length / this.pageSize);
 }
+
+  OpenOrderInfo(orderNo:any){
+    this.productService.getOrderIdBaseOnOrderNumber(orderNo).subscribe((res:any)=>{
+      if(res != null && res != undefined){
+        if(res.message != null && res.message != undefined && res.message.length>1){
+          window.location.href ="revieworder/"+res.message;
+        }
+      }
+    });
+  }
+
  GetCustomerOrderHistory(customerId:any,openTag:any){
   this.productService.GetOrderHistory(customerId,openTag).subscribe((res:any)=>{
     let msg=res.message;

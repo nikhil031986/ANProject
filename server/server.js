@@ -1,13 +1,21 @@
 const express = require('express');
 const stripe = require('stripe')('sk_test_51QMXyVQZ6Kd2u4hz4FA7TCTZlsurW9iV0gc4vCqIscTFEWxOCmfVPJcckJGyemGLSK0tVd93Kr40inN8Rh5C2TDH00wyYJB5da'); // Replace with your actual Stripe secret key
 const app = express();
+const cros = require('cros');
 
 app.use(express.json());
 
+//app.options('*', cors());
+app.use(cors({ origin: 'http://localhost:8097/', methods: 'GET,POST,PUT,DELETE,OPTIONS' }));
+
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // Allow requests from Angular app
-  res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS"); // Allowed methods
-  res.header("Access-Control-Allow-Headers", "Content-Type"); // Allow Content-Type header
+  res.header("Access-Control-Allow-Origin", "*"); // Allow requests from Angular app
+  res.header("Access-Control-Allow-Methods", "*"); // Allowed methods
+  res.header("Access-Control-Allow-Headers", "*"); // Allow Content-Type header
+  const now = new Date();
+  console.log(`[${now.toISOString()}] ${req.method} ${req.url}`);
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
   next();
 });
 

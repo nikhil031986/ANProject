@@ -5,9 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { tick } from '@angular/core/testing';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8','XApiKey':'pgH7QzFHJx4w46fI~5Uzi4RvtTwlEXp' })
 };
 
 @Injectable({
@@ -20,19 +21,24 @@ export class CartServiceService {
   private cartDetails:Itemobj[]= [];
   private cartQuantity = new BehaviorSubject<number>(0);
   currentQuantity = this.cartQuantity.asObservable();
-
+  private USER_KEY = 'CurrentSeectionId';
   constructor(private http: HttpClient,private toastr: ToastrService,) {
     this.APIURL = environment.APIUrl;
-   }
+  }
 
   getGUID(){
-    return this.guid;
+    return window.sessionStorage.getItem(this.USER_KEY);
   }
-
+  
   createGUid(){
     this.guid = uuidv4();
+    window.sessionStorage.removeItem(this.USER_KEY);
+    window.sessionStorage.setItem(this.USER_KEY,this.guid);
   }
 
+  clearCart(){
+    window.sessionStorage.removeItem(this.USER_KEY);
+  }
   getTotalQty(){
     return parseFloat( this.cartDetails.reduce((sum:any, item:any) => sum + (item.itemPrice*item.qty), 0)).toFixed(2);
   }
@@ -69,12 +75,8 @@ export class CartServiceService {
     this.http.put(this.APIURL + "Item/AddItemInCart?Item_Code=" + item_Code + "&quntity=" + Qty + "&refkey=" + currentGuid + "&unit=" + unit, httpOptions)
       .subscribe((res: any) => {
         if (res.message.includes("Record add")) {
-          //console.log("Record added.");
-          // Show success toaster
-          //this.toastr.success('Item added to cart!', 'Success');
         } else {
           console.log("Record not added.");
-          // Optionally show an error toaster if something goes wrong
           this.toastr.error('Failed to add item to cart.', 'Error');
         }
       });
@@ -96,9 +98,11 @@ export class CartServiceService {
       });
     }
   
+    let currentQty = this.cartQuantity.value;
+    currentQty =currentQty+Qty;
     // Calculate total quantity and update cart quantity
-    let totalQty = parseFloat(this.cartDetails.reduce((sum: any, item: any) => sum + item.qty, 0)).toFixed(2);
-    this.cartQuantity.next(Number(totalQty));
+    //let totalQty = parseFloat(this.cartDetails.reduce((sum: any, item: any) => sum + item.qty, 0)).toFixed(2);
+    this.cartQuantity.next(Number(currentQty));
   }
   
   
@@ -112,7 +116,25 @@ export class CartServiceService {
     return this.http.delete(this.APIURL+"Item/DeleteFromCart?ItemCode="+itemCode+"&refKey="+GUIID,httpOptions);
   }
 
+  getcartItemQty(){
+    return this.cartQuantity.value;
+  }
+
   CheckcartItem(){
+    var qty = 0;
+    this.getCart().subscribe((res:any)=>{
+      res.forEach(item => {
+        qty= qty+item.quntity;
+        this.cartDetails.push({
+          itemCode: item.item_Code,
+          itemdes: item.itemdesc,
+          qty: item.Qty,
+          imgpath: item.img,
+          itemprice: item.price
+        });
+      });   
+    });    
+    this.cartQuantity.next(Number(qty));
     return this.cartQuantity.value > 0 ?true:false;
   }
 }

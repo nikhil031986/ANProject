@@ -1,70 +1,121 @@
 <section class="section-box shop-template mt-60">
-    <div class="head-main mt-30" style="border-bottom: none;">
-      <div class="row padding-lr-80">
-          <div class="col-md-12">
-              <h1 class="head-text">Create Location Address.</h1>
-          </div>
+  <div class="container-fluid">
+    <div class="row padding-lr-80 mt-30">
+      <div class="col-md-12">
+        <h3 class="head-text">Create Location Address.</h3>
       </div>
-  </div>
-  <div class="row mb-100 padding-lr-80">
-    <form
-    [formGroup]="AddressForm" 
-    (ngSubmit)="AddressForm.valid && onSubmitShipping()"
-    novalidate
-    class="requires-validation"
-    >
-    <div class="form-register align-flex justify-content-start align-items-baseline">
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="addressLine1">Address Line 1.</label>
-                <input type="text" id="addressLine1" formControlName="addressLine1" class="form-control" required>            
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="addressLine2">Address Line 2.</label>
-                <input type="text" id="addressLine2" formControlName="addressLine2" class="form-control" required>            
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" formControlName="city" class="form-control" required>            
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="state">State</label>
-                <select class="did-floating-select" id="state" formControlName="state" (change)="onChangeState($event)">
-                    <option *ngFor="let option of lststate" [value]="option.state1">
-                      ({{option.state1}}) {{ option.descr }} 
-                    </option>
-                  </select>
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="country">Country</label>
-                <select class="did-floating-select" id="country" formControlName="country" (change)="onCountryChange($event)">
-                    <option *ngFor="let option of lstContry" [value]="option.countryCode">
-                      ({{option.countryCode}}) {{ option.countryDescr }} 
-                    </option>
-                  </select>
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="postcode">postcode</label>
-                <input type="text" id="postcode" formControlName="postcode" class="form-control" required>            
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="phonenumber">Phone Number</label>
-                <input type="text" id="phonenumber" formControlName="phonenumber" class="form-control" required>            
-            </div>
-        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Create New Address</button>
-    </form>
+    <div class="row mb-100 padding-lr-80">
+      <form
+        [formGroup]="AddressForm"
+        (ngSubmit)="AddressForm.valid && onSubmitShipping()"
+        novalidate
+        class="requires-validation"
+        style="padding-right: 0; padding-left: 0"
+      >
+        <div
+          class="form-register align-flex justify-content-start align-items-baseline"
+        >
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="addressLine1">Address Line 1.</label>
+              <input
+                type="text"
+                id="addressLine1"
+                formControlName="addressLine1"
+                 class="did-floating-input brder-color-grey"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="addressLine2">Address Line 2.</label>
+              <input
+                type="text"
+                id="addressLine2"
+                formControlName="addressLine2"
+                 class="did-floating-input brder-color-grey"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="city">City</label>
+              <input
+                type="text"
+                id="city"
+                formControlName="city"
+                 class="did-floating-input brder-color-grey"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="state">State</label>
+              <select
+                class="did-floating-select"
+                id="state"
+                formControlName="state"
+                (change)="onChangeState($event)"
+              >
+                <option *ngFor="let option of lststate" [value]="option.state1">
+                  ({{ option.state1 }}) {{ option.descr }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="country">Country</label>
+              <select
+                class="did-floating-select"
+                id="country"
+                formControlName="country"
+                (change)="onCountryChange($event)"
+              >
+                <option
+                  *ngFor="let option of lstContry"
+                  [value]="option.countryCode"
+                >
+                  ({{ option.countryCode }}) {{ option.countryDescr }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="postcode">postcode</label>
+              <input
+                type="text"
+                id="postcode"
+                formControlName="postcode"
+                 class="did-floating-input brder-color-grey"
+                required
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="did-floating-label check-out-lable" for="phonenumber">Phone Number</label>
+              <input
+                type="text"
+                id="phonenumber"
+                formControlName="phonenumber"
+                 class="did-floating-input brder-color-grey"
+                required
+              />
+            </div>
+          </div>
+        </div>
+       <div class="px-3 text-end">
+        <button type="submit" class="font-md-bold btn btn-buy w-auto">
+            Create New Address
+          </button>
+       </div>
+      </form>
+    </div>
   </div>
+</section>

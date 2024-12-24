@@ -301,12 +301,12 @@ select.did-floating-select::-ms-expand {
 }
 
 .did-floating-input:not(:placeholder-shown)~.did-floating-label {
-    /* top: -8px; */
+    /* top: -10px; */
     font-size: 13px;
 }
 
 .did-floating-select:not([value=""]):valid~.did-floating-label {
-    top: -8px;
+        top: -10px;
     font-size: 13px;
 }
 
@@ -455,7 +455,7 @@ input[type="number"]:focus,
 } */
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
     color: #002135;
 }
 
@@ -3750,9 +3750,9 @@ a.text-brand-3:hover {
     margin: 0px 15px;
 }
 
-.header .main-header .header-left .header-search .box-header-search {
+/* .header .main-header .header-left .header-search .box-header-search {
     border: 1px solid #d5dfe4;
-}
+} */
 
 .header .main-header .header-left .header-search .box-header-search .form-search {
     display: flex;
@@ -3763,7 +3763,18 @@ a.text-brand-3:hover {
 }
 
 .header .main-header .header-left .header-search .box-header-search .box-keysearch input {
-    border: 0px !important;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 .header .main-header .header-left .header-search .box-header-search .box-category {
@@ -9444,6 +9455,11 @@ a:hover span.btn-compare {
 .slider-nav-thumbnails .slick-next,
 .slider-nav-thumbnails-2 .slick-next {
     display: none !important;
+}
+
+button.slick-prev.slick-arrow,
+button.slick-next.slick-arrow {
+    display: none;
 }
 
 .slick-initialized .slick-slide {
@@ -16042,4 +16058,85 @@ label.mb-5 {
 
 .d-inline-block.box-dropdown-cart .dropdown-toggle::after{
     display: none;
+}
+.pagination{
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 0;
+}
+.pagination button{
+    background-color: #002135;
+    text-transform: capitalize;
+    text-align: center;
+    padding: 7px 22px;
+    color: #ffffff;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    font-weight: 600;
+}
+.pagination button:hover{    border: 1px solid #002135;
+    background-color: #ffffff;
+    color: #002135;
+    
+}
+.pagination span{ color: #002135;font-weight: 600;}
+button.font-md-bold.btn.btn-buy.w-100.mb-10.btn-hover-none:hover{
+    border: 1px solid transparent;
+    background-color: #002135;
+    color: #fff;
+}
+.checkout-box label{
+    margin-bottom: 0;
+}
+label.did-floating-label.check-out-lable {
+    top: 0px;    left: 30px;
+}
+.divider{
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    background-color: #d9d9d9;
+    margin: 26px 0px 26px 0px;
+}
+#Billing_Address,#Selectedaddress{
+    padding: 0px 16px;
+}
+#Billing_Address h4,#Selectedaddress h4{
+    font-size: 16px;
+    font-weight: 600;
+}
+#Billing_Address h6,#Selectedaddress h6{
+    font-size: 14px;
+    font-weight: 600;
+}
+#Billing_Address span,#Selectedaddress span{
+    font-size: 12px;
+    font-weight: 500;
+}
+.did-floating-label-content.mt-15.wish-search-box input{
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.type-ahead-container .list-group .list-group-item .cpointer.color-brand-3 .d-flex{
+    align-items: start !important;
+}
+.type-ahead-container .list-group .list-group-item .cpointer.color-brand-3 .d-flex .img{
+    width: 46px !important;
+    height: 46px !important;
 }

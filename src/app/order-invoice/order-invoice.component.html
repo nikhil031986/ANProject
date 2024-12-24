@@ -38,9 +38,9 @@
               <th>Open Amount</th>
             </tr>
             <tr class="cpointer" *ngFor="let order of paginatedData">
-              <td>{{ order.invoiceNumber }}</td>
-              <td>{{ order.invoiceDate | date:"MMM-dd-yyyy" }}</td>
-              <td>
+              <td data-th="Invoice Number">{{ order.invoiceNumber }}</td>
+              <td data-th="Invoice Date">{{ order.invoiceDate | date:"MMM-dd-yyyy" }}</td>
+              <td data-th="Status">
                 <span *ngIf="order.isOpen==true">
                     Open
                 </span>
@@ -48,45 +48,45 @@
                     Close
                 </span>
               </td>
-              <td>
+              <td data-th="Name">
                 <span *ngIf="order.customer != undefined">
                   {{ order.customer.name }}
                 </span>
               </td>
-              <td>
+              <td data-th="Location">
                 <span *ngIf="order.order != undefined">
                     <span *ngIf="order.order.customerLocation != undefined">
                         {{ order.order.customerLocation.name }}
                     </span>
                   </span>
             </td>
-            <td>
+            <td data-th="Total Lines">
                 {{order.order.totalLines}}
             </td>
-            <td>
+            <td data-th="Total Gross">
                 {{order.totalGross}}
             </td>
-            <td>
+            <td data-th="Total Amount">
                 {{order.iTotTaxAmount}}
             </td>
-            <td>
+            <td data-th="Codes Amount">
                 {{order.iTotCodesAmount}}
             </td>
-            <td>
+            <td data-th="Tax Addons">
                 {{order.totalWithTaxAndAddOns}}
             </td>
-            <td>
+            <td data-th="Payment Term">
                 <span *ngIf="order.paymentTerm != undefined">
                     {{order.paymentTerm.slug}}
                 </span>
             </td>
-            <td>
+            <td data-th="Due Date">
                 {{ order.dueDate | date:"MMM-dd-yyyy" }}
             </td>
-            <td>
+            <td data-th="Payment">
                 {{ order.payments }}
             </td>
-            <td>
+            <td data-th="Total Gross">
                 {{ order.totalGross }}
             </td>
             </tr>

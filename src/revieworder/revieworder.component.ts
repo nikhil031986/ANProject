@@ -19,10 +19,12 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './revieworder.component.css'
 })
 export class RevieworderComponent {
+  isCash:boolean=false;
   handler:any = null;
   objproduct:any[]=[];
   objTaxt:any;
   orderId:any=0;
+  isPayment:boolean=false;
   myorder:any="";
   stobj: Stripe | null=null;
   card: StripeCardElement | null=null;
@@ -72,10 +74,14 @@ export class RevieworderComponent {
       private productservice:ProductService,private toastera:ToasterService,private stservice:StripService,private dialog: MatDialog){}
 
      async ngOnInit() {
+
+
         this.imagePath=environment.APIHost;
         this.route.paramMap.subscribe((params) => {
-          const orderId = params.get('order');
-          this.myorder = orderId;
+          let orderId = params.get('order');
+          if(orderId != null || orderId != undefined){
+            this.myorder = orderId;
+          }
           this.getOrderDetails(orderId);
         });
         this.stobj = await this.stservice.getStripeInstance();
@@ -95,6 +101,16 @@ export class RevieworderComponent {
           console.log(res);
           if(res != undefined && res != null){
             this.orderId = res[0].id;
+            this.isPayment = res[0].isPayment;
+            const paymentMethod = res[0].pymethod;
+            if(paymentMethod != undefined && paymentMethod != null){
+              const paymentmethodName = paymentMethod.paymentMethod1;
+              if(paymentmethodName != undefined && paymentmethodName != null ){
+                if(String(paymentmethodName).toUpperCase() == "CASH"){
+                  this.isCash =true;
+                }
+              }
+            }
             const productDetails = res[0].orderDetails;
             var subTotal =0;
             this.products=[];
@@ -123,10 +139,13 @@ export class RevieworderComponent {
             this.getCustomerDetails(res[0].customerId);
             const dtOrder = res[0].orderDate.substr(0,10);
             this.orderDetails.cancelDate = dtOrder;
-            this.orderDetails.additionalInfo="Leave at front door if no one is home";
-            this.orderDetails.phone=res[0].customer.phone;
-            this.orderDetails.emailAddress= res[0].customer.email;
-            this.orderDetails.contact = res[0].customer.firstName;
+            this.orderDetails.jobRelease=res[0].jobRelease;
+            this.orderDetails.additionalInfo=res[0].additionalInfo;
+            this.orderDetails.phone=res[0].phonNo;
+            this.orderDetails.emailAddress= res[0].emailAddress;
+            this.orderDetails.contact = res[0].contact;
+            this.orderDetails.shippingAccount=res[0].shippingAccount;
+            this.orderDetails.poNumber=res[0].purcharOrderNo;
             this.orderSummary.rebate =0;
           }
         });
@@ -135,10 +154,10 @@ export class RevieworderComponent {
       getCustomerDetails(customerId:any){
         this.userservice.GetCustomerDetails(customerId).subscribe((res:any)=>{
           if(res != undefined && res != null){
-            const addressDetails = res[0].shipingLocation[0];
+            const addressDetails = res[0].customerLocationInformation;
             const shipviaaddress = res[0].shipAddresses[0];
               this.objTaxt={
-                from_country:addressDetails.country,
+                from_country:addressDetails.contry,
                 from_zip:"73001",
                 from_state:addressDetails.state,
                 from_city:addressDetails.city,
@@ -342,9 +361,17 @@ export class RevieworderComponent {
       tax: this.orderSummary.tax,
       total: this.orderSummary.total
     }
-    const dialogRef = this.dialog.open(PaymentPOPUPComponent, {
-      width: '600px',
-      data:{value:orderDetails},
-  });
+    if(!this.isCash){
+      const dialogRef = this.dialog.open(PaymentPOPUPComponent, {
+        width: '600px',
+        data:{value:orderDetails},
+    });
+    }
+    else{
+      this.productservice.orderPutErp("CASH",this.orderId).subscribe((res:any)=>{
+        this.CreatePDfFile();
+        this.router.navigate(['/paymentSuccess',this.orderId]);
+      });
+    }
   }
 }

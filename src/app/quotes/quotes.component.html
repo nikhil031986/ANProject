@@ -31,24 +31,24 @@
               <th>Adj Total</th>
             </tr>
             <tr class="cpointer" *ngFor="let shipment of product">
-              <td>{{ shipment.orderQuoteNumber }}</td>
-              <td>
+              <td data-th="Number">{{ shipment.orderQuoteNumber }}</td>
+              <td data-th="Status">
                 <span *ngIf="shipment.open">Open</span>
                 <span *ngIf="!shipment.open">Close</span>
               </td>
-              <td>
+              <td data-th="Reference">
                 {{ shipment.reference }}
               </td>
-              <td>{{ shipment.customer.name }}</td>
-              <td>
+              <td data-th="Customer Name">{{ shipment.customer.name }}</td>
+              <td data-th="Name">
                 <span *ngIf="shipment.salesRepresentative != undefined">
                      {{ shipment.salesRepresentative.name }}
                 </span>
               </td>
-              <td>{{ shipment.createdAt | date : "MMM dd yyyy" }}</td>
-              <td>{{ shipment.orderQuoteLineCount }}</td>
-              <td>{{ shipment.orderQuoteLineTotal }}</td>
-              <td>{{ shipment.adjustedTotal }}</td>
+              <td data-th="Created At">{{ shipment.createdAt | date : "MMM dd yyyy" }}</td>
+              <td data-th="Count">{{ shipment.orderQuoteLineCount }}</td>
+              <td data-th="Line Total">{{ shipment.orderQuoteLineTotal }}</td>
+              <td data-th="Total">{{ shipment.adjustedTotal }}</td>
             </tr>
           </tbody>
         </table>

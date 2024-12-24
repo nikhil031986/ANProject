@@ -36,7 +36,8 @@ import { AddressDialogComponent } from './address-dialog/address-dialog.componen
 import { ProductDetailModule } from './product-detail/product-detail.module';
 import { CurrentCustomerAllOrderComponent } from './current-customer-all-order/current-customer-all-order.component';
 import { PaymentPOPUPComponent } from './payment-popup/payment-popup.component';
-
+import { SearchComponent } from "./shared/search/search.component";
+import { RecaptchaModule } from 'ng-recaptcha';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,7 @@ import { PaymentPOPUPComponent } from './payment-popup/payment-popup.component';
   ],
   bootstrap: [AppComponent],
   imports: [
+    RecaptchaModule,
     BrowserModule,
     AppRoutingModule,
     ProductDetailModule,
@@ -73,8 +75,9 @@ import { PaymentPOPUPComponent } from './payment-popup/payment-popup.component';
     // Import standalone components
     CheckoutComponent,
     ImageSliderComponent,
-    AddressDialogComponent
-  ],
+    AddressDialogComponent,
+    SearchComponent
+],
   providers: [authInterceptorProviders, ToasterService, provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule {}

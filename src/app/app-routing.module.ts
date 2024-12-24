@@ -24,6 +24,7 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ShipmentComponent } from './shipment/shipment.component';
 import { QuotesComponent } from './quotes/quotes.component';
 import { OrderInvoiceComponent } from './order-invoice/order-invoice.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: 'subCatgory/:categoryTranId', component: SubCatgoryComponent },
   { path: 'subCatgory/:categeryName', component: SubCatgoryComponent },
+  { path: 'itemsearch/:itemName', component: SubCatgoryComponent },
   { path:'productDetail/:productCode/:desc',component:ProductDetailComponent},
   { path: 'itemcatwise', component: ItemcatwiseComponent },
   { path: 'viewCart', component: ViewCartComponent },  
@@ -50,6 +52,7 @@ const routes: Routes = [
   { path:'Shipment',component:ShipmentComponent},
   { path:'Quotes',component:QuotesComponent},
   { path:'Invoice',component:OrderInvoiceComponent},
+  { path:'wishlist',component:WishlistComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

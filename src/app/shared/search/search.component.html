@@ -1,0 +1,42 @@
+<div style="display: grid;gap:4px;align-items: center;">
+    <div class="box-header-search">
+        <div class="box-keysearch">
+            <div class="did-floating-label-content mb-0">
+            <input 
+            #inputValue class="did-floating-input" type="text" placeholder=" " required="true" 
+            [(ngModel)]="searchTerm"
+            (keyup)="onSearchChange($event)"
+            (keyup.enter)="onSearchChange($event)" 
+            placeholder="Search..." 
+            class="search-input"
+            />
+            <label class="did-floating-label"style="top:-10px;">Enter item number</label>
+            
+            <div class="search-icon">
+                <a (click)="getProductByProductCode(searchTerm)"> <!-- Call function on search icon click -->
+                <i class="fa fa-search" aria-hidden="true"></i>
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="items.length > 0 && !itemSelected" class="type-ahead-container">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let result of items">
+            <a  (click)="getProductByProductCode(result.item_Name)" class="cpointer color-brand-3">
+                <div class="d-flex">
+                    <div>
+                        <img src={{imageURL}}{{result.imageUrl}}
+                                alt="{{result.itemCode}}" class="fixwidthimg35 img-width">
+                    </div>
+                    <div class="search-data-align">
+                        <label id="direcvendor">{{result.vendor[0].FirstName}}</label><br />
+                        <label>{{result.itemCode}} </label>
+                        <span>{{result.item_Description}}</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

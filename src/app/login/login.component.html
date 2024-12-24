@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mb-100 align-items-center padding-lr-80">
       <div class="col-lg-5">
-        <div class="head-main bd-gray-200">
+        <div class="head-main bd-gray-200" *ngIf="!isForgotPassword">
           <h3 class="head-text pb-1 fw-bold">
             Welcome to our newly launched website! To explore the exciting new
             features, please select ‘Forgot Your Password’ to reset your
@@ -14,15 +14,15 @@
         </div>
         <form
           class="form-register mb-30"
-          *ngIf="!isLoggedIn"
+          *ngIf="!IsUserLogin()"
           name="form"
           (ngSubmit)="f.form.valid && onSubmit()"
           #f="ngForm"
           novalidate
         >
-          <div class="form-group">
-            <label class="font-sm color-gray-700">Email</label
-            ><span class="displaynone">*</span>
+          <div class="form-group" *ngIf="!isForgotPassword">
+            <!-- <label class="font-sm color-gray-700">Email</label
+            ><span class="displaynone">*</span> -->
             <div class="did-floating-label-content mb-0">
               <input
                 type="text"
@@ -45,8 +45,8 @@
               Email is required!
             </div>
           </div>
-          <div class="form-group">
-            <label class="font-sm color-gray-700">Password</label>
+          <div class="form-group" *ngIf="!isForgotPassword">
+            <!-- <label class="font-sm color-gray-700">Password</label> -->
             <div class="did-floating-label-content mb-0">
               <input
                 type="text"
@@ -76,8 +76,42 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="col-6 md-6 text-lg-end" *ngIf="!isForgotPassword">
+            <a
+              class="font-sm-bold color-brand-3"
+              (click)="isForgotPassword = !isForgotPassword"
+              >Forgot Your Password?</a
+            >
+          </div>
+          <div class="form-group" *ngIf="isForgotPassword">
+            <div class="col-md-12 head-main bd-gray-200 mb-15">
+              <h1 class="head-text">Forgot Password</h1>
+            </div>
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700"
+                >Forget password? Enter your email address below and we will
+              </label><span class="displaynone">*</span>
+              <div class="did-floating-label-content mb-0">
+                <input type="text"
+                  class="did-floating-input brder-color-grey" [(ngModel)]="UserID" name="UserID"/>
+                <label class="did-floating-label">Forget password
+                  <span>*</span></label>
+              </div>
+            </div>
+          </div>
+        
+          <div class="form-group col-md-12 d-flex justify-content-end">
+            <re-captcha name="resolved" (resolved)="resolved($event)" required
+              siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+          </div>
+          <div class="form-group" *ngIf="!isForgotPassword">
             <button class="font-md-bold btn btn-buy w-auto mb-5">Login</button>
+          </div>
+          <div class="form-group" *ngIf="isForgotPassword">
+            <button  (click)="isForgotPassword = !isForgotPassword" class="font-md-bold btn btn-buy w-auto mb-5">Back to login</button>
+          </div>
+          <div class="form-group" *ngIf="isForgotPassword">
+            <button (click)="forgetPassword()" class="font-md-bold btn btn-buy w-auto mb-5">Send email new password</button>
           </div>
           <div class="form-group">
             <div
@@ -89,7 +123,7 @@
             </div>
           </div>
         </form>
-        <div class="alert alert-success" *ngIf="isLoggedIn">
+        <div class="alert alert-success" *ngIf="IsUserLogin()">
           Logged in as {{ roles }}.
         </div>
       </div>

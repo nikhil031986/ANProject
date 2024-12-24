@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ProductService } from '../_services/product.service';
 import { CartServiceService } from '../_services/cart-service.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { ToasterService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-sub-catgory',
@@ -51,7 +52,7 @@ export class SubCatgoryComponent implements OnInit {
   IsLogin:boolean=false;
   viewUnit:boolean=false;
   selectedUnit:any="";
-  constructor(private route: ActivatedRoute, private userService: UserService,
+  constructor(private route: ActivatedRoute, private userService: UserService,private toastera:ToasterService,
     private productservice:ProductService,private cart:CartServiceService,private token:TokenStorageService) {}
 
   async ngOnInit() {
@@ -77,44 +78,36 @@ export class SubCatgoryComponent implements OnInit {
       }else{
         this.getMenuItem(categoryTranId); // Fetch all menu items when the component initializes
       }
+      const itemsearch = params.get('itemName');
+      if(itemsearch != undefined && itemsearch != null && itemsearch.length>0){
+        this.searchItems(itemsearch);           
+      }
     });
     this.getAllUnit();
   }
 
+  searchItems(searchTerm:any){
+    this.Items=[];
+    this.productservice.searchItems(searchTerm).subscribe((res:any)=>{
+      res.forEach(element => {
+        this.Items.push(element);
+      });
+    }); 
+  }
+
   getItemCount(Id:any):string{
     try{
-      let currentMenu = this.childMenuItem.filter((item:any)=> item.id==Id);
-      if(currentMenu != undefined || currentMenu != null ){
-        if(Array(currentMenu).length>1){
-          return String(currentMenu[0].itemCount);
-        } 
-        else{
-          let partCat = this.menuItems.filter((items:any)=> items.id==Id);
-          if(partCat != undefined || partCat != null){
-            if(Array(partCat).length>0){
-              return String(partCat[0].itemCount);
-            }
-            else{
-              return "";
-            }
-          }
-          else{
-            return "";
-          }
-        }
-      }
-      else{
-        return this.mancategory.itemCount
-      }
+      let currentMenu = this.childMenuItem.filter((item:any)=> item.id==Id).length;
+      return String(currentMenu);
     } catch(error){
       return "";
     }
   }
 
   getChildMenuItemCount(parentId:any):string{
-    let currentMenu = this.childMenuItem.filter((item:any)=> item.parentCategory==parentId);
-    if(currentMenu != undefined || currentMenu != null){
-      return String(currentMenu[0].childCatCount);
+    if(parentId != undefined){
+      let currentMenu = this.childMenuItem.filter((item:any)=> item.parentCategory==parentId).length;
+      return String(currentMenu);
     }
     return "";
   }
@@ -225,7 +218,8 @@ getCurrentCategory(){
   // Add to cart function
   addToCart(item_Name:any) {
     var item = this.Items.filter((item:any)=> item.item_Name==item_Name)[0];
-    this.cart.addToCart(item_Name,this.quantity,item.item_Description,item.imageUrl,item.item_Price,this.selectedUnit); 
+    this.cart.addToCart(item_Name,this.quantity,item.item_Description,item.imageUrl,item.item_Price,item.itemUnit);
+    this.toastera.success("Item add in cart successfully.","Cart");
   }
   
 

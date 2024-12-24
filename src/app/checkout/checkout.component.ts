@@ -52,12 +52,12 @@ export class CheckoutComponent {
     this.btnAddressText="Add Address";
     this.imgeUrl = environment.APIHost;
     this.IsUserLogin= this.token.userLogin();
-    this.getCustomerDetails();
     this.getCartData();
     this.initShippingForm();
     this.initBillingForm();
     this.initOrderDetailsForm();
     this.initPaymentForm();
+    this.getCustomerDetails();
   }
 
   onAddressChange(event:any){
@@ -67,9 +67,8 @@ export class CheckoutComponent {
     const shipadd = this.shipmentAddress.filter((res:any)=> res.location === selectedValue);
     if(shipadd != undefined && shipadd != null){
       this.SelectedlocationId=shipadd[0].customerLocationId;
-      this.displayShipAdd = "<h4> Name : "+ shipadd[0].name+"</h4>"
-      +"<span>"+shipadd[0].location +"<br/> "+
-      shipadd[0].address1 +" "+ shipadd[0].address2 +" "+ shipadd[0].address3
+      this.displayShipAdd = ""
+      +"<span>"+shipadd[0].address1 +" "+ shipadd[0].address2 +" "+ shipadd[0].address3
       +"<br/>"+ shipadd[0].city+"<br/> "+shipadd[0].state+"<br/> " + shipadd[0].country 
       +"<br/>"+ shipadd[0].postal+ "</span>";
       this.shippingForm.controls["billingAddress1"].setValue(shipadd[0].address1);
@@ -98,14 +97,20 @@ export class CheckoutComponent {
         this.shipingLocation = this.customerDetails[0].shipingLocation[0];
         this.shipmentAddress = this.customerDetails[0].shipAddresses;
 
+        let add3=(this.customerAddress?.address3 != null)
+        ?"<br/>"+this.customerAddress?.address3:"";
         this.billingAddress = "<h4> Name :"+this.customerMaster?.firstName+"</h4>"+
         "<h6> Email :"+this.customerMaster?.email+"</h6>"+
         "<span>"+ this.customerAddress?.address1+"<br/>"+
-        this.customerAddress?.address2+"<br/>"+
-        this.customerAddress?.address3+"<br/>"+
+        this.customerAddress?.address2 +
+         add3+"<br/>"+
         this.customerAddress?.city+"<br/>"+
         this.customerAddress?.state+"<br/>"+
         this.customerAddress?.country+"<br/></span>";
+
+        this.orderDetailsForm.controls["phone"].setValue(this.contactDetails?.phone);
+        this.orderDetailsForm.controls["contact"].setValue(this.contactDetails?.firstName);
+        this.orderDetailsForm.controls["email"].setValue(this.contactDetails?.email);
       }
     });
   }
@@ -346,12 +351,13 @@ export class CheckoutComponent {
         taxAmount= taxAmount+Number(element.taxamount);
         amount=amount+(Number(element.itemPrice)*Number(element.quntity));
       });
-
+      const paymentMethodSelected = this.paymentMethod.filter((data:any)=> data.paymentMethod1 ==  this.orderDetailsForm.controls["paymentType"].value);
+      const shipmentSelected = this.SystemShipVia.filter((data:any)=> data.shipViaCode==this.orderDetailsForm.controls["shipVia"].value );
       OrderPaymentEntry.push({
         Id:0,
         OrderId:0,
-        PaymentType:1,
-        PaymentTerm:0,
+        PaymentType: paymentMethodSelected != undefined && paymentMethodSelected != null? paymentMethodSelected[0].id : 0,// this.orderDetailsForm.controls["paymentType"].value,
+        PaymentTerm:  shipmentSelected != undefined && shipmentSelected != null? shipmentSelected[0].id : 0,
         Amount:amount,
         Rebate:0.0,
         SubTotal:(amount+taxAmount),
@@ -363,25 +369,32 @@ export class CheckoutComponent {
           OrderId:"",
           CustomerId:currentCustomerId,
           OrderDate:today,
-          PaymentMethodId:1,
-          PaymentTermId:1,
+          PaymentMethodId: paymentMethodSelected != undefined && paymentMethodSelected != null? paymentMethodSelected[0].id : 0,
+          PaymentTermId:   shipmentSelected != undefined && shipmentSelected != null? shipmentSelected[0].id : 0,
           TotalAmout:amount+taxAmount,
           DiscountAmount:0.20,
           OrderDetails:OrderDetailEntry,
           OrderPayments:OrderPaymentEntry,
           OrderShipments:shipobj,
-          PurcharOrderNo:"",
+          PurcharOrderNo:this.orderDetailsForm.controls["poNumber"].value,
+          jobRelease:this.orderDetailsForm.controls["jobRelease"].value,
+          contact:this.orderDetailsForm.controls["contact"].value,
+          phonNo:this.orderDetailsForm.controls["phone"].value,
+          emailAddress:this.orderDetailsForm.controls["email"].value,
+          shippingAccount:this.orderDetailsForm.controls["shippingAccount"].value,
+          additionalInfo:this.orderDetailsForm.controls["additionalInfo"].value,
         });
   
         this.productservice.PutOrder(objorder[0]).subscribe((res:any)=>{
           console.log(res);
+          this.cart.clearCart();
           const message = res.message;
           if(message != undefined && message != null){
-            if(String(message).includes("Order not added")){
+            if(String(message).includes("Data not added.")){
               this.toastera.error(message); 
             }
             else{
-              this.toastera.success("Order please successfully.");
+              this.toastera.success("Data added successfully.");
               this.router.navigate(['/revieworder',message]);
               //window.location.href="\home";
             }

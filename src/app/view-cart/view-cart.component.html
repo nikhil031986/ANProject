@@ -50,10 +50,12 @@
                     item.item_Description.toLowerCase()
                   ]"
                 >
-                  <h4 class="cart-product-description color-brand-3 mt-0">
+                  <h4 class="cart-product-description color-brand-3 table-title-text">
                     {{ item.itemCode }}
                   </h4>
-                  {{ item.item_Description }}
+                  <h5 class="cart-product-description color-brand-3 table-sub-text">
+                    {{ item.item_Description }}
+                  </h5>
                 </a>
               </div>
             </td>
@@ -78,7 +80,7 @@
                       [attr.max]="99999999"
                       readonly
                     />
-                    <label class="did-floating-label" style="left: 40px"
+                    <label class="d-none did-floating-label" style="left: 40px"
                       >Qty</label
                     >
                     <button class="button inc" (click)="increaseQuantity(i)">

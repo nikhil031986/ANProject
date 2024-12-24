@@ -1,0 +1,218 @@
+
+<div class="container-fluid">
+    <div class="row mb-50 padding-lr-80 mt-30">
+      <div class="col-md-8">
+          <h3>
+              Wishlist Details 
+            </h3>
+      </div>
+      </div>
+      </div>
+<div class="row padding-lr-80 mt-20">
+    <div class="col-md-12 ">
+        <div class="card w-100" *ngIf="!displaywishlistDetails">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" 
+                        [(ngModel)]="wishlistName" 
+                        placeholder="Enter wishlist name" />
+                        <label class="did-floating-label ml-10">Wishlist Name</label>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-end">
+                        <div class="addcrt" >
+                            <a  (click)="onSubmitWishlist()" class="font-md-bold btn btn-buy w-auto mb-10 mr-10">ADD WISHLIST</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-sm-6 col-md-5" style="margin-top: 10px">
+                    <table class="rwd-table mb-20">
+                      <tbody>
+                        <tr>
+                          <th>wishlist</th>
+                          <th>Edit</th>
+                          <th>Remove</th>
+                        </tr>
+                        <tr class="cpointer" *ngFor="let wishlist of wishlists">
+                          <td data-th="wishlist">{{ wishlist.wishlistName}}</td>
+                          <td (click)="openWishlistDetails(wishlist.wishlistId,wishlist.wishlistName)" class="d-flex-td-respo" data-th="Edit" class="text-center" style="vertical-align: top;">
+                            <img src="assets/imgs/icons/file-view.png" width="25" height="25" alt="">
+                          </td>  
+                          <td  class="d-flex-td-respo" data-th="Remove" class="text-center" style="vertical-align: top;">
+                            <a (click)="DeleteProducttowishlist(wishlist.wishlistId)" class="btn btn-delete"></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="row w-100 mt-2 padding-lr-80">
+    <div class="col-md-12">
+        <div class="card w-100" *ngIf="displaywishlistDetails">
+            <div class="col-md-12">
+                <div class="mb-25">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4 class="font-md-bold mb-10">Wishlist Name : {{selecedwishlistName}}</h4>
+                            </div>
+                            <div class="col-md-2 mt-2 d-flex justify-content-end">
+                                <div class="addcrt" >
+                                    <a  (click)="displaywishlistDetails=!displaywishlistDetails" class="font-md-bold btn btn-buy w-auto mb-10 mr-10">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="displaySearch">
+                        <h5 class="font-md-bold mb-10">Search:</h5>
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="col-md-12">
+                                <div class="form-group mb-0 w-100">
+                                    <div class="did-floating-label-content mb-0 w-100">
+                                        <div class="box-keysearch w-100">
+                                            <app-search (searchChanged)="getProductByProductCode($event)">
+                
+                                            </app-search>   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="col-md-6 text-end">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12"  *ngIf="displayForm && selectedItem != undefined && selectedItem != null">
+                <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6 d-none *ngIf="
+                            galleryImages != undefined &&
+                            galleryImages != null &&
+                            galleryImages.length > 0
+                          ">
+                                <img src={{galleryImages[0].img}} alt="" width="50%" height="50%">
+                            </div>    
+                            <div class="col-md-6">
+                                <div
+                                class="product-description mt-10"
+                                *ngIf="selectedItem != undefined && selectedItem != null"
+                              >
+                                <h4 class="fw-bold  d-none">{{ selectedItem.item_Name }}</h4>
+                                <h4 class="fw-bold  d-none">{{ selectedItem.item_Description }}</h4>
+                                <div class="d-flex mt-15 mb-15 gap-5  d-none">
+                                  <ul>
+                                    <li class="font-md mb-10">
+                                      <strong>Price:  ${{ selectedItem.item_Price }}</strong>
+                                    </li>
+                                  </ul>
+                                  <div class="box-quantity mt-15 d-none" id="left-align-10">
+                                    <div class="did-floating-label-content mb-15">
+                                      <div
+                                        class="increment-wrapper d-flex justify-content-start"
+                                      >
+                                        <!-- Decrement button -->
+                                        <button
+                                          type="button"
+                                          class="button dec"
+                                          (click)="decrement()"
+                                        >
+                                          <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </button>
+                                        <!-- Quantity input field -->
+                                        <input
+                                          class="did-floating-input"
+                                          aria-label="Quantity input"
+                                          autocomplete="off"
+                                          name="quantity-field"
+                                          title="Qty"
+                                          [value]="quantity"
+                                          readonly
+                                        />
+                                        <label class="did-floating-label ml-10">Qty</label>
+                                        <!-- Increment button -->
+                                        <button
+                                          type="button"
+                                          class="button inc"
+                                          (click)="increment()"
+                                        >
+                                          <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                            </div>
+                          <div class="col-lg-8">
+                            <div class="product-info padding-lr-50">
+                              <div class="border-bottom pt-10 mb-20"></div>
+                              
+                                  <!-- Add to cart button -->
+                                  <div class="addcrt" >
+                                        <a  (click)="onsubmitwishlistItem()" class="font-md-bold btn btn-buy w-auto mb-10 mr-10">ADD WISHLIST</a>
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <table class="rwd-table mb-20">
+                        <tbody>
+                          <tr>
+                            <th>image</th>
+                            <th>Details</th>
+                            <th>Qty</th>
+                            <th>Remove</th>
+                          </tr>
+                    <tr class="cpointer" *ngFor="let order of userList">
+                        <td data-th="Image"><img
+                          src="{{ imageURL }}{{ order.imgUrl }}"
+                          width="50" height="50"
+                          alt="{{
+                            order.itemCode +
+                              '' +
+                              order.itemDescription +
+                              ''
+                          }}"
+                        />
+                          </td>
+                        <td data-th="Detail">
+                          <span>{{order.itemCode}}</span>
+                          <br/>
+                          <span>
+                              {{order.itemDescription}}
+                          </span>
+                        </td>
+                        <td data-th="QTY">
+                          {{ order.qty }}
+                        </td>
+                        <td  class="d-flex-td-respo" data-th="Remove" class="text-center" style="vertical-align: top;">
+                          <a (click)="DeleteWishlistItem(order.wishlistId)" class="btn btn-delete"></a>
+                        </td>
+                      </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <div class="addcrt" >
+                            <a  (click)="addToCartItems()" class="font-md-bold btn btn-buy w-auto mb-10 mr-10">ADD TO CART</a>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

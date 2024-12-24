@@ -35,24 +35,24 @@
               <th>Billing Option</th>
             </tr>
             <tr class="cpointer" *ngFor="let shipment of product">
-              <td>{{ shipment.manifestId }}</td>
-              <td>{{ shipment.status }}</td>
-              <td>
+              <td data-th="Id">{{ shipment.manifestId }}</td>
+              <td data-th="Status">{{ shipment.status }}</td>
+              <td data-th="Order">
                 {{ shipment.order.customer.name }}
                 <span *ngIf="shipment.order.customer != undefined"> </span>
               </td>
-              <td>{{ shipment.customerLocation.name }}</td>
-              <td>
+              <td data-th="Name">{{ shipment.customerLocation.name }}</td>
+              <td data-th="State">
                 {{ shipment.state }}
               </td>
-              <td>{{ shipment.wantedDate | date : "MMM dd yyyy" }}</td>
-              <td>{{ shipment.pickStatus }}</td>
-              <td>{{ shipment.orderShipmentLineCount }}</td>
-              <td>{{ shipment.totalGross }}</td>
-              <td>{{ shipment.grossProfitPercentage }}%</td>
-              <td>{{ shipment.order.orderSource.code }}</td>
-              <td>{{ shipment.systemShipVia.shipViaCode }}</td>
-              <td>{{ shipment.billingOption.description }}</td>
+              <td data-th="Date">{{ shipment.wantedDate | date : "MMM dd yyyy" }}</td>
+              <td data-th="Status">{{ shipment.pickStatus }}</td>
+              <td data-th="Line Count">{{ shipment.orderShipmentLineCount }}</td>
+              <td data-th="Total Gross">{{ shipment.totalGross }}</td>
+              <td data-th="Profit Percentage">{{ shipment.grossProfitPercentage }}%</td>
+              <td data-th="Source Code">{{ shipment.order.orderSource.code }}</td>
+              <td data-th="Ship Code">{{ shipment.systemShipVia.shipViaCode }}</td>
+              <td data-th="Billing">{{ shipment.billingOption.description }}</td>
             </tr>
           </tbody>
         </table>

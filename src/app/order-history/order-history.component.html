@@ -30,18 +30,22 @@
               <th>Order Total Cost</th>
             </tr>
             <tr class="cpointer" *ngFor="let order of paginatedData">
-              <td>{{ order.orderDate | date : "MMM-dd-yyyy" }}</td>
-              <td>{{ order.orderNumber }}</td>
-              <td>
+              <td data-th="Order Date">{{ order.orderDate | date : "MMM-dd-yyyy" }}</td>
+              <td data-th="Order Number">
+                <div (click)="OpenOrderInfo(order.orderNumber)">
+                  {{ order.orderNumber }}
+                </div>
+              </td>
+              <td data-th="Name">
                 {{ order.customer.name }}
               </td>
-              <td>{{ order.status }}</td>
-              <td>
+              <td data-th="Status">{{ order.status }}</td>
+              <td data-th="Code">
                 <span *ngIf="order.orderSource != undefined">
                   {{ order.orderSource.code }}
                 </span>
               </td>
-              <td>{{ order.orderTotalCost }}</td>
+              <td data-th="Total">{{ order.orderTotalCost }}</td>
             </tr>
           </tbody>
         </table>

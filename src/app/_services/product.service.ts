@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8','XApiKey':'pgH7QzFHJx4w46fI~5Uzi4RvtTwlEXp' })
 };
 
 @Injectable({
@@ -20,6 +20,42 @@ export class ProductService {
 
    getItemByItemCode(itemCode:any){
     return this.http.get(this.APIURL+"Item/GetItemByItemCode?ItemCode="+itemCode,httpOptions);
+   }
+
+   removeItemFromWishList(wishlistId:any){
+    return this.http.patch(this.APIURL+"AddOn/RemoveFromWishlist?wishlistId="+wishlistId,httpOptions);
+   }
+
+   getWishlistDetails(wishlistId:any){
+    return this.http.get(this.APIURL+"AddOn/GetWishlistDetails?wishlistId="+wishlistId,httpOptions);
+   }
+
+   removeItemFromWishListItem(wishlistItemId:any){
+    return this.http.patch(this.APIURL+"AddOn/RemoveFromWishlistItem?wishlistItemId="+wishlistItemId,httpOptions);
+   }
+
+   getwishlist(userId:any){
+    return this.http.get(this.APIURL+"AddOn/GetWishList?userId="+userId,httpOptions);
+   }
+
+   putItemInWishlist(wishlistDetails:any){
+    return this.http.post(this.APIURL+"AddOn/AddWishlist",wishlistDetails,httpOptions)
+   }
+
+   putWishlistItem(wishlistItem:any){
+    return this.http.post(this.APIURL+"AddOn/AddWishListItems",wishlistItem,httpOptions)
+   }
+
+   getAllItems(){
+    return this.http.get(this.APIURL+"Item/GetAllItems",httpOptions);
+   }
+
+   getOrderIdBaseOnOrderNumber(orderNumber:any){
+    return this.http.get(this.APIURL+"Order/GetOrderNumber?orderTranId="+orderNumber,httpOptions);
+   }
+
+   searchItems(strSearch:any){
+    return this.http.get(this.APIURL+"Item/SearchItems?searchData="+strSearch,httpOptions);
    }
 
    getItemPrice(itemcode:any,qty:any){

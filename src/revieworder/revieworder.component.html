@@ -136,14 +136,14 @@
     </div>
     <div  class="review-order-form">
         <!-- Checkbox for Agreement -->
-         <div class="checkbox-section">
+         <div class="checkbox-section" *ngIf="isPayment == false">
             <input type="checkbox" id="agreeTerms" [(ngModel)]="agreeTerms">
             <label for="agreeTerms">I agree to the terms and conditions</label>
         </div>
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button type="submit" class="btn btn-primary" (click)="openPaymentModal()" [disabled]="!agreeTerms">Submit</button>
-            <button type="button" class="btn btn-secondary" (click)="modifyOrder()">Modify</button>
+            <button type="submit" *ngIf="isPayment == false" class="btn btn-primary" (click)="openPaymentModal()" [disabled]="!agreeTerms">Submit</button>
+            <button type="button" *ngIf="isPayment == false" class="btn btn-secondary" (click)="modifyOrder()">Modify</button>
         </div>
     
     </div>

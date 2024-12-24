@@ -35,8 +35,6 @@
   z-index: 1000; /* Ensure it's on top */
 }
 
-
-
 .cdk-overlay-pane {
   position: absolute !important;
 }

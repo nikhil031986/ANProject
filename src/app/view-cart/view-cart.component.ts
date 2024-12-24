@@ -52,7 +52,7 @@ export class ViewCartComponent {
       console.log("Before increment:", this.cartItems[index].quntity);
       this.cartItems[index].quntity++;
       const item = this.cartItems[index];          // Extract unit
-      this.cart.addToCart(item.itemCode,item.quntity,item.item_Description,item.imagePath,item.itemPrice,item.unit);
+      this.cart.addToCart(item.itemCode,+1,item.item_Description,item.imagePath,item.itemPrice,item.unit);
     }
     this.totalAmount=parseFloat( this.cartItems.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
   }
@@ -62,7 +62,7 @@ export class ViewCartComponent {
         console.log("Before decrement:", this.cartItems[index].quntity);
         this.cartItems[index].quntity--;
         const item = this.cartItems[index];
-        this.cart.addToCart(item.itemCode,item.quntity,item.item_Description,item.imagePath,item.itemPrice,item.unit);
+        this.cart.addToCart(item.itemCode,-1,item.item_Description,item.imagePath,item.itemPrice,item.unit);
       }
       this.totalAmount=parseFloat( this.cartItems.reduce((sum:any, item:any) => sum + (item.itemPrice*item.quntity), 0)).toFixed(2);
   }

@@ -1,4 +1,4 @@
-* General container styling for the dialog */
+/* General container styling for the dialog */
 .mat-dialog-container {
   padding: 20px; /* Internal spacing */
   border-radius: 12px; /* Soft rounded corners */

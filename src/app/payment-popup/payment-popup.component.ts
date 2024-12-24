@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { StripService } from '../_services/strip.service';
 import { ProductService } from '../_services/product.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment-popup',
@@ -58,7 +59,7 @@ constructor(
           console.log('Stripe.js has not loaded');
           return;
       }
-
+      
       // Create an instance of the card element
       this.card = stripe.elements().create('card');
       this.card.mount('#card-element');
@@ -82,7 +83,7 @@ constructor(
     }
 
     // Call your backend to create a Payment Intent and get the client secret
-    const response = await fetch('http://localhost:3000/create-payment-intent', {
+    const response = await fetch(environment.APIUrl+"Order/create-payment-intent", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: this.orderSummary.subtotal }) // Amount in cents

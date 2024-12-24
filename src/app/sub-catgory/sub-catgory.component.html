@@ -42,12 +42,11 @@
                 >
                   {{ mancategory.category }}
                 </p>
-                <p>
-                  Child Category {{getChildMenuItemCount(mancategory.categoryTranId)}}
+                <p *ngIf="getChildMenuItemCount(mancategory.categoryTranId) != '0'">
+                  Child Category
+                  {{ getChildMenuItemCount(mancategory.categoryTranId) }}
                 </p>
-                <p>
-                  Items {{getItemCount(mancategory.id)}}
-                </p>
+                <p *ngIf=" getItemCount(mancategory.id) != '0'" >Items {{ getItemCount(mancategory.id) }}</p>
               </div>
             </div>
           </div>
@@ -58,19 +57,19 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row">
-    <div
-      class="box-filters mt-0 pb-5 border-bottom"
-      *ngIf="
-        childMenuItems != undefined &&
-        childMenuItems != null &&
-        childMenuItems.length > 0
-      "
-    >
-      <div class="row">
-        <div class="align-flex">
+  <div class="row padding-lr-80">
+    <div class="col-md-12">
+      <div
+        class="box-filters mt-30 pb-5 border-bottom"
+        *ngIf="
+          childMenuItems != undefined &&
+          childMenuItems != null &&
+          childMenuItems.length > 0
+        "
+      >
+        <div class="row">
           <div
-            class="col-xl-2 col-lg-3 mb-10 text-lg-start text-center"
+            class="col-xl-2 col-lg-3 mb-10 text-lg-start"
             *ngIf="Items != undefined || Items != null"
           >
             <div
@@ -90,134 +89,131 @@
               </button>
             </div>
           </div>
-          <div class="col-xl-10 col-lg-9 mb-10 text-lg-end text-center">
+          <div class="col-xl-10 col-lg-9 mb-10 text-lg-end">
             <div class="d-inline-block">
               <a
-                class="view-type-grid mr-5"
+                class="view-type-grid mr-1"
                 [ngClass]="{ active: isListView == 1 }"
                 (click)="setlistview(1)"
               ></a>
               <a
-                class="view-type-list mr-5"
+                class="view-type-list mr-1"
                 [ngClass]="{ active: isListView == 2 }"
                 (click)="setlistview(2)"
               ></a>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-12 mb-10 text-lg-start">
-          <div class="filter-data">
-            <ul class="align-flex justify-content-start">
-              <!-- <li>
+
+          <div class="col-xl-12 mb-10 text-lg-start">
+            <div class="filter-data">
+              <ul class="align-flex justify-content-start">
+                <!-- <li>
               <a class="font-xs filter-btn" href="index.html">Custom Fields
                 <i class="fa fa-times" aria-hidden="true"></i>
               </a>
             </li> -->
-            </ul>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-      <ul
-        class="list-grid-col mt-60 mb-60"
-        *ngIf="
-          isListView == 1 &&
-          childMenuItems != undefined &&
-          childMenuItems != null &&
-          childMenuItems.length > 0
-        "
-      >
-        <li class="" *ngFor="let item of childMenuItems">
-          <div
-            class="card-grid-style-3 card-style-full-image"
-            style="cursor: pointer"
-          >
-            <div class="card-grid-inner">
-              <div class="image-box">
-                <a [routerLink]="['/subCatgory', item.category]">
-                  <i class="bi bi-backpack4-fill"></i>
-                  <img
-                    src="/assets/images/Category/comman.png"
-                    [alt]="item.category"
-                  />
-                </a>
-              </div>
-              <div class="info-right">
-                <div class="row"></div>
-                <a
-                  class="color-brand-3 font-md-bold"
-                  [routerLink]="['/subCatgory', item.categoryTranId]"
-                  >{{ item.Counts }} items</a
-                >
-                <h4
-                  class="color-brand-3 font-md-bold text-center"
-                  [routerLink]="['/subCatgory', item.categoryTranId]"
-                >
-                  {{ item.category }}
-                </h4>
-                <div class="price-info" id="webdescr">
-                  <p
-                    class="font-base color-brand-3 ellipsis"
-                    [innerHTML]="item.category"
-                  ></p>
-                  <p>
-                    Child Category {{getChildMenuItemCount(item.categoryTranId)}}
-                  </p>
-                  <p>
-                    Items {{getItemCount(item.id)}}
-                  </p>
+        <ul
+          class="list-grid-col mt-60 mb-60"
+          *ngIf="
+            isListView == 1 &&
+            childMenuItems != undefined &&
+            childMenuItems != null &&
+            childMenuItems.length > 0
+          "
+        >
+          <li class="" *ngFor="let item of childMenuItems">
+            <div
+              class="card-grid-style-3 card-style-full-image"
+              style="cursor: pointer"
+            >
+              <div class="card-grid-inner">
+                <div class="image-box">
+                  <a [routerLink]="['/subCatgory', item.category]">
+                    <i class="bi bi-backpack4-fill"></i>
+                    <img
+                      src="/assets/images/Category/comman.png"
+                      [alt]="item.category"
+                    />
+                  </a>
+                </div>
+                <div class="info-right">
+                  <div class="row"></div>
+                  <a
+                    class="color-brand-3 font-md-bold"
+                    [routerLink]="['/subCatgory', item.categoryTranId]"
+                    >{{ item.Counts }} items</a
+                  >
+                  <h4
+                    class="color-brand-3 font-md-bold text-center"
+                    [routerLink]="['/subCatgory', item.categoryTranId]"
+                  >
+                    {{ item.category }}
+                  </h4>
+                  <div class="price-info" id="webdescr">
+                    <p
+                      class="font-base color-brand-3 ellipsis"
+                      [innerHTML]="item.category"
+                    ></p>
+                    <p>
+                      Child Category
+                      {{ getChildMenuItemCount(item.categoryTranId) }}
+                    </p>
+                    <p>Items {{ getItemCount(item.id) }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
-      </ul>
-      <div
-        class="row mt-60 display-list"
-        *ngIf="
-          isListView == 2 &&
-          childMenuItems != undefined &&
-          childMenuItems != null &&
-          childMenuItems.length > 0
-        "
-      >
-        <div class="col-lg-12 mb-20" *ngFor="let category of childMenuItems">
-          <div class="card-grid-style-3">
-            <div class="card-grid-inner">
-              <div class="image-box">
-                <a [routerLink]="['/subCatgory', category.category]">
-                  <i class="bi bi-backpack4-fill"></i>
-                  <img
-                    src="/assets/images/Category/comman.png"
-                    [alt]="category.category"
-                  />
-                </a>
-              </div>
-              <div class="info-right">
-                <div class="row"></div>
-                <a
-                  class="color-brand-3 font-md-bold"
-                  [routerLink]="['/subCatgory', category.category]"
-                  >{{ category.Counts }} items
-                </a>
-                <h4
-                  class="color-brand-3 font-md-bold text-center"
-                  [routerLink]="['/subCatgory', category.category]"
-                >
-                  {{ category.category }}
-                </h4>
-                <div class="price-info" id="webdescr">
-                  <p
-                    class="font-base color-brand-3 ellipsis"
-                    [innerHTML]="category.category"
-                  ></p>
-                  <p>
-                    Child Category {{getChildMenuItemCount(category.categoryTranId)}}
-                  </p>
-                  <p>
-                    Items {{getItemCount(category.id)}}
-                  </p>
+          </li>
+        </ul>
+        <div
+          class="row mt-60 display-list"
+          *ngIf="
+            isListView == 2 &&
+            childMenuItems != undefined &&
+            childMenuItems != null &&
+            childMenuItems.length > 0
+          "
+        >
+          <div class="col-lg-12 mb-20" *ngFor="let category of childMenuItems">
+            <div class="card-grid-style-3">
+              <div class="card-grid-inner">
+                <div class="image-box">
+                  <a [routerLink]="['/subCatgory', category.category]">
+                    <i class="bi bi-backpack4-fill"></i>
+                    <img
+                      src="/assets/images/Category/comman.png"
+                      [alt]="category.category"
+                    />
+                  </a>
+                </div>
+                <div class="info-right">
+                  <div class="row"></div>
+                  <a
+                    class="color-brand-3 font-md-bold"
+                    [routerLink]="['/subCatgory', category.category]"
+                    >{{ category.Counts }} items
+                  </a>
+                  <h4
+                    class="color-brand-3 font-md-bold text-center"
+                    [routerLink]="['/subCatgory', category.category]"
+                  >
+                    {{ category.category }}
+                  </h4>
+                  <div class="price-info" id="webdescr">
+                    <p
+                      class="font-base color-brand-3 ellipsis"
+                      [innerHTML]="category.category"
+                    ></p>
+                    <p>
+                      Child Category
+                      {{ getChildMenuItemCount(category.categoryTranId) }}
+                    </p>
+                    <p>Items {{ getItemCount(category.id) }}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -234,7 +230,7 @@
     *ngIf="Items != null && Items != undefined && Items.length > 0"
   >
     <div class="col-lg-12 order-first order-lg-last">
-      <h4 class="fw-bold">Products</h4>
+      <h4 class="fw-bold mt-15">Products</h4>
       <div class="box-filters mt-0 pb-5 border-bottom">
         <div class="row">
           <div class="col-xl-2 col-lg-3 mb-10 text-lg-start text-start">
@@ -403,10 +399,12 @@
                 <div class="info-right">
                   <div class="font-lg-bold color-brand-2 price-main text-end">
                     <b><span> &nbsp;</span> {{ item.item_Name }} </b>
+                    <span>
+                    
+                    </span>
                   </div>
-                  <h4></h4>
                   <div
-                    class="font-lg-bold color-brand-2 price-main text-end d-none"
+                    class="font-sm-bold color-brand-2 price-main  justify-content-start text-end"
                   >
                     <span>{{ item.item_Description }}&nbsp;</span>
                   </div>
@@ -424,11 +422,11 @@
                       ${{ item.item_Price }} <span>{{ item.itemUnit }}</span>
                     </b>
                     <b *ngIf="item.item_Price != '0'">
-                      ${{ item.item_Price }}
+                       ${{ item.item_Price }}
                       <span>{{ item.displayunit }}</span>
                     </b>
 
-                    <b>{{ item.item_Price }}&nbsp;</b>
+                    <b>${{ item.item_Price }}&nbsp;</b>
                   </div>
                   <div
                     class="tag sale sale1"
@@ -540,8 +538,7 @@
                                 [value]="quantity"
                                 readonly
                               />
-                              <label class="did-floating-label ml-25"
-                                >Qty</label
+                              <label class="did-floating-label ml-25" style="left:40px !important">Qty</label
                               >
                               <!-- Increment button -->
                               <button

@@ -7,6 +7,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CartServiceService } from '../_services/cart-service.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { SearchComponent } from '../shared/search/search.component';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,6 @@ export class HeaderComponent implements OnInit {
   trybyUrl:any;
   menuItems:any=[];
   childMenuItem:any=[];
-  cartQuantity: number = 0;
   shcart: any;
   cartProduct:any=[];
   imagePath:any="";
@@ -44,10 +44,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMenuItem();
-    this.IsUserLogin= this.tokenStorageService.userLogin();
+    this.IsUserLogin= this.userService.userLogin();
     this.cart.currentQuantity.subscribe((quantity) => {
-      this.cartQuantity = quantity;
-      console.log('Cart quantity updated in UI:', this.cartQuantity);
       this.cdr.detectChanges();
     });
     this.route.paramMap.subscribe((params) => {
@@ -56,9 +54,23 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  getCartQuty(){
+    return String(this.cart.getcartItemQty());
+  }
+
+  CheckUserLogin(){
+    return this.userService.userLogin();
+  }
+
+  getUserEmailId(){
+    return this.tokenStorageService.getUserInfo("User_Email");
+  }
+
   logout(){
     if(this.IsUserLogin){
       this.tokenStorageService.signOut();
+      this.userService.setUserLogOff();
+      this.cart.clearCart();
       window.location.href="\home";
     }
     else{
@@ -105,17 +117,6 @@ export class HeaderComponent implements OnInit {
       console.log('Product code is required');
       return;  // Don't make the API call if product code is empty
     }
-    this.product = null;
-    this.galleryImages=[];
-    this.productService.getItemByItemCode(productCode).subscribe((res:any)=>{
-      this.product = res;
-      if(this.product != null && this.product != undefined){
-        this.router.navigate(['/productDetail',this.product.item_Name,this.product.item_Description]);
-        // var path = String(this.imagePath)+String(this.product.imageUrl);
-        // this.galleryImages.push({
-        //   img: String(this.imagePath)+String(this.product.imageUrl)
-        // });
-      }
-    });
+    this.router.navigate(['/itemsearch',productCode]);
   }
 }
